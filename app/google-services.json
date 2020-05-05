@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "721634568567",
+    "firebase_url": "https://valerioelectric-1588668873629.firebaseio.com",
+    "project_id": "valerioelectric-1588668873629",
+    "storage_bucket": "valerioelectric-1588668873629.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721634568567:android:ed6b61e8ba18ff124cd972",
+        "android_client_info": {
+          "package_name": "duodev.valerio.electric"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721634568567-k5nk04k48dnfof6j8f112llcpsi5vbc7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "duodev.valerio.electric",
+            "certificate_hash": "055ab18f3fe3f549f86aa80b74dfa40b7496631c"
+          }
+        },
+        {
+          "client_id": "721634568567-22rkr3na9rmqkascpa3t09hm9aoi5tbv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLPPd18Mb8l7Dqg_mLyA5hRNn0HeJeTtY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721634568567-22rkr3na9rmqkascpa3t09hm9aoi5tbv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
