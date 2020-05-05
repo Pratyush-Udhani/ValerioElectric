@@ -1,1 +1,4 @@
 # ValerioElectric
+
+We provide an innovative solution enabled by IoT, which addresses the given problem. Real-time data from sensors in charging ports help gauge the occupancy at a particular station and also estimate the time required for the occupying vehicles to charge them. Based on this data, nearby users who require charging are alerted via a mobile application and re-routed to the nearest station having empty slots. These slots can be pre-booked by them to provide a hassle-free charging service.
+Apart from this, we provide charging stations that derive power from solar energy to create an eco-friendly and sustainable infrastructure. 
