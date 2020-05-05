@@ -1,4 +1,4 @@
-package duodev.valerio_electric
+package duodev.valerio.electric
 
 import org.junit.Test
 

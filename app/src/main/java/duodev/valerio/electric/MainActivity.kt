@@ -1,4 +1,4 @@
-package duodev.valerio_electric
+package duodev.valerio.electric
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package duodev.valerio_electric
+package duodev.valerio.electric
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("duodev.valerio_electric", appContext.packageName)
+        assertEquals("duodev.valerio.electric", appContext.packageName)
     }
 }
