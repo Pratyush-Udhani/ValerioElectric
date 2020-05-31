@@ -10,6 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.jaeger.library.StatusBarUtil
 import duodev.valerio.electric.R
 import kotlinx.android.synthetic.main.activity_login.*
 
