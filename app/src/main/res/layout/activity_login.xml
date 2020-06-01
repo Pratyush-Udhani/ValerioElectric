@@ -39,12 +39,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias=".75" />
 
+    <ImageView
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:outlineAmbientShadowColor="#BEBEBE"
+        android:src="@drawable/ic_valerio_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias=".1"/>
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1997767857142857" />
+        app:layout_constraintGuide_percent="0.2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
