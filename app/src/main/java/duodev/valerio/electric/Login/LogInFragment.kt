@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
@@ -55,6 +56,10 @@ class LogInFragment : Fragment() {
             mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
             signIn()
         }
+        loginButton.setOnClickListener {
+            startActivity(Intent(requireContext(), HomeActivity::class.java))
+        }
+
         signUp.setOnClickListener {
             changeFragment(SignUpFragment.newInstance())
         }
