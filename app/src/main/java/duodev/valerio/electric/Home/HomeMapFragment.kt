@@ -16,6 +16,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Station.StationListFragment
+import kotlinx.android.synthetic.main.fragment_home_map.*
 
 class HomeMapFragment : Fragment() {
 
@@ -42,6 +44,20 @@ class HomeMapFragment : Fragment() {
 
     private fun init() {
         setUpMap()
+        setListeners()
+    }
+
+    private fun setListeners() {
+        gotToButton.setOnClickListener {
+            changeFragment(StationListFragment.newInstance())
+        }
+    }
+
+    private fun changeFragment(fragment: Fragment) {
+        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.homeContainer, fragment)
+        fragmentTransaction?.addToBackStack(null)
+        fragmentTransaction?.commit()
     }
 
     private fun setUpMap() {

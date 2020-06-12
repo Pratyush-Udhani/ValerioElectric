@@ -7,80 +7,12 @@
     android:fitsSystemWindows="true"
     tools:context=".Home.HomeActivity">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@null"
-        android:elevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/header_bg_two"
-            android:elevation="0dp">
-
-            <TextView
-                android:id="@+id/headingTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
-                android:text="Map View"
-                android:textColor="@color/color_white"
-                android:textSize="23sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
     <FrameLayout
         android:id="@+id/homeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <include layout="@layout/station_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/bookNowButton"
-            app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="20dp"/>
-
-    <Button
-        android:id="@+id/bookNowButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Book Now"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/gotToButton"
-        android:textColor="@color/main_blue"
-        android:layout_marginBottom="20dp"
-        android:layout_marginHorizontal="20dp"
-        android:textSize="18sp"
-        android:background="@drawable/outlined_button_blue"/>
-
-    <Button
-        android:id="@+id/gotToButton"
-        android:layout_width="0dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/bookNowButton"
-        app:layout_constraintBottom_toBottomOf="@id/bookNowButton"
-        app:layout_constraintStart_toEndOf="@id/bookNowButton"
-        android:drawableStart="@drawable/ic_go_to_icon"
-        android:paddingHorizontal="10dp"
-        android:text="Go To"
-        android:gravity="center"
-        android:textColor="@color/color_white"
-        android:textSize="18sp"
-        android:background="@drawable/solid_blue_button"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomNavCard"
@@ -104,11 +36,11 @@
                 android:background="@android:color/transparent"
                 android:elevation="0dp"
                 app:elevation="0dp"
+                app:itemIconTint="@color/main_blue"
                 app:itemRippleColor="@color/main_blue"
                 app:itemTextColor="@color/main_blue"
                 app:labelVisibilityMode="labeled"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:itemIconTint="@color/main_blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:menu="@menu/bottom_nav" />

@@ -7,4 +7,5 @@
 
     <color name="color_white">#FFFFFF</color>
     <color name="color_black">#111</color>
+    <color name="shadow_color">#979797</color>
 </resources>
