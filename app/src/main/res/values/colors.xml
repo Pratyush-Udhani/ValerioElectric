@@ -7,5 +7,6 @@
 
     <color name="color_white">#FFFFFF</color>
     <color name="color_black">#111</color>
-    <color name="shadow_color">#979797</color>
+    <color name="shadow_color">#DDDDDD</color>
+    <color name="card_bg_color">#E6E6E6</color>
 </resources>
