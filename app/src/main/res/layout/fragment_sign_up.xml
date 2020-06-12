@@ -5,7 +5,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Login.SignUpFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fillViewport="true">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <TextView
         android:id="@+id/headingText"
         android:layout_width="wrap_content"
@@ -29,10 +38,9 @@
         android:elevation="5dp"
         app:endIconMode="clear_text"
         app:hintTextColor="@color/main_blue"
-        app:layout_constraintBottom_toTopOf="@id/userEmailLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         app:hintEnabled="false"
         app:layout_constraintTop_toBottomOf="@id/headingText"
         app:startIconDrawable="@drawable/ic_user_logo"
@@ -60,10 +68,9 @@
         android:elevation="5dp"
         app:endIconMode="clear_text"
         app:hintTextColor="@color/main_blue"
-        app:layout_constraintBottom_toTopOf="@id/userPasswordLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         app:hintEnabled="false"
         app:layout_constraintTop_toBottomOf="@id/userNameLayout"
         app:startIconDrawable="@drawable/ic_mail_icon"
@@ -86,7 +93,6 @@
         android:id="@+id/userPasswordLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/retypePasswordLayout"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/edit_text_bg"
@@ -117,7 +123,6 @@
             android:id="@+id/retypePasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/signUpCard"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_bg"
@@ -152,8 +157,8 @@
         android:layout_marginHorizontal="20dp"
         app:cardBackgroundColor="@color/main_blue"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@id/signInText"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/retypePasswordLayout">
 
@@ -164,6 +169,7 @@
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             android:fontFamily="@font/lato"
+            android:textStyle="bold"
             android:text="Sign Up"
             android:textColor="#fff"
             android:textSize="17sp" />
@@ -177,8 +183,8 @@
         android:text="Already have an account? "
         android:textColor="#6C6C6C"
         android:textSize="17sp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toStartOf="@id/signIn"
         app:layout_constraintHorizontal_chainStyle="packed"
         android:fontFamily="@font/lato"
@@ -191,7 +197,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/lato_bold"
         android:text="Sign In"
-        android:background="@android:color/transparent"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:textColor="@color/main_blue"
         android:textSize="17sp"
         android:textAllCaps="false"
@@ -199,6 +205,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/signInText"
         app:layout_constraintTop_toTopOf="@id/signInText" />
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
