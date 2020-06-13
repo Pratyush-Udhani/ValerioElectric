@@ -1,23 +1,20 @@
 package duodev.valerio.electric.Home
 
-import androidx.fragment.app.Fragment
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.StationListFragment
 import duodev.valerio.electric.Utils.replaceFragment
+import duodev.valerio.electric.Utils.toast
 import kotlinx.android.synthetic.main.fragment_home_map.*
 
 class HomeMapFragment : Fragment() {
@@ -29,6 +26,20 @@ class HomeMapFragment : Fragment() {
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
+    private var backPressed: Long = 0
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (backPressed + 2000 > System.currentTimeMillis()) {
+                    activity?.finishAffinity()
+                } else {
+                    activity?.toast("Press again to exit")
+                    backPressed = System.currentTimeMillis()
+                }
+            }
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

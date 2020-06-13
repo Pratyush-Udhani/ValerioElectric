@@ -2,9 +2,14 @@ package duodev.valerio.electric.Home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import duodev.valerio.electric.Bookings.BookingsFragment
+import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Settings.SettingsFragment
 import duodev.valerio.electric.Station.StationListFragment
 import duodev.valerio.electric.Utils.addFragment
+import duodev.valerio.electric.Utils.replaceFragment
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
@@ -24,6 +29,26 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-
+        bottomNav.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.navigationMap -> {
+                    replaceFragment(null, R.id.homeContainer, HomeMapFragment.newInstance(), this)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.navigationClock -> {
+                    replaceFragment(null, R.id.homeContainer, BookingsFragment.newInstance(), this)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.navigationProfile -> {
+                    replaceFragment(null, R.id.homeContainer, ProfileFragment.newInstance(), this)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.navigationSettings -> {
+                    replaceFragment(null, R.id.homeContainer, SettingsFragment.newInstance(), this)
+                    return@setOnNavigationItemSelectedListener true
+                }
+            }
+            false
+        }
     }
 }
