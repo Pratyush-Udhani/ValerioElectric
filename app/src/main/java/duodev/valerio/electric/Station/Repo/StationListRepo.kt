@@ -7,7 +7,7 @@ class StationListRepo {
 
     private val stationList: MutableList<Station> = mutableListOf()
 
-    fun fetchData(): MutableLiveData<List<Station>> {
+    suspend fun fetchData(): MutableLiveData<List<Station>> {
         val data = MutableLiveData<List<Station>>()
 
         for (i in 0..10) {

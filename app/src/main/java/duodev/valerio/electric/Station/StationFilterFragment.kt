@@ -5,14 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.addFragment
 import duodev.valerio.electric.Utils.replaceFragment
+import kotlinx.android.synthetic.main.fragment_station_filter.*
 import kotlinx.android.synthetic.main.fragment_station_list.*
+import kotlinx.android.synthetic.main.fragment_station_list.backButton
 
 class StationFilterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                replaceFragment(
+                    this@StationFilterFragment,
+                    R.id.homeContainer,
+                    StationListFragment.newInstance()
+                )
+            }
+        })
         arguments?.let {
 
         }
@@ -36,7 +49,14 @@ class StationFilterFragment : Fragment() {
 
     private fun setUpListeners() {
         backButton.setOnClickListener {
-            replaceFragment(this, R.id.homeContainer, StationListFragment.newInstance())
+            replaceFragment(
+                this,
+                R.id.homeContainer,
+                StationListFragment.newInstance()
+            )
+        }
+        companyList.setOnClickListener {
+            addFragment(this, R.id.homeContainer, StationCompanyFragment.newInstance())
         }
     }
 

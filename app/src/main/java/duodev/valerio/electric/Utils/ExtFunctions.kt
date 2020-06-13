@@ -27,18 +27,20 @@ fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-fun replaceFragment(fromFragment : Fragment?, container: Int, fragment: Fragment, activity: FragmentActivity? = null) {
+fun replaceFragment(fromFragment : Fragment?, container: Int, fragment: Fragment, activity: FragmentActivity? = null, tag:Boolean = false) {
     when {
         activity != null -> {
             val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(container, fragment)
-            fragmentTransaction.addToBackStack(null)
+            if (tag)
+                fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
         fromFragment != null -> {
             val fragmentTransaction = fromFragment.activity?.supportFragmentManager?.beginTransaction()
             fragmentTransaction?.replace(container, fragment)
-            fragmentTransaction?.addToBackStack(null)
+            if (tag)
+                fragmentTransaction?.addToBackStack(null)
             fragmentTransaction?.commit()
         }
         else -> {
@@ -47,18 +49,20 @@ fun replaceFragment(fromFragment : Fragment?, container: Int, fragment: Fragment
     }
 }
 
-fun addFragment(fromFragment: Fragment?, container: Int, fragment: Fragment, activity: FragmentActivity? = null) {
+fun addFragment(fromFragment: Fragment?, container: Int, fragment: Fragment, activity: FragmentActivity? = null, tag: Boolean = false) {
     when {
         activity != null -> {
             val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fragmentTransaction.add(container, fragment)
-            fragmentTransaction.addToBackStack(null)
+            if (tag)
+                fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
         fromFragment != null -> {
             val fragmentTransaction = fromFragment.activity?.supportFragmentManager?.beginTransaction()
             fragmentTransaction?.add(container, fragment)
-            fragmentTransaction?.addToBackStack(null)
+            if (tag)
+                fragmentTransaction?.addToBackStack(null)
             fragmentTransaction?.commit()
         }
         else -> {

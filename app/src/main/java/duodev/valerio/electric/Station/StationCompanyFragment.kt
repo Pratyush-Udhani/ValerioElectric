@@ -8,47 +8,43 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import duodev.valerio.electric.Home.HomeMapFragment
 import duodev.valerio.electric.R
-import duodev.valerio.electric.Station.Adapter.StationListAdapter
-import duodev.valerio.electric.Station.ViewModel.StationListViewModel
-import duodev.valerio.electric.Utils.addFragment
+import duodev.valerio.electric.Station.Adapter.StationCompanyAdapter
+import duodev.valerio.electric.Station.ViewModel.StationCompanyViewModel
 import duodev.valerio.electric.Utils.replaceFragment
-import duodev.valerio.electric.pojos.Station
+import duodev.valerio.electric.pojos.Company
+import kotlinx.android.synthetic.main.fragment_station_company.*
+import kotlinx.android.synthetic.main.fragment_station_filter.*
 import kotlinx.android.synthetic.main.fragment_station_list.*
+import kotlinx.android.synthetic.main.fragment_station_list.backButton
 
-class StationListFragment : Fragment(), StationListAdapter.OnClick {
+class StationCompanyFragment : Fragment(), StationCompanyAdapter.OnClick {
 
-    private val stationAdapter by lazy {
-        StationListAdapter(
-            mutableListOf(),
-            this
-        )
-    }
-    private val stationListViewModel = StationListViewModel()
-    private var stationList: MutableList<Station> = mutableListOf()
+    private val companyAdapter by lazy { StationCompanyAdapter(mutableListOf(), this) }
+    private val stationCompanyViewModel = StationCompanyViewModel()
+    private var companyList: MutableList<Company> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 replaceFragment(
-                    this@StationListFragment,
+                    this@StationCompanyFragment,
                     R.id.homeContainer,
-                    HomeMapFragment.newInstance())
+                    StationFilterFragment.newInstance()
+                )
             }
         })
         arguments?.let {
 
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_station_list, container, false)
+        return inflater.inflate(R.layout.fragment_station_company, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,43 +53,37 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     }
 
     private fun init() {
-        stationListViewModel.fetchData()
+        stationCompanyViewModel.fetchData()
         setUpObservers()
-        setUpRecycler()
         setUpListeners()
-    }
-
-    private fun setUpObservers() {
-        stationListViewModel.data.observe(viewLifecycleOwner, Observer {
-            if (it.isNotEmpty()){
-                for (element in it){
-                    stationList.add(element)
-                }
-                    stationAdapter.addData(stationList)
-            }
-        })
-    }
-
-
-
-    private fun setUpListeners() {
-        backButton.setOnClickListener {
-            replaceFragment(this, R.id.homeContainer , HomeMapFragment.newInstance())
-        }
-        filterButton.setOnClickListener {
-            addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance())
-        }
+        setUpRecycler()
     }
 
     private fun setUpRecycler() {
-        stationListRecycler.apply {
-            adapter = this@StationListFragment.stationAdapter
+        companyRecycler.apply {
+            adapter = this@StationCompanyFragment.companyAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
 
+    private fun setUpObservers() {
+        stationCompanyViewModel.data.observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()){
+                for (element in it){
+                    companyList.add(element)
+                }
+                companyAdapter.addItems(companyList)
+            }
+        })
+    }
+
+    private fun setUpListeners() {
+        backButton.setOnClickListener {
+            replaceFragment(this,R.id.homeContainer, StationFilterFragment.newInstance())
+        }
+    }
 
     companion object {
-        fun newInstance() = StationListFragment()
+        fun newInstance() = StationCompanyFragment()
     }
 }
