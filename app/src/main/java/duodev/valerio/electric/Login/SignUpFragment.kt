@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.replaceFragment
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 
 class SignUpFragment : Fragment() {
@@ -37,21 +38,13 @@ class SignUpFragment : Fragment() {
 
     private fun setListeners() {
         signIn.setOnClickListener {
-            changeFragment(LogInFragment.newInstance())
+            replaceFragment(this, R.id.loginContainer, LogInFragment.newInstance())
         }
         signUpButton.setOnClickListener {
-            changeFragment(LogInFragment.newInstance())
+            replaceFragment(this, R.id.loginContainer, LogInFragment.newInstance())
         }
     }
 
-    private fun changeFragment(fragment: Fragment) {
-        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(
-            R.id.loginContainer,
-            fragment
-        )
-        fragmentTransaction?.commit()
-    }
 
     companion object {
         fun newInstance() = SignUpFragment()

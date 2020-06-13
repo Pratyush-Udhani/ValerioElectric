@@ -1,4 +1,4 @@
-package duodev.valerio.electric.Station
+package duodev.valerio.electric.Station.Adapter
 
 import android.view.LayoutInflater
 import android.view.View

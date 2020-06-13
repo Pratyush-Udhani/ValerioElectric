@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.replaceFragment
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
 class LogInFragment : Fragment() {
@@ -61,11 +62,11 @@ class LogInFragment : Fragment() {
         }
 
         signUp.setOnClickListener {
-            changeFragment(SignUpFragment.newInstance())
+            replaceFragment(this, R.id.loginContainer, SignUpFragment.newInstance())
         }
 
         forgotPasswordButton.setOnClickListener {
-            changeFragment(ForgotPasswordFragment.newInstance())
+            replaceFragment(this, R.id.loginContainer, ForgotPasswordFragment.newInstance())
         }
 
     }
@@ -96,16 +97,6 @@ class LogInFragment : Fragment() {
             Toast.makeText(requireContext(), "Invalid Login", Toast.LENGTH_LONG).show()
         }
     }
-
-    private fun changeFragment(fragment: Fragment) {
-        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(
-            R.id.loginContainer,
-            fragment
-        )
-        fragmentTransaction?.commit()
-    }
-
     companion object {
         fun newInstance() = LogInFragment()
     }

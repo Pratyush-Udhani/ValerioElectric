@@ -3,6 +3,7 @@ package duodev.valerio.electric.Login
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.addFragment
 
 class LoginActivity : AppCompatActivity() {
 
@@ -17,12 +18,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setUpFragments() {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(
-            R.id.loginContainer,
-            LogInFragment.newInstance(),
-            "Log in"
-        )
-        fragmentTransaction.commit()
+        addFragment(null, R.id.loginContainer, LogInFragment.newInstance(), this)
     }
 }
