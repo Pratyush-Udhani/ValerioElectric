@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <androidx.cardview.widget.CardView
+        android:layout_width="125dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="2:3"
+        android:elevation="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="25dp"
+        app:cardElevation="5dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/main_blue"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/plugLogo"
+                android:layout_width="50dp"
+                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_launcher_background"
+                android:layout_gravity="center"/>
+            <TextView
+                android:id="@+id/plugName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="chademo"
+                android:layout_weight=".5"
+                android:textColor="@color/color_white"
+                android:textSize="16sp"
+                android:layout_gravity="center"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EBEBEB"
+                android:layout_marginHorizontal="10dp"/>
+            <TextView
+                android:id="@+id/plugCost"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/color_white"
+                android:text="5.67 per kwh"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import duodev.valerio.electric.Bookings.BookingPlugsFragment
 import duodev.valerio.electric.Home.HomeMapFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.replaceFragment
@@ -31,7 +32,6 @@ class StationSingleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_station_single, container, false)
     }
 
@@ -47,6 +47,9 @@ class StationSingleFragment : Fragment() {
     private fun setUpListeners() {
         backButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, HomeMapFragment.newInstance())
+        }
+        bookNowButton.setOnClickListener {
+            replaceFragment(this, R.id.homeContainer, BookingPlugsFragment.newInstance())
         }
     }
 
