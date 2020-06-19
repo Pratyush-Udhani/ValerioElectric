@@ -5,10 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import duodev.valerio.electric.Bookings.Adapter.BookingPlugAdapter
+import duodev.valerio.electric.Home.HomeMapFragment
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Station.StationSingleFragment
+import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.pojos.Ports
 import kotlinx.android.synthetic.main.fragment_booking_plugs.*
 
@@ -18,6 +22,14 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                replaceFragment(
+                    this@BookingPlugsFragment,
+                    R.id.homeContainer,
+                    StationSingleFragment.newInstance())
+            }
+        })
         arguments?.let {
 
         }
@@ -64,5 +76,9 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
 
     companion object {
         fun newInstance() = BookingPlugsFragment()
+    }
+
+    override fun onItemClicked(position: Int) {
+        replaceFragment(this, R.id.homeContainer, BookingSlotFragment.newInstance())
     }
 }

@@ -5,22 +5,31 @@
     android:id="@+id/splashBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0"
-    android:background="@color/colorPrimary"
+    android:background="@color/color_white"
     tools:context=".Splash.SplashScreen">
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:elevation="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_bias=".4"
+        app:layout_constraintDimensionRatio="1:1"
         android:layout_marginHorizontal="@dimen/normal_spacing"
         android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="#fff"
-        android:textSize="30sp"
+        android:src="@drawable/ic_valerio_logo_individual"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/imageLogo"
+    android:text="@string/transforming_electric_mobility"
+    android:textSize="24sp"
+    android:gravity="center"
+    android:textColor="@color/color_black"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
