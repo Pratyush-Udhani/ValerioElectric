@@ -106,8 +106,24 @@
                 layout="@layout/filter_layout_connectivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginTop="10dp" />
+
+            <Button
+                android:id="@+id/applyFiltersButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_solid_blue"
+                android:fontFamily="@font/open_sans"
+                android:gravity="center"
+                android:paddingHorizontal="25dp"
+                android:text="Apply Filters"
+                android:textAllCaps="false"
+                android:textColor="@color/color_white"
+                android:textSize="18sp" />
+
         </LinearLayout>
     </ScrollView>
 

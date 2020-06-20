@@ -57,6 +57,5 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
     // kedia's dependency
-    implementation 'com.github.Priyansh-Kedia:ScaleSelector:0.1.0'
-
+    implementation 'com.github.Priyansh-Kedia:ScaleSelector:0.1.2'
 }

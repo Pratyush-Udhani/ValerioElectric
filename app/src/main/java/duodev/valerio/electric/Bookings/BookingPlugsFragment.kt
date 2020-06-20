@@ -26,15 +26,11 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (backPressed + 2000 > System.currentTimeMillis()) {
                     replaceFragment(
                         this@BookingPlugsFragment,
                         R.id.homeContainer,
                         StationSingleFragment.newInstance()
                     )
-                } else {
-                    activity?.toast("Press back again to cancel booking")
-                }
                 arguments?.let {
 
                 }

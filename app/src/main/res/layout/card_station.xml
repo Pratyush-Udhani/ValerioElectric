@@ -16,7 +16,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_white"
+            android:background="@drawable/bg_white_soft_box"
+            android:clickable="true"
+            android:focusable="true"
             android:minHeight="150dp">
 
             <androidx.cardview.widget.CardView
