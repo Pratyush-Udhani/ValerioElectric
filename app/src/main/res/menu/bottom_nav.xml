@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigationMap"
-        android:icon="@drawable/map_selector"
+        android:icon="@drawable/selector_map"
         android:title="Map" />
 
     <item
         android:id="@+id/navigationClock"
-        android:icon="@drawable/clock_selector"
+        android:icon="@drawable/selector_clock"
         android:title="Bookings" />
 
     <item
         android:id="@+id/navigationProfile"
-        android:icon="@drawable/profile_selector"
+        android:icon="@drawable/selector_profile"
         android:title="Profile" />
 
     <item
         android:id="@+id/navigationSettings"
-        android:icon="@drawable/settings_selector"
+        android:icon="@drawable/selector_settings"
         android:title="Settings" />
 </menu>

@@ -4,5 +4,7 @@
         <item>@font/frank_ruhl_libre_bold</item>
         <item>@font/lato</item>
         <item>@font/lato_bold</item>
+        <item>@font/open_sans</item>
+        <item>@font/open_sans_semibold</item>
     </array>
 </resources>

@@ -21,7 +21,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/header_bg_two"
+            android:background="@drawable/bg_header_two"
             android:elevation="0dp"
             android:orientation="horizontal">
             <TextView

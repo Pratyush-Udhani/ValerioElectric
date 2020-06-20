@@ -15,7 +15,7 @@ class StationListAdapter(private val list: MutableList<Station>, private val lis
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.station_card,
+                R.layout.card_station,
                 parent,
                 false
             )

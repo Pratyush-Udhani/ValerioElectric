@@ -13,26 +13,33 @@ import duodev.valerio.electric.Home.HomeMapFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.StationSingleFragment
 import duodev.valerio.electric.Utils.replaceFragment
+import duodev.valerio.electric.Utils.toast
 import duodev.valerio.electric.pojos.Ports
 import kotlinx.android.synthetic.main.fragment_booking_plugs.*
 
 class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
 
     private val plugAdapter by lazy { BookingPlugAdapter(mutableListOf(), this) }
+    private var backPressed: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                replaceFragment(
-                    this@BookingPlugsFragment,
-                    R.id.homeContainer,
-                    StationSingleFragment.newInstance())
+                if (backPressed + 2000 > System.currentTimeMillis()) {
+                    replaceFragment(
+                        this@BookingPlugsFragment,
+                        R.id.homeContainer,
+                        StationSingleFragment.newInstance()
+                    )
+                } else {
+                    activity?.toast("Press back again to cancel booking")
+                }
+                arguments?.let {
+
+                }
             }
         })
-        arguments?.let {
-
-        }
     }
 
     override fun onCreateView(
@@ -75,6 +82,7 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
     }
 
     companion object {
+        fun newInstance(string: String) = BookingPlugsFragment()
         fun newInstance() = BookingPlugsFragment()
     }
 

@@ -18,7 +18,7 @@ class BookingPlugAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(
-            R.layout.plug_card,
+            R.layout.card_plug,
             parent,
             false
         ))

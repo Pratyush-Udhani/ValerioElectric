@@ -19,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/header_bg_two"
+            android:background="@drawable/bg_header_two"
             android:elevation="0dp">
 
             <TextView
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/edit_text_bg"
+        android:background="@drawable/bg_white_soft_box"
         android:elevation="2dp"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
             android:background="@null"
             android:hint="Search"
             android:textColor="@color/color_black"
-            android:textColorHint="@color/shadow_color" />
+            android:textColorHint="@color/hint_color" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,7 +74,7 @@
 
     <include
         android:id="@+id/stationLayout"
-        layout="@layout/station_card"
+        layout="@layout/card_station"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/outlined_button_blue"
+        android:background="@drawable/button_outlined_blue"
         android:text="Book Now"
         android:textColor="@color/main_blue"
         android:textSize="18sp"
@@ -101,7 +101,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:background="@drawable/solid_blue_button"
+        android:background="@drawable/button_solid_blue"
         android:drawableStart="@drawable/ic_go_to_icon"
         android:gravity="center"
         android:paddingStart="20dp"

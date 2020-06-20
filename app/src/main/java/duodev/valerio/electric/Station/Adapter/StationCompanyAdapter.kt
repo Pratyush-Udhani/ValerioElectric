@@ -17,7 +17,7 @@ class StationCompanyAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.company_card,
+                R.layout.card_company,
                 parent,
                 false
             )
