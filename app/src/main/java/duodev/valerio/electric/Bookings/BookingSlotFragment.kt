@@ -17,14 +17,6 @@ class BookingSlotFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                replaceFragment(
-                    this@BookingSlotFragment,
-                    R.id.homeContainer,
-                    StationSingleFragment.newInstance())
-            }
-        })
         arguments?.let {
 
         }

@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.StationListFragment
+import duodev.valerio.electric.Station.StationSingleActivity
 import duodev.valerio.electric.Station.StationSingleFragment
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.Utils.toast
@@ -65,7 +66,8 @@ class HomeMapFragment : Fragment() {
             replaceFragment(this, R.id.homeContainer, StationListFragment.newInstance())
         }
         stationLayout.setOnClickListener {
-            replaceFragment(this, R.id.homeContainer, StationSingleFragment.newInstance())
+            startActivity(StationSingleActivity.newInstance(requireContext()))
+            activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
     }
 
