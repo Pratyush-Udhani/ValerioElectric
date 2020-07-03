@@ -44,15 +44,15 @@ class StationListAdapter(private val list: MutableList<Station>, private val lis
             val stationAvailability: TextView = itemView.findViewById(R.id.stationAvailability)
             val starred: ImageView = itemView.findViewById(R.id.StationStar)
 
-            stationName.text = item.stationName
+         //   stationName.text = item.stationName
             stationAddress.text = item.stationAddress
-            stationAvailability.text = if (item.stationAvailability) "Available" else "Unavailable"
-            if (item.starred){
-                starred.setImageResource(R.drawable.ic_star_selected)
-            } else {
-                starred.setImageResource(R.drawable.ic_star_unselected)
-
-            }
+//            stationAvailability.text = if (item.stationAvailability) "Available" else "Unavailable"
+//            if (item.starred){
+//                starred.setImageResource(R.drawable.ic_star_selected)
+//            } else {
+//                starred.setImageResource(R.drawable.ic_star_unselected)
+//
+//            }
 
         }
     }

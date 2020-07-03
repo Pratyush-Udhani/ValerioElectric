@@ -11,15 +11,15 @@ class StationListRepo {
         val data = MutableLiveData<List<Station>>()
 
         for (i in 0..10) {
-            stationList.add(
-                Station(
-                    stationName = "Name$i",
-                    stationAddress = "Addrres",
-                    stationAvailability = true,
-                    starred = true,
-                    stationPort = "as"
-                )
-            )
+//            stationList.add(
+//                Station(
+//                    stationName = "Name$i",
+//                    stationAddress = "Addrres",
+//                    stationAvailability = true,
+//                    starred = true,
+//                    stationPort = "as"
+//                )
+//            )
         }
         data.value = stationList
         return data
