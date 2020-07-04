@@ -2,6 +2,7 @@ package duodev.valerio.electric.Station
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
@@ -15,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
+import duodev.valerio.electric.Bookings.BookingPlugsFragment
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Home.HomeMapFragment
 import duodev.valerio.electric.R
@@ -32,12 +34,7 @@ import kotlin.math.sin
 
 class StationListFragment : Fragment(), StationListAdapter.OnClick {
 
-    private val stationAdapter by lazy {
-        StationListAdapter(
-            mutableListOf(),
-            this
-        )
-    }
+    private val stationAdapter by lazy { StationListAdapter(mutableListOf(), this) }
     private val stationListViewModel = StationListViewModel()
     private var stationList: MutableList<Station> = mutableListOf()
     private var longitude: Double? = 0.0
@@ -100,17 +97,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
 //            replaceFragment(this, R.id.homeContainer , HomeMapFragment.newInstance())
 //        }
         filterButton.setOnClickListener {
-            setUpDB()
-        }
-    }
-
-    private fun setUpDB() {
-        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-        val list = StationDef.getStationList()
-
-        for (element in list) {
-            Log.d("LISTS", " ${element.stationId}  ${element.toString()}")
-            firestore.collection("Stations").document(element.stationId).set(element)
+            addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance())
         }
     }
 
@@ -145,6 +132,21 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
 
     private fun rad2deg(rad: Double): Double {
         return rad * 180.0 / Math.PI
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_CODE) {
+            changeFragment(BookingPlugsFragment.newInstance(), true)
+        }
+    }
+
+    private fun changeFragment(fragment: Fragment, tag: Boolean) {
+        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+        fragmentTransaction?.add(R.id.homeContainer, fragment)
+        if (tag)
+            fragmentTransaction?.addToBackStack(null)
+        fragmentTransaction?.commit()
     }
 
     private fun getLocation() {
@@ -187,6 +189,8 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     }
 
     override fun onStationClicked(station: Station) {
+        Log.d("CLICKED", "clicked")
+
         val map: HashMap<String, Any> = hashMapOf()
         map[OWNER] = station.ownerCompany
      //   map[CONNECTOR] = station.connectorType
@@ -198,7 +202,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         map[ID] = station.stationId
         map[IMAGE_URL] = station.imageUrl
         log("called")
-        startActivity(StationSingleActivity.newInstance(requireContext(), map))
+        startActivityForResult(StationSingleActivity.newInstance(requireContext(), map), RESULT_CODE)
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
     }
 }

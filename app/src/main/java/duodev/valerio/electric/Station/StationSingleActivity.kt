@@ -97,9 +97,13 @@ class StationSingleActivity : AppCompatActivity() {
 //        backButton.setOnClickListener {
 //            replaceFragment(null, R.id.homeContainer, HomeMapFragment.newInstance(), this)
 //        }
-//        bookNowButton.setOnClickListener {
+        bookNowButton.setOnClickListener {
 //            replaceFragment(null, R.id.homeContainer, BookingPlugsFragment.newInstance(), this)
-//        }
+            val intent = Intent()
+            setResult(StationListFragment.RESULT_CODE, intent)
+            finish()
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+        }
     }
 
     companion object {

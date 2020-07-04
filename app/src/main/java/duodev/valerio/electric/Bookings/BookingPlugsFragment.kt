@@ -72,6 +72,7 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
     }
 
     override fun onItemClicked(position: Int) {
-        replaceFragment(this, R.id.homeContainer, BookingSlotFragment.newInstance())
+//        replaceFragment(this, R.id.homeContainer, BookingSlotFragment.newInstance())
+        activity?.toast("Payment to be added")
     }
 }

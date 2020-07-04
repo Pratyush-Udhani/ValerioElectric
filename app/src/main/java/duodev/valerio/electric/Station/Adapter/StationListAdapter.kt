@@ -1,5 +1,6 @@
 package duodev.valerio.electric.Station.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,8 @@ import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.pojos.Station
 
-class StationListAdapter(private val list: MutableList<Station>, private val listener: OnClick)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StationListAdapter(private val list: MutableList<Station>, private val listener: OnClick) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -40,28 +41,26 @@ class StationListAdapter(private val list: MutableList<Station>, private val lis
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val stationName: TextView = itemView.findViewById(R.id.stationName)
         private val stationAddress: TextView = itemView.findViewById(R.id.stationAddress)
-        private val cardView: CardView = itemView.findViewById(R.id.cardView)
+        private val cardView: CardView = itemView.findViewById(R.id.stationCard)
 
         fun bindItems(item: Station) {
 
             stationName.text = item.stationName
             stationAddress.text = item.stationAddress
 
-            stationName.setOnClickListener {
-                log("called adapter")
+            cardView.setOnClickListener {
+                Log.d("CLICKED", "clicked adaptre")
                 listener.onStationClicked(item)
             }
 
-            cardView.setOnClickListener { stationName.callOnClick() }
-            itemView.setOnClickListener { stationName.callOnClick() }
-
         }
     }
-    interface OnClick{
+
+    interface OnClick {
         fun onStationClicked(station: Station)
     }
 }
