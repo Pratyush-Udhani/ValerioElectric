@@ -7,6 +7,16 @@
     android:background="@color/color_white"
     tools:context=".Station.StationListFragment">
 
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"

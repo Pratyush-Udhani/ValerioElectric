@@ -4,8 +4,8 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -23,10 +23,14 @@ import kotlinx.android.synthetic.main.activity_station_single.*
 class StationSingleActivity : AppCompatActivity() {
 
     private lateinit var googleMap: GoogleMap
+    private lateinit var station: HashMap<String, Any>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_station_single)
+        intent?.let {
+            station = it.getSerializableExtra(FLAG) as HashMap<String, Any>
+        }
         init()
     }
 
@@ -58,13 +62,10 @@ class StationSingleActivity : AppCompatActivity() {
             val style = MapStyleOptions.loadRawResourceStyle(this, R.raw.night_maps)
             googleMap.isMyLocationEnabled = true
             googleMap.setMapStyle(style)
-
-            // lat lang for location
-
-//            val latLng = LatLng(gym[NewHomeFragment.LATITUDE] as Double,gym[NewHomeFragment.LONGITUDE] as Double)
-//            googleMap.addMarker(MarkerOptions().position(latLng))
-//            val cameraPosition = CameraPosition.Builder().target(latLng).zoom(12f).build()
-//            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            val latLng = LatLng(station[StationListFragment.LATITUDE] as Double,station[StationListFragment.LONGITUDE] as Double)
+            googleMap.addMarker(MarkerOptions().position(latLng))
+            val cameraPosition = CameraPosition.Builder().target(latLng).zoom(12f).build()
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         }
     }
 
@@ -100,6 +101,11 @@ class StationSingleActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun newInstance(context: Context) = Intent(context, StationSingleActivity::class.java)
+
+        const val FLAG = "flag"
+
+        fun newInstance(context: Context, map: HashMap<String, Any>) = Intent(context, StationSingleActivity::class.java).apply {
+            putExtra(FLAG, map)
+        }
     }
 }
