@@ -1,8 +1,13 @@
 package duodev.valerio.electric.pojos
 
+import com.google.firebase.firestore.GeoPoint
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.RawValue
+
 
 data class Station (
+    @SerializedName("stationName")
+    val stationName: String,
 
     @SerializedName("stationLocation")
     val stationLocation: String,
@@ -22,9 +27,13 @@ data class Station (
     @SerializedName("connectorType")
     val connectorType: List<Connector>,
 
-    @SerializedName("latitude")
-    val latitude: Double,
+    @SerializedName("location")
+    val location: @RawValue GeoPoint,
 
-    @SerializedName("longitude")
-    val longitude: Double
+    @SerializedName("stationImage")
+    val imageUrl: String,
+
+    @SerializedName("stationId")
+    val stationId: String
+
 )
