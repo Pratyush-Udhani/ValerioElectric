@@ -22,6 +22,7 @@ import duodev.valerio.electric.Station.Adapter.StationListAdapter
 import duodev.valerio.electric.Station.ViewModel.StationListViewModel
 import duodev.valerio.electric.Utils.StationDef
 import duodev.valerio.electric.Utils.addFragment
+import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.fragment_station_list.*
@@ -71,8 +72,8 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     }
 
     private fun setUpObservers() {
-        stationListViewModel.data.observe(viewLifecycleOwner, Observer {
-            if (it.isNotEmpty()){
+        stationListViewModel.fetchData().observe(viewLifecycleOwner, Observer {
+            if (it.isNotEmpty()) {
                 sortData(it)
             }
         })
@@ -185,19 +186,19 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         fun newInstance() = StationListFragment()
     }
 
-    override fun onStationClicked(station: Station, location: String) {
+    override fun onStationClicked(station: Station) {
         val map: HashMap<String, Any> = hashMapOf()
         map[OWNER] = station.ownerCompany
-        map[CONNECTOR] = station.connectorType
+     //   map[CONNECTOR] = station.connectorType
         map[NAME] = station.stationName
         map[ADDRESS] = station.stationAddress
         map[PROVIDER] = station.serviceProvider
         map[LATITUDE] = station.location.latitude
         map[LONGITUDE] = station.location.longitude
         map[ID] = station.stationId
-        map[LOCATION] = location
         map[IMAGE_URL] = station.imageUrl
-        startActivityForResult(StationSingleActivity.newInstance(requireActivity(), map), RESULT_CODE)
+        log("called")
+        startActivity(StationSingleActivity.newInstance(requireContext(), map))
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
     }
 }

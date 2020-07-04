@@ -13,20 +13,20 @@ object StationDef {
 
                 Station(
                     stationName = "stationName $i",
-                    stationAddress = "ascslidn",
+                    stationAddress = "station Address $i",
                     stationId = "$i",
                     stationLocation = "",
                     numberOfStations = 4,
                     serviceProvider = "",
                     imageUrl = "asc",
-                    location = GeoPoint(23.233, 23.233),
+                    location = GeoPoint(i*5.5, i*5.5),
                     ownerCompany = Company(
-                        name = "asc",
+                        name = "company",
                         imageUri = "as"
                     ),
                     connectorType = arrayListOf(
                         Connector(
-                            type = "asc"
+                            type = "Type 1"
                         )
                     )
                 )

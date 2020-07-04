@@ -1,10 +1,13 @@
 package duodev.valerio.electric.pojos
 
+import android.os.Parcelable
 import com.google.firebase.firestore.GeoPoint
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import kotlinx.android.parcel.RawValue
 
 
+@Parcelize
 data class Station (
     @SerializedName("stationName")
     val stationName: String,
@@ -25,7 +28,7 @@ data class Station (
     val numberOfStations: Int,
 
     @SerializedName("connectorType")
-    val connectorType: List<Connector>,
+    val connectorType: @RawValue List<Connector>,
 
     @SerializedName("location")
     val location: @RawValue GeoPoint,
@@ -36,4 +39,4 @@ data class Station (
     @SerializedName("stationId")
     val stationId: String
 
-)
+): Parcelable

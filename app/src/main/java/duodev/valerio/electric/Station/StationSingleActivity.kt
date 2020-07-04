@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import duodev.valerio.electric.Bookings.BookingPlugsFragment
 import duodev.valerio.electric.Home.HomeMapFragment
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.Utils.replaceFragment
 import kotlinx.android.synthetic.main.activity_station_single.*
 
@@ -28,6 +29,7 @@ class StationSingleActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_station_single)
+        mapView.onCreate(savedInstanceState)
         intent?.let {
             station = it.getSerializableExtra(FLAG) as HashMap<String, Any>
         }
@@ -95,9 +97,9 @@ class StationSingleActivity : AppCompatActivity() {
 //        backButton.setOnClickListener {
 //            replaceFragment(null, R.id.homeContainer, HomeMapFragment.newInstance(), this)
 //        }
-        bookNowButton.setOnClickListener {
-            replaceFragment(null, R.id.homeContainer, BookingPlugsFragment.newInstance(), this)
-        }
+//        bookNowButton.setOnClickListener {
+//            replaceFragment(null, R.id.homeContainer, BookingPlugsFragment.newInstance(), this)
+//        }
     }
 
     companion object {

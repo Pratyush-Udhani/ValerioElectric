@@ -15,12 +15,11 @@ class StationListViewModel : ViewModel() {
     val data: MutableLiveData<List<Station>>
         get() = _data
 
-    fun fetchData() {
-        viewModelScope.launch {
-            val response = stationListRepo.fetchData()
-            if (response.value != null) {
-                _data = response
-            }
-        }
-    }
+    fun fetchData() = stationListRepo.fetchData()
+//    {
+//
+//        viewModelScope.launch {
+//             stationListRepo.fetchData()
+//        }
+//    }
 }

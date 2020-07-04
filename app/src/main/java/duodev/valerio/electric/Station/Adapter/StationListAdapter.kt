@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.pojos.Station
 
 class StationListAdapter(private val list: MutableList<Station>, private val listener: OnClick)
@@ -35,31 +37,33 @@ class StationListAdapter(private val list: MutableList<Station>, private val lis
 
     fun addData(data: List<Station>) {
         list.addAll(data)
+        log("called")
         notifyDataSetChanged()
     }
 
 
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bindItems(item: Station) {
-            val stationName: TextView = itemView.findViewById(R.id.stationName)
-            val stationAddress: TextView = itemView.findViewById(R.id.stationAddress)
-            val stationAvailability: TextView = itemView.findViewById(R.id.stationAvailability)
-            val starred: ImageView = itemView.findViewById(R.id.StationStar)
 
-         //   stationName.text = item.stationName
+        val stationName: TextView = itemView.findViewById(R.id.stationName)
+        private val stationAddress: TextView = itemView.findViewById(R.id.stationAddress)
+        val stationAvailability: TextView = itemView.findViewById(R.id.stationAvailability)
+        val starred: ImageView = itemView.findViewById(R.id.StationStar)
+        private val cardView: CardView = itemView.findViewById(R.id.cardView)
+
+        fun bindItems(item: Station) {
+
+            stationName.text = item.stationName
             stationAddress.text = item.stationAddress
-//            stationAvailability.text = if (item.stationAvailability) "Available" else "Unavailable"
-//            if (item.starred){
-//                starred.setImageResource(R.drawable.ic_star_selected)
-//            } else {
-//                starred.setImageResource(R.drawable.ic_star_unselected)
-//
-//            }
+
+            stationName.setOnClickListener {
+                log("called adapter")
+                listener.onStationClicked(item)
+            }
 
         }
     }
     interface OnClick{
-        fun onStationClicked(station: Station, location: String)
+        fun onStationClicked(station: Station)
     }
 }
