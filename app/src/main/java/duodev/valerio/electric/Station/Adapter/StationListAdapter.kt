@@ -1,6 +1,5 @@
 package duodev.valerio.electric.Station.Adapter
 
-import android.telephony.cdma.CdmaCellLocation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,14 +40,10 @@ class StationListAdapter(private val list: MutableList<Station>, private val lis
         notifyDataSetChanged()
     }
 
-
-
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        val stationName: TextView = itemView.findViewById(R.id.stationName)
+        private val stationName: TextView = itemView.findViewById(R.id.stationName)
         private val stationAddress: TextView = itemView.findViewById(R.id.stationAddress)
-        val stationAvailability: TextView = itemView.findViewById(R.id.stationAvailability)
-        val starred: ImageView = itemView.findViewById(R.id.StationStar)
         private val cardView: CardView = itemView.findViewById(R.id.cardView)
 
         fun bindItems(item: Station) {
@@ -60,6 +55,9 @@ class StationListAdapter(private val list: MutableList<Station>, private val lis
                 log("called adapter")
                 listener.onStationClicked(item)
             }
+
+            cardView.setOnClickListener { stationName.callOnClick() }
+            itemView.setOnClickListener { stationName.callOnClick() }
 
         }
     }
