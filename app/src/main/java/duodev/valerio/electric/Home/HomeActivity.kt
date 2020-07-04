@@ -25,14 +25,14 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setUpFragment() {
-        addFragment(null, R.id.homeContainer, HomeMapFragment.newInstance(), this)
+        addFragment(null, R.id.homeContainer, StationListFragment.newInstance(), this)
     }
 
     private fun setListeners() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigationMap -> {
-                    replaceFragment(null, R.id.homeContainer, HomeMapFragment.newInstance(), this)
+                    replaceFragment(null, R.id.homeContainer, StationListFragment.newInstance(), this)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigationClock -> {

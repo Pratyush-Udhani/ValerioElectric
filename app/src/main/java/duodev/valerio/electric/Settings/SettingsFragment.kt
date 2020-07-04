@@ -16,16 +16,6 @@ class SettingsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (backPressed + 2000 > System.currentTimeMillis()) {
-                    activity?.finishAffinity()
-                } else {
-                    activity?.toast("Press again to exit")
-                    backPressed = System.currentTimeMillis()
-                }
-            }
-        })
     }
 
     override fun onCreateView(

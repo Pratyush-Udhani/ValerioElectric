@@ -16,14 +16,6 @@ class StationSingleFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                replaceFragment(
-                    this@StationSingleFragment,
-                    R.id.homeContainer,
-                    HomeMapFragment.newInstance())
-            }
-        })
         arguments?.let {
         }
     }
@@ -45,9 +37,9 @@ class StationSingleFragment : Fragment() {
     }
 
     private fun setUpListeners() {
-        backButton.setOnClickListener {
-            replaceFragment(this, R.id.homeContainer, HomeMapFragment.newInstance())
-        }
+//        backButton.setOnClickListener {
+//            replaceFragment(this, R.id.homeContainer, HomeMapFragment.newInstance())
+//        }
         bookNowButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, BookingPlugsFragment.newInstance())
         }

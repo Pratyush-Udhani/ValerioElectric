@@ -26,15 +26,6 @@ class StationCompanyFragment : Fragment(), StationCompanyAdapter.OnClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                replaceFragment(
-                    this@StationCompanyFragment,
-                    R.id.homeContainer,
-                    StationFilterFragment.newInstance()
-                )
-            }
-        })
         arguments?.let {
 
         }

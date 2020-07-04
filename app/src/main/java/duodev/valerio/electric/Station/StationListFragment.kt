@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,11 +14,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Home.HomeMapFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.Adapter.StationListAdapter
 import duodev.valerio.electric.Station.ViewModel.StationListViewModel
+import duodev.valerio.electric.Utils.StationDef
 import duodev.valerio.electric.Utils.addFragment
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.pojos.Station
@@ -42,14 +45,6 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                replaceFragment(
-                    this@StationListFragment,
-                    R.id.homeContainer,
-                    HomeMapFragment.newInstance())
-            }
-        })
         arguments?.let {
 
         }
@@ -100,11 +95,21 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     }
 
     private fun setUpListeners() {
-        backButton.setOnClickListener {
-            replaceFragment(this, R.id.homeContainer , HomeMapFragment.newInstance())
-        }
+//        backButton.setOnClickListener {
+//            replaceFragment(this, R.id.homeContainer , HomeMapFragment.newInstance())
+//        }
         filterButton.setOnClickListener {
-            addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance())
+            setUpDB()
+        }
+    }
+
+    private fun setUpDB() {
+        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+        val list = StationDef.getStationList()
+
+        for (element in list) {
+            Log.d("LISTS", " ${element.stationId}  ${element.toString()}")
+            firestore.collection("Stations").document(element.stationId).set(element)
         }
     }
 
@@ -193,5 +198,6 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         map[LOCATION] = location
         map[IMAGE_URL] = station.imageUrl
         startActivityForResult(StationSingleActivity.newInstance(requireActivity(), map), RESULT_CODE)
-        activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)    }
+        activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+    }
 }

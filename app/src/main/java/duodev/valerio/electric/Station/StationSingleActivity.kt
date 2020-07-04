@@ -92,9 +92,9 @@ class StationSingleActivity : AppCompatActivity() {
 
 
     private fun setUpListeners() {
-        backButton.setOnClickListener {
-            replaceFragment(null, R.id.homeContainer, HomeMapFragment.newInstance(), this)
-        }
+//        backButton.setOnClickListener {
+//            replaceFragment(null, R.id.homeContainer, HomeMapFragment.newInstance(), this)
+//        }
         bookNowButton.setOnClickListener {
             replaceFragment(null, R.id.homeContainer, BookingPlugsFragment.newInstance(), this)
         }

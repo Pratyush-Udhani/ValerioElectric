@@ -31,16 +31,6 @@ class HomeMapFragment : Fragment() {
     private var backPressed: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (backPressed + 2000 > System.currentTimeMillis()) {
-                    activity?.finishAffinity()
-                } else {
-                    activity?.toast("Press again to exit")
-                    backPressed = System.currentTimeMillis()
-                }
-            }
-        })
     }
 
     override fun onCreateView(
@@ -66,8 +56,8 @@ class HomeMapFragment : Fragment() {
             replaceFragment(this, R.id.homeContainer, StationListFragment.newInstance())
         }
         stationLayout.setOnClickListener {
-            startActivity(StationSingleActivity.newInstance(requireContext()))
-            activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+//            startActivity(StationSingleActivity.newInstance(requireContext()))
+//            activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
     }
 
