@@ -197,34 +197,24 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         ) {
 
         } else {
-            val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+//            val location =  lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             val locationRequest = LocationRequest()
             locationRequest.interval = 10000
             locationRequest.fastestInterval = 3000
             locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            LocationServices.getFusedLocationProviderClient(requireContext())
-                .requestLocationUpdates(locationRequest, object : LocationCallback(){
-                    override fun onLocationResult(p0: LocationResult?) {
-                        super.onLocationResult(p0)
-                        LocationServices.getFusedLocationProviderClient(requireContext())
-                            .removeLocationUpdates(this)
-                        if (p0 != null && p0.locations.size > 0) {
-                            val latestLocationIndex = p0.locations.size - 1
-                            latitude = p0.locations[latestLocationIndex].latitude
-                            longitude = p0.locations[latestLocationIndex].longitude
-                            stationListViewModel.fetchData().observe(viewLifecycleOwner, Observer {
-                                if (it.isNotEmpty()) {
-                                    log("called$it")
-                                    sortData(it)
-                                }
-                            })
+            LocationServices.getFusedLocationProviderClient(requireContext()).lastLocation.addOnSuccessListener {
+                if (it != null) {
+                    latitude = it.latitude
+                    longitude = it.longitude
+                    stationListViewModel.fetchData().observe(viewLifecycleOwner, Observer {list ->
+                        if (list.isNotEmpty()) {
+                            log("called$list")
+                            sortData(list)
                         }
-                    }
+                    })
+                }
+            }
 
-                    override fun onLocationAvailability(p0: LocationAvailability?) {
-                        super.onLocationAvailability(p0)
-                    }
-                }, Looper.getMainLooper())
 //            longitude = location?.longitude!!
 //            latitude = location?.latitude
         }
