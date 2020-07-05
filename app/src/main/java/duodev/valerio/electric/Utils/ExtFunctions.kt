@@ -23,6 +23,8 @@ fun log(message: String) {
     Log.d("TAG!!!!", message)
 }
 
+fun String.trimString(): String = this.trim()
+
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }

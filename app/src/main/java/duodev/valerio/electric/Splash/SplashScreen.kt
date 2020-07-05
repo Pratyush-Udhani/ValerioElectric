@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Login.LoginActivity
 import duodev.valerio.electric.MainActivity
 import duodev.valerio.electric.R
@@ -31,7 +32,7 @@ class SplashScreen : AppCompatActivity() {
 
         Handler().postDelayed({
             if (account!=null) {
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, HomeActivity::class.java))
                 overridePendingTransition(
                     R.anim.slideleft,
                     R.anim.slideright

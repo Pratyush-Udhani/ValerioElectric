@@ -37,4 +37,21 @@
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+
+    <Button
+        android:id="@+id/logoutButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_solid_blue"
+        android:fontFamily="@font/lato_bold"
+        android:text="Log out"
+        android:textColor="@color/color_white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

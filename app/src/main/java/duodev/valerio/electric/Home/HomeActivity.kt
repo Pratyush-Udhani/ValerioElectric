@@ -1,5 +1,7 @@
 package duodev.valerio.electric.Home
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import duodev.valerio.electric.Bookings.BookingsFragment
@@ -50,5 +52,9 @@ class HomeActivity : AppCompatActivity() {
             }
             false
         }
+    }
+
+    companion object {
+        fun newInstance(context: Context) = Intent(context, HomeActivity::class.java)
     }
 }

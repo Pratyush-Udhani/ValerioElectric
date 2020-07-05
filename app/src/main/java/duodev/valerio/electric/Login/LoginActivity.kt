@@ -1,5 +1,7 @@
 package duodev.valerio.electric.Login
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import duodev.valerio.electric.R
@@ -19,5 +21,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setUpFragments() {
         addFragment(null, R.id.loginContainer, LogInFragment.newInstance(), this)
+    }
+
+    companion object {
+        fun newInstance(context: Context) = Intent(context, LoginActivity::class.java)
     }
 }

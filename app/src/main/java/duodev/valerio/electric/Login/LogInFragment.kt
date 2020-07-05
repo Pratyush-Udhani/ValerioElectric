@@ -2,6 +2,7 @@ package duodev.valerio.electric.Login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +14,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.FirebaseFirestore
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
-import duodev.valerio.electric.Utils.replaceFragment
+import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.pojos.Users
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
 class LogInFragment : Fragment() {
 
+    private val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val pm = PreferenceUtils
     private var backPressed: Long = 0
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private var RC_SIGN_IN = 108
@@ -48,17 +53,11 @@ class LogInFragment : Fragment() {
 
     private fun setListeners() {
         sign_in_button.setOnClickListener {
-            val gso = GoogleSignInOptions.Builder(
-                GoogleSignInOptions.DEFAULT_SIGN_IN
-            )
-                .requestEmail()
-                .requestProfile()
-                .build()
-            mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-            signIn()
+            initiateLogin()
         }
         loginButton.setOnClickListener {
-            startActivity(Intent(requireContext(), HomeActivity::class.java))
+//            startActivity(Intent(requireContext(), HomeActivity::class.java))
+            activity?.toast("Use google login instead")
         }
 
         signUp.setOnClickListener {
@@ -71,32 +70,70 @@ class LogInFragment : Fragment() {
 
     }
 
-    private fun signIn() {
-        val signInIntent = mGoogleSignInClient.signInIntent
-        mGoogleSignInClient.signOut()
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+    private fun initiateLogin() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+
+        val googleSignInClient: GoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+
+        val signInGoogle: Intent = googleSignInClient.signInIntent
+        startActivityForResult(signInGoogle, 100)
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == 100) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleSignInResult(task)
+            Log.d("SIGNUP", "result caode")
         }
     }
 
-    private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
+    private fun handleSignInResult(task: Task<GoogleSignInAccount>?) {
         try {
-            val account = task.getResult(ApiException::class.java)
-            Toast.makeText(requireContext(), "Logged In", Toast.LENGTH_LONG).show()
+            Log.d("SIGNUP", "success")
+            val account: GoogleSignInAccount? = task?.getResult(ApiException::class.java)
+            loader.makeVisible()
+            proceedWithLogin(account = account)
         } catch (e: ApiException) {
-            Toast.makeText(requireContext(), "Invalid Login", Toast.LENGTH_LONG).show()
+            Log.d("SIGNUP", "fail + $e")
+
         }
     }
+
+    private fun proceedWithLogin(account: GoogleSignInAccount?) {
+        var intent: Intent? = null
+        Log.d("SIGNUP", "here")
+        firebaseFirestore.collection(USERS).document(account?.email.toString().trim()).get()
+            .addOnSuccessListener {
+        Log.d("SIGNUP", "SUCCESS")
+                pm.name = account?.givenName.toString()
+                pm.email = account?.email.toString()
+                pm.account = true
+                if (it.exists()) {
+                    pm.setUser(convertToPojo(it.data!!, Users::class.java))
+                    intent = HomeActivity.newInstance(requireContext())
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+                } else {
+        Log.d("SIGNUP", "NEW")
+                    firebaseFirestore.collection(USERS).document(account?.email.toString().trim()).set(pm.getUser())
+                    loader.makeGone()
+                    intent = HomeActivity.newInstance(requireContext())
+                    startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+                }
+            }
+    }
+
+    private fun changeFragment() {
+        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+        fragmentTransaction?.add(R.id.loginContainer, SignUpFragment.newInstance())
+        fragmentTransaction?.commit()
+    }
+
     companion object {
         fun newInstance() = LogInFragment()
     }
