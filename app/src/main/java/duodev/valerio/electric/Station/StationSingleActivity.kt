@@ -37,9 +37,15 @@ class StationSingleActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        setUpUI()
         mapView.onResume()
         setUpMap()
         setUpListeners()
+    }
+
+    private fun setUpUI() {
+        stationName.text = station[StationListFragment.ADDRESS].toString()
+        stationAddress.text = station[StationListFragment.LOCATION].toString()
     }
 
 

@@ -52,7 +52,7 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
                 Ports(
                     portImageRes = R.drawable.ic_ccs_icon_white,
                     portName = "CCS$i",
-                    portCost = "askkjcbajksc"
+                    portCost = "Rs. 5.56 per hour"
                 )
             )
         }

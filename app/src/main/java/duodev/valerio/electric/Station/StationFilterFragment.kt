@@ -47,7 +47,7 @@ class StationFilterFragment : Fragment() {
             )
         }
         companyList.setOnClickListener {
-            addFragment(this, R.id.homeContainer, StationCompanyFragment.newInstance())
+            addFragment(this, R.id.homeContainer, StationCompanyFragment.newInstance(), null, true)
         }
     }
 

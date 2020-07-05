@@ -7,7 +7,7 @@
     
     <androidx.cardview.widget.CardView
         android:id="@+id/plugCard"
-        android:layout_width="100dp"
+        android:layout_width="125dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="2:3"
         android:elevation="0dp"

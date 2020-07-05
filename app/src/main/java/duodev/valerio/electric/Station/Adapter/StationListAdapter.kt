@@ -49,8 +49,8 @@ class StationListAdapter(private val list: MutableList<Station>, private val lis
 
         fun bindItems(item: Station) {
 
-            stationName.text = item.stationName
-            stationAddress.text = item.stationAddress
+            stationName.text = item.stationAddress
+            stationAddress.text = item.stationLocation
 
             cardView.setOnClickListener {
                 Log.d("CLICKED", "clicked adaptre")

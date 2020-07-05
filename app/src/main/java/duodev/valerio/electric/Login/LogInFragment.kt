@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -17,7 +16,6 @@ import com.google.android.gms.tasks.Task
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.replaceFragment
-import duodev.valerio.electric.Utils.toast
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
 class LogInFragment : Fragment() {

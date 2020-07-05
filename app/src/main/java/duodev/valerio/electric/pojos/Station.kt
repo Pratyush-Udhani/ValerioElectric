@@ -9,8 +9,6 @@ import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class Station (
-    @SerializedName("stationName")
-    val stationName: String,
 
     @SerializedName("stationLocation")
     val stationLocation: String,
