@@ -1,29 +1,21 @@
 {
   "project_info": {
-    "project_number": "692215937189",
-    "firebase_url": "https://valerio-electric-9b26f.firebaseio.com",
-    "project_id": "valerio-electric-9b26f",
-    "storage_bucket": "valerio-electric-9b26f.appspot.com"
+    "project_number": "1034886524484",
+    "firebase_url": "https://valerio-ac7ff.firebaseio.com",
+    "project_id": "valerio-ac7ff",
+    "storage_bucket": "valerio-ac7ff.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:692215937189:android:8704a6c7a2f12d4ad5354c",
+        "mobilesdk_app_id": "1:1034886524484:android:4fdd97b09eb91de66f9611",
         "android_client_info": {
           "package_name": "duodev.valerio.electric"
         }
       },
       "oauth_client": [
         {
-          "client_id": "692215937189-nho60i2ijitvp2hsv6d9gi3ft4hrapkd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "duodev.valerio.electric",
-            "certificate_hash": "5aaf12b9664da0de173626badafa802ce0720860"
-          }
-        },
-        {
-          "client_id": "692215937189-dcjvatol4boem1o3brsjfru9elc2ula1.apps.googleusercontent.com",
+          "client_id": "1034886524484-r8ing67stmboho9km9ric9mupgnq0t6e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "duodev.valerio.electric",
@@ -31,20 +23,20 @@
           }
         },
         {
-          "client_id": "692215937189-qigm7hdbeeq8m189ta47rjhvpm2bqop5.apps.googleusercontent.com",
+          "client_id": "1034886524484-dndfg0f02n920rvs94lqrub87000l4l9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBGntEV8UZNNh9fgmkVz7M5MkFEKMFHc8A"
+          "current_key": "AIzaSyB8DetbZ6gZKkvHTLnlaJSkif8uTmgHAwI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "692215937189-qigm7hdbeeq8m189ta47rjhvpm2bqop5.apps.googleusercontent.com",
+              "client_id": "1034886524484-dndfg0f02n920rvs94lqrub87000l4l9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

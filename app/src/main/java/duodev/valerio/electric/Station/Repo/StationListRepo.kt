@@ -17,7 +17,9 @@ class StationListRepo {
 
     fun fetchData(): LiveData<List<Station>> {
         val data = MutableLiveData<List<Station>>()
+        firestore.collection("Stations").get().addOnCompleteListener { log("${it.result?.documents}") }
         firestore.collection("Stations").get().addOnSuccessListener {
+            log("${it.documents}")
                 for (i in 0 until it.documents.size) {
                     log(it.documents[i].data!!.toString())
                     stationList.add(convertToPojo(it.documents[i].data!!, Station::class.java))
@@ -25,7 +27,7 @@ class StationListRepo {
                 data.value = stationList
         }
 
-        data.value = stationList
+   //     data.value = stationList
         return data
     }
 

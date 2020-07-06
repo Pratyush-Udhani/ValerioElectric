@@ -106,7 +106,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
 //        }
         filterButton.setOnClickListener {
             addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance(), null, true)
-//            setUpdb()
+           // setUpdb()
         }
 
         permissionText.setOnClickListener {
@@ -171,8 +171,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermissions(
                 arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE), 1)
@@ -183,8 +182,6 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     }
 
     private fun fetchStations() {
-        val lm =
-            (activity as HomeActivity).getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
@@ -203,7 +200,9 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
             locationRequest.fastestInterval = 3000
             locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
             LocationServices.getFusedLocationProviderClient(requireContext()).lastLocation.addOnSuccessListener {
+                log("success")
                 if (it != null) {
+                    log("not null")
                     latitude = it.latitude
                     longitude = it.longitude
                     stationListViewModel.fetchData().observe(viewLifecycleOwner, Observer {list ->
