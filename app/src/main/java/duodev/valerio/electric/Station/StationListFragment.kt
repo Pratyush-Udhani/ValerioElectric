@@ -234,6 +234,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
             } else {
                 requireContext().toast("Please grant permissions")
                 permissionText.makeVisible()
+                loader.makeGone()
             }
         }
     }
