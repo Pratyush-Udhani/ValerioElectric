@@ -17,14 +17,16 @@ import com.google.android.gms.maps.model.MarkerOptions
 import duodev.valerio.electric.Bookings.BookingPlugsFragment
 import duodev.valerio.electric.Home.HomeMapFragment
 import duodev.valerio.electric.R
-import duodev.valerio.electric.Utils.log
-import duodev.valerio.electric.Utils.replaceFragment
+import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.pojos.Connector
+import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.activity_station_single.*
 
 class StationSingleActivity : AppCompatActivity() {
 
     private lateinit var googleMap: GoogleMap
     private lateinit var station: HashMap<String, Any>
+    private lateinit var distance: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class StationSingleActivity : AppCompatActivity() {
         mapView.onCreate(savedInstanceState)
         intent?.let {
             station = it.getSerializableExtra(FLAG) as HashMap<String, Any>
+            distance = it.getStringExtra(DIST)!!
         }
         init()
     }
@@ -46,6 +49,18 @@ class StationSingleActivity : AppCompatActivity() {
     private fun setUpUI() {
         stationName.text = station[StationListFragment.ADDRESS].toString()
         stationAddress.text = station[StationListFragment.LOCATION].toString()
+        distanceLabel.text = "$distance km"
+
+        val list = station[StationListFragment.CONNECTOR] as List<Connector>
+
+        for (connector in list) {
+            when (connector.type) {
+                TYPE_ONE -> typeOneLayoutOut.makeVisible()
+                TYPE_TWO -> typeTwoLayoutOut.makeVisible()
+                CHAD -> chadLayoutOut.makeVisible()
+                CCS -> ccsLayoutOut.makeVisible()
+            }
+        }
     }
 
 
@@ -115,9 +130,11 @@ class StationSingleActivity : AppCompatActivity() {
     companion object {
 
         const val FLAG = "flag"
+        const val DIST = "dist"
 
-        fun newInstance(context: Context, map: HashMap<String, Any>) = Intent(context, StationSingleActivity::class.java).apply {
+        fun newInstance(context: Context, map: HashMap<String, Any>, dist: String) = Intent(context, StationSingleActivity::class.java).apply {
             putExtra(FLAG, map)
+            putExtra(DIST, dist)
         }
     }
 }

@@ -48,14 +48,14 @@ object StationDef {
                         name = "NDMC",
                         imageUri = "as"
                     ),
-                    connectorType = arrayListOf(
+                    connectorType = listOf(
                         Connector(
-                            type = "Type 2"
+                            type = TYPE_TWO,
+                            price = "Rs. 5.56 per hour"
                         )
                     )
                 )
             )
-
         }
 
         return list
