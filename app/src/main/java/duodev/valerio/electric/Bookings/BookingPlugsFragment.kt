@@ -15,6 +15,7 @@ import duodev.valerio.electric.Station.StationSingleFragment
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.Utils.toast
 import duodev.valerio.electric.pojos.Ports
+import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.fragment_booking_plugs.*
 
 class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
@@ -67,7 +68,7 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
     }
 
     companion object {
-        fun newInstance(string: String) = BookingPlugsFragment()
+        fun newInstance(station: Station) = BookingPlugsFragment()
         fun newInstance() = BookingPlugsFragment()
     }
 

@@ -6,6 +6,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 fun View.makeGone() {
     visibility = View.GONE
@@ -72,3 +74,20 @@ fun addFragment(fromFragment: Fragment?, container: Int, fragment: Fragment, act
         }
     }
 }
+
+fun miles2km (distInMiles: Double): Int {
+    return BigDecimal(distInMiles * 1.60934).setScale(2, RoundingMode.HALF_EVEN).toInt()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

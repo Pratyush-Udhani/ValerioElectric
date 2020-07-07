@@ -31,7 +31,7 @@ import kotlin.math.sin
 
 class StationListFragment : Fragment(), StationListAdapter.OnClick {
 
-    private val stationAdapter by lazy { StationListAdapter(mutableListOf(), this) }
+    private val stationAdapter by lazy { StationListAdapter(mutableMapOf<Station, String>() as LinkedHashMap<Station, String>, this) }
     private val stationListViewModel = StationListViewModel()
     private var stationList: MutableList<Station> = mutableListOf()
     private var longitude: Double? = 0.0
@@ -84,6 +84,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
 
     private fun sortData(list: List<Station>) {
         //   getLocation()
+        val sortedMap: LinkedHashMap<Station, String> = mutableMapOf<Station, String>() as LinkedHashMap<Station, String>
         val sortedList: MutableList<Station> = list as MutableList<Station>
         for (i in list.indices) {
             for (j in 0 until list.size - i -1) {
@@ -96,8 +97,13 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
                 }
             }
         }
+        for (element in sortedList) {
+
+            sortedMap[element] =
+                distance(latitude!!, longitude!!, element.location.latitude, element.location.longitude).toString()
+        }
         loader.makeGone()
-        stationAdapter.addData(sortedList)
+        stationAdapter.addData(sortedMap)
     }
 
     private fun setUpListeners() {
@@ -106,7 +112,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
 //        }
         filterButton.setOnClickListener {
             addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance(), null, true)
-           // setUpdb()
+//            setUpdb()
         }
 
         permissionText.setOnClickListener {
@@ -257,12 +263,12 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         fun newInstance() = StationListFragment()
     }
 
-    override fun onStationClicked(station: Station) {
+    override fun onStationClicked(station: Station, dist: String) {
         Log.d("CLICKED", "clicked")
 
         val map: HashMap<String, Any> = hashMapOf()
         map[OWNER] = station.ownerCompany
-        //   map[CONNECTOR] = station.connectorType
+        map[CONNECTOR] = station.connectorType
         map[ADDRESS] = station.stationAddress
         map[PROVIDER] = station.serviceProvider
         map[LATITUDE] = station.location.latitude
@@ -272,7 +278,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         map[IMAGE_URL] = station.imageUrl
         log("called")
         startActivityForResult(
-            StationSingleActivity.newInstance(requireContext(), map),
+            StationSingleActivity.newInstance(requireContext(), map, dist),
             RESULT_CODE
         )
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
