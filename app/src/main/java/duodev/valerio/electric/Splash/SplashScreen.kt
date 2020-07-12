@@ -10,11 +10,13 @@ import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Login.LoginActivity
 import duodev.valerio.electric.MainActivity
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.PreferenceUtils
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 
 class SplashScreen : AppCompatActivity() {
 
     private val SPLASH_SCREEN_TIMEOUT: Long = 3000
+    private val pm = PreferenceUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,7 @@ class SplashScreen : AppCompatActivity() {
         val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
 
         Handler().postDelayed({
-            if (account!=null) {
+            if (account!=null || pm.account) {
                 startActivity(Intent(this, HomeActivity::class.java))
                 overridePendingTransition(
                     R.anim.slideleft,

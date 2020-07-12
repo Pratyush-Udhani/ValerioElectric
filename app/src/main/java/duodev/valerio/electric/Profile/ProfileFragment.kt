@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import duodev.valerio.electric.Login.LoginActivity
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.PreferenceUtils
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
-    private var backPressed: Long = 0
+    private val pm = PreferenceUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +46,22 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initiateSignOut() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
+        val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(requireContext())
 
-        val googleSignInClient: GoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-        googleSignInClient.signOut().addOnSuccessListener {
+        if (account != null) {
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+
+            val googleSignInClient: GoogleSignInClient =
+                GoogleSignIn.getClient(requireContext(), gso)
+            googleSignInClient.signOut().addOnSuccessListener {
+                startActivity(LoginActivity.newInstance(requireContext()))
+                pm.resetUser()
+            }
+        } else {
             startActivity(LoginActivity.newInstance(requireContext()))
+            pm.resetUser()
         }
     }
 

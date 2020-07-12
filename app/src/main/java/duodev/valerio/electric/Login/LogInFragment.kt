@@ -6,8 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -25,9 +26,9 @@ class LogInFragment : Fragment() {
 
     private val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val pm = PreferenceUtils
-    private var backPressed: Long = 0
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private var RC_SIGN_IN = 108
+    private val isAuth = MutableLiveData<Boolean>(false)
+    private val noPassword = MutableLiveData<Boolean>(false)
+    private val noEmail = MutableLiveData<Boolean>(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,6 @@ class LogInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_log_in, container, false)
     }
 
@@ -48,7 +48,53 @@ class LogInFragment : Fragment() {
     }
 
     private fun init() {
+        setUpObservers()
         setListeners()
+    }
+
+    private fun setUpObservers() {
+        isAuth.observe(this, Observer {
+            if (isAuth.value!!) {
+                startActivity(Intent(requireContext(), HomeActivity::class.java))
+                isAuth.value = false
+            }
+        })
+
+        noPassword.observe(this, Observer {
+            if (noPassword.value!!) {
+                activity?.toast("Invalid password")
+            }
+        })
+
+        noEmail.observe(this, Observer {
+            if (noEmail.value!!) {
+                activity?.toast("No user found")
+            }
+        })
+    }
+
+    private fun checkAuth(email: String, password: String) {
+        isAuth.value = false
+        noPassword.value = false
+        noEmail.value = false
+        val hash = generateHash(password)
+
+        firebaseFirestore.collection(USERS).document(email).get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    if (it.result!!.exists() && it.result!! != null) {
+                        if (it.result!!.get("hash") == hash) {
+                            isAuth.value = true
+                            pm.setUser(convertToPojo(it.result!!.data!!, Users::class.java))
+                        } else {
+                            noPassword.value = true
+                        }
+                    } else {
+                        noEmail.value = true
+                    }
+                }
+            }
+
     }
 
     private fun setListeners() {
@@ -56,8 +102,12 @@ class LogInFragment : Fragment() {
             initiateLogin()
         }
         loginButton.setOnClickListener {
-//            startActivity(Intent(requireContext(), HomeActivity::class.java))
-            activity?.toast("Use google login instead")
+            if (userEmail.text.isNotEmpty() && userPassword.text.isNotEmpty()) {
+                checkAuth(userEmail.text.toString(), userPassword.text.toString())
+                pm.account = true
+            } else {
+                activity?.toast("Enter details please")
+            }
         }
 
         signUp.setOnClickListener {
@@ -108,7 +158,7 @@ class LogInFragment : Fragment() {
         Log.d("SIGNUP", "here")
         firebaseFirestore.collection(USERS).document(account?.email.toString().trim()).get()
             .addOnSuccessListener {
-        Log.d("SIGNUP", "SUCCESS")
+                Log.d("SIGNUP", "SUCCESS")
                 pm.name = account?.givenName.toString()
                 pm.email = account?.email.toString()
                 pm.account = true
@@ -118,20 +168,15 @@ class LogInFragment : Fragment() {
                     startActivity(intent)
                     requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
                 } else {
-        Log.d("SIGNUP", "NEW")
-                    firebaseFirestore.collection(USERS).document(account?.email.toString().trim()).set(pm.getUser())
+                    Log.d("SIGNUP", "NEW")
+                    firebaseFirestore.collection(USERS).document(account?.email.toString().trim())
+                        .set(pm.getUser())
                     loader.makeGone()
                     intent = HomeActivity.newInstance(requireContext())
                     startActivity(intent)
                     requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
                 }
             }
-    }
-
-    private fun changeFragment() {
-        val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
-        fragmentTransaction?.add(R.id.loginContainer, SignUpFragment.newInstance())
-        fragmentTransaction?.commit()
     }
 
     companion object {

@@ -59,7 +59,7 @@
                 app:startIconDrawable="@drawable/ic_mail_icon"
                 app:startIconTint="@color/main_blue">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:id="@+id/userEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                 app:startIconDrawable="@drawable/ic_password_key_icon"
                 app:startIconTint="@color/main_blue">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:id="@+id/userPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

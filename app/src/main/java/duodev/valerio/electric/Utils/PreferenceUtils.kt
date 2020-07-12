@@ -40,6 +40,7 @@ object PreferenceUtils {
             pm.edit().putString(MOBILE, value).apply()
         }
 
+
     fun getUser(): Users {
         return Users()
     }
@@ -49,6 +50,14 @@ object PreferenceUtils {
         pm.name = users.name?.trimString()!!
         pm.email = users.email?.trimString()!!
         pm.mobile = users.address?.trimString()!!
+    }
+
+    fun resetUser() {
+        val pm = PreferenceUtils
+        pm.name = ""
+        pm.email = ""
+        pm.mobile = ""
+        pm.account = false
     }
 
 }

@@ -49,7 +49,7 @@
                 app:startIconDrawable="@drawable/ic_user_logo"
                 app:startIconTint="@color/main_blue">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                 app:startIconDrawable="@drawable/ic_mail_icon"
                 app:startIconTint="@color/main_blue">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:id="@+id/userEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -90,6 +90,67 @@
                     android:paddingHorizontal="16dp"
                     android:textColor="#000000"
                     android:textSize="20sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userPhoneLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_white_soft_box"
+                android:elevation="5dp"
+                app:hintEnabled="false"
+                app:hintTextColor="@color/main_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userEmailLayout"
+                app:startIconDrawable="@drawable/ic_phone_logo"
+                app:startIconTint="@color/main_blue">
+
+                <EditText
+                    android:id="@+id/userPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:fontFamily="@font/lato"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userAddressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_white_soft_box"
+                android:elevation="5dp"
+                app:hintEnabled="false"
+                app:hintTextColor="@color/main_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userPhoneLayout"
+                app:startIconDrawable="@drawable/ic_home_icon"
+                app:startIconTint="@color/main_blue">
+
+                <EditText
+                    android:id="@+id/userAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:lines="3"
+                    android:fontFamily="@font/lato"
+                    android:hint="Address"
+                    android:inputType="textMultiLine"
+                    android:paddingHorizontal="16dp"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -105,11 +166,11 @@
                 app:hintTextColor="@color/main_blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/userEmailLayout"
+                app:layout_constraintTop_toBottomOf="@id/userAddressLayout"
                 app:startIconDrawable="@drawable/ic_password_key_icon"
                 app:startIconTint="@color/main_blue">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:id="@+id/userPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,7 +201,7 @@
                 app:startIconDrawable="@drawable/ic_password_key_icon"
                 app:startIconTint="@color/main_blue">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <EditText
                     android:id="@+id/retypePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -153,6 +214,18 @@
                     android:textSize="20sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/passwordMatchText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:textColor="@color/main_blue"
+                android:fontFamily="@font/lato"
+                android:gravity="start"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/retypePasswordLayout"
+                android:layout_marginTop="10dp"
+                android:text="Passwords do not match"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/signUpCard"
@@ -164,7 +237,7 @@
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/retypePasswordLayout">
+                app:layout_constraintTop_toBottomOf="@id/passwordMatchText">
 
                 <Button
                     android:id="@+id/signUpButton"

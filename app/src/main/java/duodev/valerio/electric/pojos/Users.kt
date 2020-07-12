@@ -23,6 +23,8 @@ data class Users (
     val address: String? = "",
 
     @SerializedName("imageUrl")
-    val imageUrl: String? = ""
+    val imageUrl: String? = "",
 
+    @SerializedName("hash")
+    val hash: String? = ""
 ) : Parcelable
