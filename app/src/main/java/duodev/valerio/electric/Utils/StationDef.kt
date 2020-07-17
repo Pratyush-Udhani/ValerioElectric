@@ -32,31 +32,31 @@ object StationDef {
             77.219663
         )
 
-        for (i in 0..4) {
-
-
-            list.add(
-                Station(
-                    stationAddress = listOfNames[i],
-                    location = GeoPoint(listOfLats[i], listOnLongs[i]),
-                    stationLocation = "Delhi",
-                    numberOfStations = 1,
-                    serviceProvider = "Delta Electronics",
-                    imageUrl = "asc",
-                    stationId = "",
-                    ownerCompany = Company(
-                        name = "NDMC",
-                        imageUri = "as"
-                    ),
-                    connectorType = listOf(
-                        Connector(
-                            type = TYPE_TWO,
-                            price = "Rs. 5.56 per hour"
-                        )
-                    )
-                )
-            )
-        }
+//        for (i in 0..4) {
+//
+//
+//            list.add(
+//                Station(
+//                    stationAddress = listOfNames[i],
+//                    location = GeoPoint(listOfLats[i], listOnLongs[i]),
+//                    stationLocation = "Delhi",
+//                    numberOfStations = 1,
+//                    serviceProvider = "Delta Electronics",
+//                    imageUrl = "asc",
+//                    stationId = "",
+//                    ownerCompany = Company(
+//                        name = "NDMC",
+//                        imageUri = "as"
+//                    ),
+//                    connectorType = listOf(
+//                        Connector(
+//                            type = TYPE_TWO,
+//                            price = "Rs. 5.56 per hour"
+//                        )
+//                    )
+//                )
+//            )
+//        }
 
         return list
     }

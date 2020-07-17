@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_outlined_blue"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/headingText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/lato_bold"
+            android:gravity="center"
+            android:text="Add Stations"
+            android:textColor="@color/main_blue"
+            android:textSize="22sp" />
+
+        <EditText
+            android:id="@+id/stationAddress"
+            android:layout_width="match_parent"
+            android:maxLines="3"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_white_soft_box"
+            android:elevation="5dp"
+            android:hint="enter station address"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/color_black"
+            android:textColorHint="@color/gray"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/stationCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_white_soft_box"
+            android:elevation="5dp"
+            android:hint="enter station city"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/color_black"
+            android:textColorHint="@color/gray"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/stationSlots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_white_soft_box"
+            android:elevation="5dp"
+            android:hint="enter number of slots"
+            android:inputType="number"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/color_black"
+            android:textColorHint="@color/gray"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/companyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_white_soft_box"
+            android:elevation="5dp"
+            android:hint="enter owned company name"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/color_black"
+            android:textColorHint="@color/gray"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/serviceProvider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_white_soft_box"
+            android:elevation="5dp"
+            android:hint="enter service provider"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/color_black"
+            android:textColorHint="@color/gray"
+            android:textSize="16sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:elevation="0dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/stationLat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_soft_box"
+                android:digits="01234567890.-"
+                android:elevation="5dp"
+                android:fontFamily="@font/lato"
+                android:hint="enter latitudes"
+                android:maxLines="1"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="8dp"
+                android:textColor="@color/color_black"
+                android:textColorHint="@color/gray"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/stationLong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_white_soft_box"
+                android:digits="01234567890.-"
+                android:elevation="5dp"
+                android:fontFamily="@font/lato"
+                android:hint="enter longitudes"
+                android:maxLines="1"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="8dp"
+                android:textColor="@color/color_black"
+                android:textColorHint="@color/gray"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/companyImageLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/removeCompanyImageButton"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:elevation="1dp"
+                    android:src="@drawable/ic_cancel_icon"
+                    android:tint="@color/main_blue"
+                    app:layout_constraintBottom_toTopOf="@id/companyImage"
+                    app:layout_constraintEnd_toEndOf="@id/companyImage"
+                    app:layout_constraintStart_toEndOf="@id/companyImage"
+                    app:layout_constraintTop_toTopOf="@id/companyImage" />
+
+                <ImageView
+                    android:id="@+id/companyImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_launcher_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/stationImageLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/removeStationImageButton"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:elevation="1dp"
+                    android:src="@drawable/ic_cancel_icon"
+                    android:tint="@color/main_blue"
+                    app:layout_constraintBottom_toTopOf="@id/stationImage"
+                    app:layout_constraintEnd_toEndOf="@id/stationImage"
+                    app:layout_constraintStart_toEndOf="@id/stationImage"
+                    app:layout_constraintTop_toTopOf="@id/stationImage" />
+
+                <ImageView
+                    android:id="@+id/stationImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/ic_launcher_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/uploadStationImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_outlined_blue"
+                android:drawableStart="@drawable/ic_upload_pin"
+                android:drawableTint="@color/main_blue"
+                android:fontFamily="@font/lato"
+                android:paddingHorizontal="5dp"
+                android:text="upload station image"
+                android:textAllCaps="false"
+                android:textColor="@color/main_blue"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/uploadCompanyImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_outlined_blue"
+                android:drawableStart="@drawable/ic_upload_pin"
+                android:drawableTint="@color/main_blue"
+                android:fontFamily="@font/lato"
+                android:paddingHorizontal="5dp"
+                android:text="upload company image"
+                android:textAllCaps="false"
+                android:textColor="@color/main_blue"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/ownerGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/color_black"
+            android:hapticFeedbackEnabled="true"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RadioButton
+                android:id="@+id/privateOwner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="Private Owner"
+                android:textSize="13sp" />
+
+            <RadioButton
+                android:id="@+id/publicOwner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:text="Public Owner"
+                android:textSize="13sp" />
+        </RadioGroup>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/addPlugButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:paddingHorizontal="8dp"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_outlined_blue"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="10dp"
+                    android:src="@drawable/ic_add_icon"
+                    android:tint="@color/main_blue" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingVertical="8dp"
+                    android:paddingEnd="20dp"
+                    android:text="Add plugs"
+                    android:textColor="@color/color_black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/plugRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:nestedScrollingEnabled="true"
+            android:overScrollMode="never"
+            android:visibility="visible"
+            tools:listitem="@layout/card_added_plug" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/uploadStationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="20dp"
+            android:paddingHorizontal="8dp"
+            app:cardCornerRadius="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="@color/main_blue"
+                    android:paddingVertical="8dp"
+                    android:text="Upload Station"
+                    android:textColor="@color/color_white"
+                    android:textSize="18sp" />
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

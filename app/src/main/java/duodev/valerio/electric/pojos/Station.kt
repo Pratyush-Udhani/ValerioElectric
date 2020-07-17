@@ -35,6 +35,9 @@ data class Station (
     val imageUrl: String,
 
     @SerializedName("stationId")
-    val stationId: String
+    val stationId: String,
+
+    @SerializedName("ownership")
+    val ownership: String
 
 ): Parcelable

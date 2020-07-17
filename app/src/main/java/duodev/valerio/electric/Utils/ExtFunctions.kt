@@ -6,6 +6,8 @@ import android.hardware.input.InputManager
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
@@ -29,8 +31,6 @@ fun View.makeVisible() {
 fun log(message: String) {
     Log.d("TAG!!!!", message)
 }
-
-fun String.trimString(): String = this.trim()
 
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -80,7 +80,7 @@ fun addFragment(fromFragment: Fragment?, container: Int, fragment: Fragment, act
     }
 }
 
-fun hideKeyboard(context: Context, view: View) {
+fun closeKeyboard(context: Context, view: View) {
     val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(view.windowToken, 0)
     view.clearFocus()
@@ -89,6 +89,12 @@ fun hideKeyboard(context: Context, view: View) {
 fun miles2km (distInMiles: Double): Int {
     return BigDecimal(distInMiles * 1.60934).setScale(2, RoundingMode.HALF_EVEN).toInt()
 }
+
+fun TextView.trimString(): String = text.toString().trim()
+
+fun EditText.trimString(): String = text.toString().trim()
+
+fun String.trimString(): String = this.trim()
 
 fun generateHash(password: String): String {
     val bytes = password.toByteArray()

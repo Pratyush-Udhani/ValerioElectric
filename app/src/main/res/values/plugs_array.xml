@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="plugs">
+        <item>CHAdeMO – DC</item>
+        <item>CCS – DC</item>
+        <item>Type 2 – 43kw AC</item>
+        <item>Type 2 – 22kw AC</item>
+        <item>Type 1 – 7kw AC</item>
+        <item>IEC connector</item>
+        <item>16A plug</item>
+    </string-array>
+</resources>

@@ -52,7 +52,7 @@ class SignUpFragment : Fragment() {
 
         userPhone.addTextChangedListener {
             if (userPhone.text.length == 10) {
-                hideKeyboard(requireContext(), userPhone)
+                closeKeyboard(requireContext(), userPhone)
             }
         }
     }
