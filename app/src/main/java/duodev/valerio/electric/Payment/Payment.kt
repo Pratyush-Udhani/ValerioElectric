@@ -21,7 +21,6 @@ import java.util.*
 class Payment : AppCompatActivity() {
 
     private var pm = PreferenceUtils
-    private lateinit var firestoreFirebase: FirebaseFirestore
     private lateinit var booking: Bookings
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +31,6 @@ class Payment : AppCompatActivity() {
             booking.station = it.getSerializableExtra("station") as Station
             booking.plugType = it.getStringExtra("port") as String
             booking.time = it.getSerializableExtra("date") as Date
-            booking.id = booking.station.stationId
         }
         init()
 
@@ -80,11 +78,13 @@ class Payment : AppCompatActivity() {
     }
 
     private fun uploadToFirebase() {
-        firestoreFirebase = FirebaseFirestore.getInstance()
-
+        var firestoreFirebase = FirebaseFirestore.getInstance()
+        var id = firestoreFirebase.collection("Users").document(pm.email).collection("Bookings").document().id
+        booking.id = id
         firestoreFirebase.collection("Users").document(pm.email)
             .collection("Bookings")
-            .add(booking)
+            .document(id)
+            .set(booking)
             .addOnSuccessListener {
                 log("Booking added Successfully")
             }
