@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.StationSingleFragment
+import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.Utils.toast
+import duodev.valerio.electric.pojos.Ports
+import duodev.valerio.electric.pojos.Station
 
 class BookingSlotFragment : Fragment() {
 
@@ -18,7 +21,7 @@ class BookingSlotFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            log(it.toString())
         }
     }
 
@@ -30,6 +33,7 @@ class BookingSlotFragment : Fragment() {
     }
 
     companion object {
+        fun newInstance(station: Station,plug: Ports) = BookingSlotFragment()
         fun newInstance() = BookingSlotFragment()
     }
 }

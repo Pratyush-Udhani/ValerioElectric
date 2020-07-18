@@ -41,7 +41,7 @@ class StationSingleFragment : Fragment() {
 //            replaceFragment(this, R.id.homeContainer, HomeMapFragment.newInstance())
 //        }
         bookNowButton.setOnClickListener {
-            replaceFragment(this, R.id.homeContainer, BookingPlugsFragment.newInstance())
+            replaceFragment(this, R.id.homeContainer, BookingPlugsFragment.newInstance() )
         }
     }
 

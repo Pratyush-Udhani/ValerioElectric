@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="415dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/heading_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:paddingStart="5dp"
+                android:text="Payment"
+                android:textColor="@android:color/black"
+                android:textSize="30sp" />
+
+            <LinearLayout
+                android:id="@+id/payment_body_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+
+                <RadioGroup
+                    android:id="@+id/payment_radio_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/payment_debit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Debit Card" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_debit_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipToPadding="false"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="10dp"
+
+                            android:orientation="horizontal"
+                            android:textAlignment="viewStart">
+
+                            <ImageView
+                                android:id="@+id/iconVisa"
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_visa" />
+
+                            <ImageView
+                                android:id="@+id/iconMaestro"
+                                android:layout_width="2dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_maestro" />
+
+                            <ImageView
+                                android:id="@+id/iconDiscover"
+                                android:layout_width="10dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_discover" />
+
+                             <ImageView
+                                android:id="@+id/iconRupay"
+                                android:layout_width="10dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:srcCompat="@mipmap/rupay" />
+
+                        </LinearLayout>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/payment_debit_cardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:elevation="8dp"
+                            android:padding="10dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="10dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@android:color/white"
+                                android:padding="20dp"
+                                android:paddingBottom="20dp">
+
+                                <TextView
+                                    android:id="@+id/textViewCVV"
+                                    android:layout_width="111dp"
+                                    android:layout_height="37dp"
+                                    android:layout_marginStart="7dp"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="5dp"
+                                    android:text="CVV"
+                                    app:layout_constraintStart_toEndOf="@id/editTextExpiryDate"
+                                    app:layout_constraintTop_toBottomOf="@+id/editTextCardnum" />
+
+                                <TextView
+                                    android:id="@+id/textViewCardnum"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="34dp"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="5dp"
+                                    android:text="Enter card no."
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <EditText
+                                    android:id="@+id/editTextCardnum"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="39dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_input_soft_box"
+                                    android:ems="10"
+                                    android:hint="4567-56-76-56"
+                                    android:inputType="number"
+                                    android:padding="7dp"
+                                    app:layout_constraintStart_toStartOf="@+id/textViewCardnum"
+                                    app:layout_constraintTop_toBottomOf="@+id/textViewCardnum" />
+
+                                <TextView
+                                    android:id="@+id/textViewExpiryDate"
+                                    android:layout_width="111dp"
+                                    android:layout_height="37dp"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="5dp"
+                                    android:text="Expiry date"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/editTextCardnum" />
+
+                                <EditText
+                                    android:id="@+id/editTextExpiryDate"
+                                    android:layout_width="150dp"
+                                    android:layout_height="45dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_input_soft_box"
+                                    android:ems="10"
+                                    android:hint="4567-56-76-56"
+                                    android:inputType="date"
+                                    android:padding="7dp"
+                                    app:layout_constraintStart_toStartOf="@+id/textViewExpiryDate"
+                                    app:layout_constraintTop_toBottomOf="@+id/textViewExpiryDate" />
+
+                                <EditText
+                                    android:id="@+id/editTextCVV"
+                                    android:layout_width="150dp"
+                                    android:layout_height="45dp"
+                                    android:layout_marginEnd="2dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_input_soft_box"
+                                    android:ems="10"
+                                    android:hint="4567-56-76-56"
+                                    android:inputType="number"
+                                    android:maxLength="3"
+                                    android:padding="7dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="@+id/textViewCVV"
+                                    app:layout_constraintTop_toBottomOf="@+id/textViewCVV" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="Payment details will be saved to make future payments faster"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/payment_debit_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/button_solid_blue"
+                            android:text="Pay"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white" />
+
+                    </LinearLayout>
+
+                    <RadioButton
+                        android:id="@+id/payment_credit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Credit Card" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_credit_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="10dp"
+
+                            android:orientation="horizontal"
+                            android:textAlignment="viewStart">
+
+                            <ImageView
+                                android:id="@+id/iconVisa1"
+                                android:layout_width="2dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_visa" />
+
+                            <ImageView
+                                android:id="@+id/iconMaestro1"
+                                android:layout_width="2dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_maestro" />
+
+                            <ImageView
+                                android:id="@+id/iconDiscover1"
+                                android:layout_width="10dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_discover" />
+
+                            <ImageView
+                                android:id="@+id/iconRupay1"
+                                android:layout_width="10dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                app:srcCompat="@mipmap/rupay" />
+
+                        </LinearLayout>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/payment_credit_cardView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:elevation="8dp"
+                            android:padding="10dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="10dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@android:color/white"
+                                android:padding="20dp"
+                                android:paddingBottom="20dp">
+
+                                <TextView
+                                    android:id="@+id/textViewCVV"
+                                    android:layout_width="111dp"
+                                    android:layout_height="37dp"
+                                    android:layout_marginStart="7dp"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="5dp"
+                                    android:text="CVV"
+                                    app:layout_constraintStart_toEndOf="@id/editTextExpiryDate"
+                                    app:layout_constraintTop_toBottomOf="@+id/editTextCardnum" />
+
+                                <TextView
+                                    android:id="@+id/textViewCardnum1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="34dp"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="5dp"
+                                    android:text="Enter card no."
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <EditText
+                                    android:id="@+id/editTextCardnum"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="39dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_input_soft_box"
+                                    android:ems="10"
+                                    android:hint="4567-56-76-56"
+                                    android:inputType="number"
+                                    android:padding="7dp"
+                                    app:layout_constraintStart_toStartOf="@+id/textViewCardnum1"
+                                    app:layout_constraintTop_toBottomOf="@+id/textViewCardnum1" />
+
+                                <TextView
+                                    android:id="@+id/textViewExpiryDate"
+                                    android:layout_width="111dp"
+                                    android:layout_height="37dp"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="5dp"
+                                    android:text="Expiry date"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/editTextCardnum" />
+
+                                <EditText
+                                    android:id="@+id/editTextExpiryDate"
+                                    android:layout_width="150dp"
+                                    android:layout_height="45dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_input_soft_box"
+                                    android:ems="10"
+                                    android:hint="4567-56-76-56"
+                                    android:inputType="date"
+                                    android:padding="7dp"
+                                    app:layout_constraintStart_toStartOf="@+id/textViewExpiryDate"
+                                    app:layout_constraintTop_toBottomOf="@+id/textViewExpiryDate" />
+
+                                <EditText
+                                    android:id="@+id/editTextCVV"
+                                    android:layout_width="150dp"
+                                    android:layout_height="45dp"
+                                    android:layout_marginEnd="2dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/bg_input_soft_box"
+                                    android:ems="10"
+                                    android:hint="4567-56-76-56"
+                                    android:inputType="number"
+                                    android:maxLength="3"
+                                    android:padding="7dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="@+id/textViewCVV"
+                                    app:layout_constraintTop_toBottomOf="@+id/textViewCVV" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="Payment details will be saved to make future payments faster"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/payment_credit_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/button_solid_blue"
+                            android:text="Pay"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white" />
+
+                    </LinearLayout>
+
+                    <RadioButton
+                        android:id="@+id/payment_paytm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Paytm" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_paytm_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="visible">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/payment_paytm_num"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="5dp"
+                            android:elevation="8dp"
+                            android:padding="10dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="10dp">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@android:color/white"
+                                android:paddingBottom="20dp">
+
+                                <TextView
+                                    android:id="@+id/textViewCardnum"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="34dp"
+                                    android:layout_marginStart="20dp"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="5dp"
+                                    android:text="Enter paytm registered mobile no."
+                                    android:textSize="10sp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                <EditText
+                                    android:id="@+id/editTextCardnum"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="39dp"
+                                    android:layout_weight="1"
+                                    android:width="300dp"
+                                    android:background="@drawable/bg_input_soft_box"
+                                    android:ems="10"
+                                    android:hint="4567-56-76-56"
+                                    android:inputType="number"
+                                    android:padding="7dp"
+                                    app:layout_constrainedWidth="false"
+                                    app:layout_constraintStart_toStartOf="@+id/textViewCardnum"
+                                    app:layout_constraintTop_toBottomOf="@+id/textViewCardnum"
+                                    app:layout_constraintWidth_min="wrap"
+                                    app:layout_constraintWidth_percent="80" />
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="Payment details will be saved to make future payments faster"
+                            android:textSize="10sp" />
+
+                        <Button
+                            android:id="@+id/payment_paytm_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/button_solid_blue"
+                            android:text="Pay"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white" />
+
+                    </LinearLayout>
+                </RadioGroup>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

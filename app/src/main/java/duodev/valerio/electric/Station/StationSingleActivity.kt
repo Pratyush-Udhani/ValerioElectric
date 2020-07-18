@@ -32,6 +32,7 @@ class StationSingleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_station_single)
         mapView.onCreate(savedInstanceState)
+
         intent?.let {
             station = it.getSerializableExtra(FLAG) as HashMap<String, Any>
             distance = it.getStringExtra(DIST)!!

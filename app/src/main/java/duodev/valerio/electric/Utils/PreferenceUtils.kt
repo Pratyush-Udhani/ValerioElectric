@@ -33,7 +33,6 @@ object PreferenceUtils {
             pm.edit().putBoolean(ACCOUNT, value).apply()
         }
 
-
     var mobile: String
         get() = pm.getString(MOBILE, "") ?: ""
         set(value) {
