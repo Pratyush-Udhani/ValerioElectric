@@ -1,4 +1,4 @@
-package duodev.valerio.electric.Station.Adapter
+package duodev.valerio.electric.Services.Adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import duodev.valerio.electric.R
 import duodev.valerio.electric.pojos.Company
 
-class StationCompanyAdapter(
+class ServiceCompanyAdapter(
     private val list: MutableList<Company>,
     private val listener: OnClick
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

@@ -7,10 +7,7 @@ import android.view.View
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import duodev.valerio.electric.R
-import duodev.valerio.electric.Utils.PreferenceUtils
-import duodev.valerio.electric.Utils.log
-import duodev.valerio.electric.Utils.makeGone
-import duodev.valerio.electric.Utils.makeVisible
+import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.pojos.Bookings
 import duodev.valerio.electric.pojos.Ports
 import duodev.valerio.electric.pojos.Station
@@ -26,7 +23,7 @@ class Payment : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
-        Log.d("TAG", "onCreate: Preference Utiles: $pm")
+//        Log.d("TAG", "onCreate: Preference Utiles: $pm")
         intent.let {
             booking.station = it.getSerializableExtra("station") as Station
             booking.plugType = it.getStringExtra("port") as String
