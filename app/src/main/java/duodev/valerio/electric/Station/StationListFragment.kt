@@ -215,6 +215,9 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
                         if (list.isNotEmpty()) {
                             log("called$list")
                             sortData(list)
+                        } else {
+                            loader.makeGone()
+                            noStationText.makeVisible()
                         }
                     })
                 }

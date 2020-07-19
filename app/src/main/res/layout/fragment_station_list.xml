@@ -18,7 +18,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
+    <TextView
+        android:id="@+id/noStationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/main_blue"
+        android:visibility="gone"
+        android:paddingVertical="20dp"
+        android:elevation="3dp"
+        android:fontFamily="@font/lato_bold"
+        android:text="No stations found"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
         android:id="@+id/permissionText"
         android:layout_width="wrap_content"
