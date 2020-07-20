@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
-    tools:context=".Station.StationListFragment">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Home.HomeActivity">
 
     <ProgressBar
         android:id="@+id/loader"
@@ -54,9 +52,9 @@
 
             <ImageView
                 android:id="@+id/backButton"
+                android:visibility="gone"
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_back_arrow" />
@@ -67,7 +65,7 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/lato"
                 android:gravity="center"
-                android:text="Stations"
+                android:text="Services"
                 android:textColor="@color/color_white"
                 android:textSize="23sp" />
         </LinearLayout>
@@ -76,9 +74,9 @@
     <Button
         android:id="@+id/filterButton"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:visibility="gone"
         android:background="@drawable/bg_white_soft_box"
         android:drawableStart="@drawable/ic_filter_icon"
         android:drawablePadding="20dp"
@@ -94,11 +92,11 @@
         app:layout_constraintTop_toBottomOf="@id/headerLayout" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/stationListRecycler"
+        android:id="@+id/serviceListRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filterButton"
-        tools:listitem="@layout/card_station" />
+        tools:listitem="@layout/card_service" />
 </androidx.constraintlayout.widget.ConstraintLayout>

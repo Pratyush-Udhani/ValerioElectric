@@ -53,7 +53,8 @@ object StationDef {
 //                            type = TYPE_TWO,
 //                            price = "Rs. 5.56 per hour"
 //                        )
-//                    )
+//                    ),
+//                    ownership = "Private"
 //                )
 //            )
 //        }

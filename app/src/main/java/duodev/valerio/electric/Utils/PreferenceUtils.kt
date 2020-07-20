@@ -33,7 +33,6 @@ object PreferenceUtils {
             pm.edit().putBoolean(ACCOUNT, value).apply()
         }
 
-
     var mobile: String
         get() = pm.getString(MOBILE, "") ?: ""
         set(value) {
@@ -49,7 +48,7 @@ object PreferenceUtils {
         val pm = PreferenceUtils
         pm.name = users.name?.trimString()!!
         pm.email = users.email?.trimString()!!
-        pm.mobile = users.address?.trimString()!!
+        pm.mobile = users.contact?.trimString()!!
     }
 
     fun resetUser() {
