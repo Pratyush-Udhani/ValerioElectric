@@ -11,6 +11,7 @@ import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.firestore.FirebaseFirestore
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Station.StationListFragment
 import duodev.valerio.electric.Station.StationSingleActivity
 import duodev.valerio.electric.Utils.PreferenceUtils
 import duodev.valerio.electric.Utils.log
@@ -21,18 +22,21 @@ import duodev.valerio.electric.pojos.Ports
 import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.activity_payment.*
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class PaymentActivity : AppCompatActivity() {
 
     private var pm = PreferenceUtils
-    private lateinit var station: Station
+    private lateinit var station: HashMap<String,Any>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
-        LocalBroadcastManager.getInstance(this)
-            .registerReceiver(broadcastReceiver, IntentFilter("flag"))
+        intent?.let {
+            station = it.getSerializableExtra(StationSingleActivity.STATION)!! as HashMap<String,Any>
+        }
+
         log("broadcast set")
         init()
 
@@ -48,18 +52,10 @@ class PaymentActivity : AppCompatActivity() {
 //            log("called recieve")
 //        }
 //
-//    }
-
-    private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            TODO("Not yet implemented")
-        }
-
-    }
 
     private fun setUpListeners() {
         paymentButton.setOnClickListener {
-            Log.d("TETETE", station.stationAddress)
+            Log.d("TETETE", station[StationListFragment.ADDRESS].toString())
         }
 
 //        payment_radio_group.setOnCheckedChangeListener { _,checkedId ->
@@ -106,7 +102,12 @@ class PaymentActivity : AppCompatActivity() {
 //    }
 
     companion object {
+
         fun newInstance(context: Context) = Intent(context, PaymentActivity::class.java)
+
+        fun newInstance(context: Context, station: HashMap<String,Any>) = Intent(context,PaymentActivity::class.java).apply {
+                putExtra(StationSingleActivity.STATION, station)
+        }
     }
 
 }
