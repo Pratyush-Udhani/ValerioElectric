@@ -149,13 +149,13 @@ class StationSingleActivity : AppCompatActivity() {
 
         Log.d("TETETE", setUpStation().toString())
 
-        val intentFilter = Intent("flag").apply {
+        val intentFilter = Intent(PaymentActivity.newInstance(this)).apply {
             action = "flag"
-            putExtra(STATION, setUpStation())
-            log("sent ${setUpStation()}")
+            putExtra(STATION, station)
+            log("sent $station")
         }
         LocalBroadcastManager.getInstance(this).sendBroadcast(intentFilter)
-        startActivity(PaymentActivity.newInstance(this))
+     //   startActivity(PaymentActivity.newInstance(this))
     }
 
     companion object {

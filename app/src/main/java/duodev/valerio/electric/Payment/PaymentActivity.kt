@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.StationSingleActivity
 import duodev.valerio.electric.Utils.PreferenceUtils
@@ -34,6 +33,7 @@ class PaymentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_payment)
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(broadcastReceiver, IntentFilter("flag"))
+        log("broadcast set")
         init()
 
     }
@@ -42,10 +42,17 @@ class PaymentActivity : AppCompatActivity() {
         setUpListeners()
     }
 
+//    private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+//        override fun onReceive(context: Context, intent: Intent) {
+//            station = intent.getParcelableExtra(StationSingleActivity.STATION)!!
+//            log("called recieve")
+//        }
+//
+//    }
+
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            station = intent?.getParcelableExtra(StationSingleActivity.STATION)!!
-            log("called recieve")
+            TODO("Not yet implemented")
         }
 
     }
