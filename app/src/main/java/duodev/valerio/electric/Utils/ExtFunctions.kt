@@ -15,6 +15,8 @@ import androidx.fragment.app.FragmentActivity
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.security.MessageDigest
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun View.makeGone() {
     visibility = View.GONE
@@ -103,8 +105,15 @@ fun generateHash(password: String): String {
     return digest.fold("", { str, it -> str + "%02x".format(it) })
 }
 
+fun long2Date(date: Long): String {
+    val formatter = SimpleDateFormat("dd-MM-yyyy")
+    return formatter.format(Date(date))
+}
 
-
+fun long2time(time: Long): String {
+    val formatter = SimpleDateFormat("K:mm a")
+    return formatter.format(Date(time))
+}
 
 
 

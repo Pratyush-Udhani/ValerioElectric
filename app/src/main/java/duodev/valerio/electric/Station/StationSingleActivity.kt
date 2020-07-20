@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
@@ -14,10 +16,11 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
-import duodev.valerio.electric.Bookings.BookingPlugsFragment
-import duodev.valerio.electric.Home.HomeMapFragment
+import com.google.firebase.firestore.GeoPoint
+import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.pojos.Company
 import duodev.valerio.electric.pojos.Connector
 import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.activity_station_single.*
@@ -45,6 +48,22 @@ class StationSingleActivity : AppCompatActivity() {
         mapView.onResume()
         setUpMap()
         setUpListeners()
+        setUpStation()
+    }
+
+    private fun setUpStation(): Station {
+        return Station(
+            stationAddress = station[StationListFragment.ADDRESS].toString(),
+            location = GeoPoint(station[StationListFragment.LATITUDE].toString().toDouble(), station[StationListFragment.LONGITUDE].toString().toDouble() ),
+            stationLocation = station[StationListFragment.LOCATION].toString(),
+            numberOfStations = station[StationListFragment.SLOTS].toString().toInt(),
+            serviceProvider = station[StationListFragment.PROVIDER].toString(),
+            imageUrl = station[StationListFragment.IMAGE_URL].toString(),
+            stationId = station[StationListFragment.ID].toString(),
+            ownerCompany = station[StationListFragment.OWNER] as Company,
+            connectorType = station[StationListFragment.CONNECTOR] as List<Connector>,
+            ownership = station[StationListFragment.OWNERSHIP].toString()
+        )
     }
 
     private fun setUpUI() {
@@ -116,22 +135,22 @@ class StationSingleActivity : AppCompatActivity() {
 
 
     private fun setUpListeners() {
-//        backButton.setOnClickListener {
-//            replaceFragment(null, R.id.homeContainer, HomeMapFragment.newInstance(), this)
-//        }
         bookNowButton.setOnClickListener {
-//            replaceFragment(null, R.id.homeContainer, BookingPlugsFragment.newInstance(), this)
             val intent = Intent()
+            intent.putExtra(STATION, station)
             setResult(StationListFragment.RESULT_CODE, intent)
             finish()
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+
         }
     }
+
 
     companion object {
 
         const val FLAG = "flag"
         const val DIST = "dist"
+        const val STATION = "Station"
 
         fun newInstance(context: Context, map: HashMap<String, Any>, dist: String) = Intent(context, StationSingleActivity::class.java).apply {
             putExtra(FLAG, map)

@@ -48,7 +48,7 @@ object PreferenceUtils {
         val pm = PreferenceUtils
         pm.name = users.name?.trimString()!!
         pm.email = users.email?.trimString()!!
-        pm.mobile = users.address?.trimString()!!
+        pm.mobile = users.contact?.trimString()!!
     }
 
     fun resetUser() {
