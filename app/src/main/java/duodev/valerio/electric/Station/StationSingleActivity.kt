@@ -154,8 +154,8 @@ class StationSingleActivity : AppCompatActivity() {
             putExtra(STATION, station)
             log("sent $station")
         }
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intentFilter)
-     //   startActivity(PaymentActivity.newInstance(this))
+        //   LocalBroadcastManager.getInstance(this).sendBroadcast(intentFilter)
+        startActivity(intentFilter)
     }
 
     companion object {
