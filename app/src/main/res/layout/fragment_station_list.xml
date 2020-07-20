@@ -56,19 +56,18 @@
                 android:id="@+id/backButton"
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_back_arrow" />
 
             <TextView
                 android:id="@+id/headingTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="45dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/lato"
                 android:gravity="center"
-                android:text="List View"
+                android:text="Stations"
                 android:textColor="@color/color_white"
                 android:textSize="23sp" />
         </LinearLayout>

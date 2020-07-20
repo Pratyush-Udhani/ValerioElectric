@@ -1,14 +1,13 @@
 package duodev.valerio.electric.Splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Login.LoginActivity
-import duodev.valerio.electric.MainActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.PreferenceUtils
 import kotlinx.android.synthetic.main.activity_splash_screen.*

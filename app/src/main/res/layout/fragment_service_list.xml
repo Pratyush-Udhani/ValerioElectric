@@ -52,6 +52,7 @@
 
             <ImageView
                 android:id="@+id/backButton"
+                android:visibility="gone"
                 android:layout_width="25dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -60,13 +61,11 @@
 
             <TextView
                 android:id="@+id/headingTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="45dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/lato"
                 android:gravity="center"
-                android:text="List View"
+                android:text="Services"
                 android:textColor="@color/color_white"
                 android:textSize="23sp" />
         </LinearLayout>
@@ -75,6 +74,7 @@
     <Button
         android:id="@+id/filterButton"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_white_soft_box"

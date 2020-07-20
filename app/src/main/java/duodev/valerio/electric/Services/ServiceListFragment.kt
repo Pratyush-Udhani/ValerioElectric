@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.fragment_service_list.*
 import kotlinx.android.synthetic.main.fragment_station_list.*
 
 class ServiceListFragment: Fragment(), ServiceListAdapter.OnClick  {
+
     private val serviceListAdapter by lazy { ServiceListAdapter(mutableMapOf<Station, String>() as LinkedHashMap<Station, String>, this) }
 
     override fun onCreateView(
@@ -31,13 +32,15 @@ class ServiceListFragment: Fragment(), ServiceListAdapter.OnClick  {
     fun init() {
         setUpRecycler()
     }
-    override fun onServiceClicked(station: Station, dist: String) {
 
-    }
     private fun setUpRecycler() {
         serviceListRecycler.apply {
             adapter = this@ServiceListFragment.serviceListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+    }
+
+    override fun onServiceClicked(station: Station, dist: String) {
+
     }
 }

@@ -56,10 +56,10 @@ class HomeActivity : AppCompatActivity() {
                     replaceFragment(null, R.id.homeContainer, BookingsFragment.newInstance(), this)
                     return@setOnNavigationItemSelectedListener true
                 }
-                R.id.navigationProfile -> {
-                    replaceFragment(null, R.id.homeContainer, ProfileFragment.newInstance(), this)
-                    return@setOnNavigationItemSelectedListener true
-                }
+//                R.id.navigationProfile -> {
+//                    replaceFragment(null, R.id.homeContainer, ProfileFragment.newInstance(), this)
+//                    return@setOnNavigationItemSelectedListener true
+//                }
                 R.id.navigationSettings -> {
                     replaceFragment(null, R.id.homeContainer, SettingsFragment.newInstance(), this)
                     return@setOnNavigationItemSelectedListener true

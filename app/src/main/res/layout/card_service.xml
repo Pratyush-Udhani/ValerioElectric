@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:minHeight="150dp"
         app:cardCornerRadius="11dp"
         app:cardElevation="3dp">
 
@@ -96,7 +95,7 @@
                         android:id="@+id/availability"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
                         android:text="Available"
                         android:textSize="10sp" />
                 </LinearLayout>
@@ -105,14 +104,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/thumb_icon"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
                         app:srcCompat="@drawable/ic_like_icon" />
 
                     <TextView
@@ -129,7 +129,8 @@
                     android:id="@+id/serviceStation_star"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/ic_star_selected" />
 
             </LinearLayout>

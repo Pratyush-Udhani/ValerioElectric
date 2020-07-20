@@ -3,19 +3,19 @@ package duodev.valerio.electric.Services.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import duodev.valerio.electric.R
-import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.Utils.log
+import duodev.valerio.electric.Utils.miles2km
 import duodev.valerio.electric.pojos.Station
 
 class ServiceListAdapter(
     private val list: LinkedHashMap<Station, String>,
-    private val listener: ServiceListAdapter.OnClick
+    private val listener: OnClick
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_service, parent, false))
     }
@@ -24,11 +24,6 @@ class ServiceListAdapter(
         return list.size
     }
 
-    fun addData(data: MutableMap<Station, String>) {
-        list.putAll(data)
-        log("called")
-        notifyDataSetChanged()
-    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
@@ -38,11 +33,17 @@ class ServiceListAdapter(
             )
         }
     }
+
+    fun addData(data: MutableMap<Station, String>) {
+        list.putAll(data)
+        log("called")
+        notifyDataSetChanged()
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val serviceStationName: TextView = itemView.findViewById(R.id.serviceStation_name)
         private val serviceStationAddress: TextView = itemView.findViewById(R.id.serviceStation_address)
-//        private val likePercentage: TextView = itemView.findViewById(R.id.serviceStation_likePercentage)
         private val cardView: CardView = itemView.findViewById(R.id.serviceStation_cardView)
         private val distLabel: TextView = itemView.findViewById(R.id.serviceStation_distance)
 
