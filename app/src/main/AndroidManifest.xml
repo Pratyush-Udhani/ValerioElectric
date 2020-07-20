@@ -36,6 +36,7 @@
 
         <activity android:name=".Home.HomeActivity" />
         <activity android:name=".Login.LoginActivity" />
+        <activity android:name=".Payment.PaymentActivity" />
         <activity android:name=".Splash.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

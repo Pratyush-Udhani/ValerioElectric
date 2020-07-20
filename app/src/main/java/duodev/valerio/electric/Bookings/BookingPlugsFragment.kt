@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_booking_plugs.*
 class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
 
     private val plugAdapter by lazy { BookingPlugAdapter(mutableListOf(), this) }
+    private var plug = ""
     private var backPressed: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +43,19 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
     }
 
     private fun init() {
+        setListeners()
         setUpRecycler()
         setUpObservers()
+    }
+
+    private fun setListeners() {
+        bookPlugButton.setOnClickListener {
+            if (plug != "") {
+                replaceFragment(this, R.id.homeContainer, BookingSlotFragment.newInstance())
+            } else {
+                activity?.toast("Select a plug")
+            }
+        }
     }
 
     private fun setUpObservers() {
@@ -68,13 +80,10 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
     }
 
     companion object {
-        fun newInstance(station: Station) = BookingPlugsFragment()
         fun newInstance() = BookingPlugsFragment()
     }
 
-    override fun onItemClicked(position: Int) {
-        replaceFragment(this, R.id.homeContainer, BookingSlotFragment.newInstance())
-
-//        activity?.toast("Payment to be added")
+    override fun onItemClicked(port: Ports) {
+        plug = port.portName
     }
 }

@@ -32,6 +32,19 @@ class BookingSlotFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_booking_slot, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
+    private fun init() {
+        setUpListeners()
+    }
+
+    private fun setUpListeners() {
+
+    }
+
     companion object {
         fun newInstance(station: Station,plug: Ports) = BookingSlotFragment()
         fun newInstance() = BookingSlotFragment()

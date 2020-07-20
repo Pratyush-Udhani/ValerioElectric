@@ -1,19 +1,25 @@
 package duodev.valerio.electric.Home
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import duodev.valerio.electric.Bookings.BookingsFragment
 import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Settings.SettingsFragment
 import duodev.valerio.electric.Station.StationListFragment
+import duodev.valerio.electric.Station.StationSingleActivity
 import duodev.valerio.electric.Utils.addFragment
 import duodev.valerio.electric.Utils.replaceFragment
+import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
