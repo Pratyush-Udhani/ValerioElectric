@@ -75,7 +75,6 @@
         app:layout_constraintTop_toBottomOf="@id/headerLayout">
 
         <TextView
-            android:id="@+id/arrivalTimeText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -86,18 +85,34 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/arrivalTime"
+            android:id="@+id/arrivalTimeText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_weight="1"
             android:fontFamily="@font/lato"
             android:gravity="center"
-            android:text="12:30 am"
-            android:textColor="@color/color_black"
+            android:text="select time"
+            android:textColor="@color/main_blue"
             android:textSize="20sp" />
 
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/bookSlotButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_solid_blue"
+        android:fontFamily="@font/lato_bold"
+        android:text="Next"
+        android:textColor="@color/color_white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,9 @@
 package duodev.valerio.electric.Station
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
 import duodev.valerio.electric.Bookings.BookingPlugsFragment
-import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.Adapter.StationListAdapter
 import duodev.valerio.electric.Station.ViewModel.StationListViewModel
@@ -157,7 +153,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_CODE) {
-            changeFragment(BookingPlugsFragment.newInstance(), true)
+            replaceFragment(this, R.id.homeContainer, BookingPlugsFragment.newInstance(data?.getSerializableExtra(StationSingleActivity.STATION)))
         }
     }
 
@@ -252,15 +248,16 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     companion object {
 
         const val ADDRESS = "address"
-        const val NAME = "name"
         const val PROVIDER = "provider"
         const val CONNECTOR = "connector"
         const val OWNER = "owner"
-        const val LATITUDE = "Latitude"
-        const val LONGITUDE = "Longitude"
+        const val LATITUDE = "latitude"
+        const val LONGITUDE = "longitude"
         const val ID = "id"
-        const val LOCATION = "Location"
-        const val IMAGE_URL = "ImageUrl"
+        const val LOCATION = "location"
+        const val IMAGE_URL = "imageUrl"
+        const val OWNERSHIP = "ownership"
+        const val SLOTS = "slots"
         const val RESULT_CODE = 12
 
         fun newInstance() = StationListFragment()
@@ -279,11 +276,14 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         map[LOCATION] = station.stationLocation
         map[ID] = station.stationId
         map[IMAGE_URL] = station.imageUrl
+        map[OWNERSHIP] = station.ownership
+        map[SLOTS] = station.numberOfStations
         log("called")
         startActivityForResult(
             StationSingleActivity.newInstance(requireContext(), map, dist),
             RESULT_CODE
         )
+//        startActivity(StationSingleActivity.newInstance(requireContext(), map, dist))
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
     }
 }

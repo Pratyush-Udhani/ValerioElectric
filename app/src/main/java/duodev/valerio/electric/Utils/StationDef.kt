@@ -32,36 +32,32 @@ object StationDef {
             77.219663
         )
 
-        val listOfNumbers = arrayListOf(
-            1, 2, 1, 1, 1
-        )
-
-        for (i in 0..4) {
-
-
-            list.add(
-                Station(
-                    stationAddress = listOfNames[i],
-                    location = GeoPoint(listOfLats[i], listOnLongs[i]),
-                    stationLocation = "Delhi",
-                    numberOfStations = listOfNumbers[i],
-                    serviceProvider = "Delta Electronics",
-                    imageUrl = "asc",
-                    stationId = "",
-                    ownerCompany = Company(
-                        name = "NDMC",
-                        imageUri = "as"
-                    ),
-                    connectorType = listOf(
-                        Connector(
-                            type = TYPE_TWO,
-                            price = "Rs. 5.56 per hour"
-                        )
-                    ),
-                    ownership = "Public"
-                )
-            )
-        }
+//        for (i in 0..4) {
+//
+//
+//            list.add(
+//                Station(
+//                    stationAddress = listOfNames[i],
+//                    location = GeoPoint(listOfLats[i], listOnLongs[i]),
+//                    stationLocation = "Delhi",
+//                    numberOfStations = 1,
+//                    serviceProvider = "Delta Electronics",
+//                    imageUrl = "asc",
+//                    stationId = "",
+//                    ownerCompany = Company(
+//                        name = "NDMC",
+//                        imageUri = "as"
+//                    ),
+//                    connectorType = listOf(
+//                        Connector(
+//                            type = TYPE_TWO,
+//                            price = "Rs. 5.56 per hour"
+//                        )
+//                    ),
+//                    ownership = "Private"
+//                )
+//            )
+//        }
 
         return list
     }

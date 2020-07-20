@@ -3,17 +3,17 @@
     <item
         android:id="@+id/navigationMap"
         android:icon="@drawable/selector_map"
-        android:title="Map" />
+        android:title="Stations" />
 
     <item
         android:id="@+id/navigationClock"
         android:icon="@drawable/selector_clock"
-        android:title="Bookings" />
+        android:title="Services" />
 
-    <item
-        android:id="@+id/navigationProfile"
-        android:icon="@drawable/selector_profile"
-        android:title="Profile" />
+<!--    <item-->
+<!--        android:id="@+id/navigationProfile"-->
+<!--        android:icon="@drawable/selector_profile"-->
+<!--        android:title="Profile" />-->
 
     <item
         android:id="@+id/navigationSettings"
