@@ -51,8 +51,6 @@ class BookingPlugAdapter(
 
             portName.text = item.portName
             portPrice.text = item.portCost
-            portImage.setImageResource(item.portImageRes)
-
 
             if (selectedPosition == adapterPosition) {
                 portCard.setCardBackgroundColor(Color.parseColor("#0072bc"))

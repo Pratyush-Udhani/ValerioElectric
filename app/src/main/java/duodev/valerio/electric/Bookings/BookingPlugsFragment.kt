@@ -5,28 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import duodev.valerio.electric.Bookings.Adapter.BookingPlugAdapter
-import duodev.valerio.electric.Home.HomeMapFragment
 import duodev.valerio.electric.R
-import duodev.valerio.electric.Station.StationSingleFragment
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.Utils.toast
 import duodev.valerio.electric.pojos.Ports
-import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.fragment_booking_plugs.*
+import java.io.Serializable
 
 class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
 
     private val plugAdapter by lazy { BookingPlugAdapter(mutableListOf(), this) }
-    private var plug = ""
-    private var backPressed: Long = 0
+    private var selected = false
+    private lateinit var plug: Ports
+    private lateinit var station: Serializable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        arguments?.let {
+            station = it.getSerializable(STATION)!!
+        }
     }
 
     override fun onCreateView(
@@ -50,8 +49,8 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
 
     private fun setListeners() {
         bookPlugButton.setOnClickListener {
-            if (plug != "") {
-                replaceFragment(this, R.id.homeContainer, BookingSlotFragment.newInstance())
+            if (selected) {
+                replaceFragment(this, R.id.homeContainer, BookingSlotFragment.newInstance(plug, station))
             } else {
                 activity?.toast("Select a plug")
             }
@@ -63,7 +62,6 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
         for (i in 0..3) {
             list.add(
                 Ports(
-                    portImageRes = R.drawable.ic_ccs_icon_white,
                     portName = "CCS$i",
                     portCost = "Rs. 5.56 per hour"
                 )
@@ -80,10 +78,18 @@ class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
     }
 
     companion object {
-        fun newInstance() = BookingPlugsFragment()
+
+        private const val STATION = "Station"
+
+        fun newInstance(station: Serializable?) = BookingPlugsFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(STATION, station)
+            }
+        }
     }
 
-    override fun onItemClicked(port: Ports) {
-        plug = port.portName
+    override fun onItemClicked(ports: Ports) {
+        selected = true
+        plug = ports
     }
 }

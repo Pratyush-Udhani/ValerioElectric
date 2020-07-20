@@ -136,23 +136,15 @@ class StationSingleActivity : AppCompatActivity() {
 
     private fun setUpListeners() {
         bookNowButton.setOnClickListener {
-            setUpBroadcast()
-//            val intent = Intent()
-//            setResult(StationListFragment.RESULT_CODE, intent)
-//            finish()
-//            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+            val intent = Intent()
+            intent.putExtra(STATION, station)
+            setResult(StationListFragment.RESULT_CODE, intent)
+            finish()
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
 
         }
     }
 
-    private fun setUpBroadcast() {
-
-        Log.d("TETETE", setUpStation().toString())
-
-
-        //   LocalBroadcastManager.getInstance(this).sendBroadcast(intentFilter)
-        startActivity(PaymentActivity.newInstance(this, station))
-    }
 
     companion object {
 
