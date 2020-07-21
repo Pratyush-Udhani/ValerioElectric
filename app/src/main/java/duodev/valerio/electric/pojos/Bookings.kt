@@ -18,6 +18,12 @@ data class Bookings (
    var time: Long,
 
    @SerializedName("id")
-   var id: String
+   var id: String,
+
+   @SerializedName("duration")
+   var duration: String,
+
+   @SerializedName("price")
+   var price: String
 
 ) : Parcelable

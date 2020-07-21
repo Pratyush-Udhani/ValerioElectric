@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.security.MessageDigest
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -111,7 +112,12 @@ fun long2time(time: Long): String {
     return formatter.format(Date(time))
 }
 
+fun roundOffTwoDigits(number: Any): String? {
+    val df = DecimalFormat("#.##")
+    df.roundingMode = RoundingMode.CEILING
 
+    return df.format(number)
+}
 
 
 

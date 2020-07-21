@@ -9,6 +9,7 @@ import duodev.valerio.electric.Bookings.Adapter.BookingPlugAdapter
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.StationListFragment
+import duodev.valerio.electric.Utils.addFragment
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.Utils.toast
 import duodev.valerio.electric.base.BaseFragment
@@ -51,7 +52,7 @@ class BookingPlugsFragment : BaseFragment(), BookingPlugAdapter.OnClick {
     private fun setListeners() {
         bookPlugButton.setOnClickListener {
             if (selected) {
-                replaceFragment(this, R.id.homeContainer, BookingSlotFragment.newInstance(plug, station))
+                addFragment(this, R.id.homeContainer, BookingSlotFragment.newInstance(plug, station))
             } else {
                 activity?.toast("Select a plug")
             }

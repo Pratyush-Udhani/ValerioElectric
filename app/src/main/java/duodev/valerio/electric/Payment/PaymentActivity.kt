@@ -31,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.time.Duration
 
 
 class PaymentActivity : BaseActivity(), PaymentResultListener {
@@ -39,8 +40,10 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     private lateinit var plug: Connector
     private var time: Long = 0
     private val paymentViewModel = PaymentViewModel()
-    private var mode = ""
     private val detailsDialog by lazy { Dialog(this) }
+    private var mode = ""
+    private var duration = ""
+    private var price = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +52,8 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
             station = it.getSerializableExtra(StationSingleActivity.STATION)!! as HashMap<String,Any>
             plug = it.getParcelableExtra(PLUG)!!
             time = it.getLongExtra(TIME, 0)
+            duration = it.getStringExtra(DURATION)!!
+            price = it.getStringExtra(PRICE)!!
         }
         init()
     }
@@ -77,7 +82,9 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                 price = plug.price
             ),
             time = time,
-            id = ""
+            id = "",
+            duration = duration,
+            price = "Rs. $price"
         )
     }
 
@@ -114,7 +121,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
         if (pm.mobile.isEmpty()) {
             showDetailsDialog()
         } else {
-                razorPayPayment(mode, "20000")
+                razorPayPayment(mode, (price.toFloat() * 100).toString())
         }
     }
 
@@ -202,11 +209,22 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
 
         private const val TIME = "time"
         private const val PLUG = "plug"
+        private const val DURATION = "duration"
+        private const val PRICE = "price"
 
-        fun newInstance(context: Context, station: HashMap<String,Any>, plug: Connector, time: Long) = Intent(context,PaymentActivity::class.java).apply {
+        fun newInstance(
+            context: Context,
+            station: HashMap<String,Any>,
+            plug: Connector,
+            time: Long,
+            duration: String,
+            price: String
+        ) = Intent(context,PaymentActivity::class.java).apply {
                 putExtra(StationSingleActivity.STATION, station)
                 putExtra(PLUG, plug)
                 putExtra(TIME, time)
+                putExtra(DURATION, duration)
+                putExtra(PRICE, price)
         }
     }
 
