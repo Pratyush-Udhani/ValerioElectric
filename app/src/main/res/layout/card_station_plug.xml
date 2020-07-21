@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical"
+    android:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:id="@+id/typeOneLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/plugIcon"
+                android:layout_width="25dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_type_one_icon" />
+
+            <TextView
+                android:id="@+id/plugNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/lato"
+                android:gravity="start"
+                android:layout_marginStart="10dp"
+                android:text="Type 2 – 22kw AC"
+                android:textColor="@color/color_black"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/portNumber"
+            android:layout_width="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/color_black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/portPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1.5"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:text="5.65 per kwh"
+            android:textColor="@color/color_black"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewfour"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#979797" />
+</LinearLayout>

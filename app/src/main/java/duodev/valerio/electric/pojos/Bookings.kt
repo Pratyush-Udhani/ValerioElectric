@@ -12,7 +12,7 @@ data class Bookings (
    var station: Station,
 
    @SerializedName("plug")
-   var plug: Ports,
+   var plug: Connector,
 
    @SerializedName("time")
    var time: Long,

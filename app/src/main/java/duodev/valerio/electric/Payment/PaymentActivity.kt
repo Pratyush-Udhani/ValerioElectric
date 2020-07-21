@@ -36,7 +36,7 @@ import org.json.JSONObject
 class PaymentActivity : BaseActivity(), PaymentResultListener {
 
     private lateinit var station: HashMap<String,Any>
-    private lateinit var plug: Ports
+    private lateinit var plug: Connector
     private var time: Long = 0
     private val paymentViewModel = PaymentViewModel()
     private var mode = ""
@@ -72,9 +72,9 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                 connectorType = station[StationListFragment.CONNECTOR] as List<Connector>,
                 ownership = station[StationListFragment.OWNERSHIP].toString()
             ),
-            Ports(
-                portName = plug.portName,
-                portCost = plug.portCost
+            Connector(
+                type = plug.type,
+                price = plug.price
             ),
             time = time,
             id = ""
@@ -88,6 +88,11 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
             } else {
                 this.toast("Select a method")
             }
+        }
+
+        backButton.setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
 
         payment_radio_group.setOnCheckedChangeListener { _,checkedId ->
@@ -198,11 +203,17 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
         private const val TIME = "time"
         private const val PLUG = "plug"
 
-        fun newInstance(context: Context, station: HashMap<String,Any>, plug: Ports, time: Long) = Intent(context,PaymentActivity::class.java).apply {
+        fun newInstance(context: Context, station: HashMap<String,Any>, plug: Connector, time: Long) = Intent(context,PaymentActivity::class.java).apply {
                 putExtra(StationSingleActivity.STATION, station)
                 putExtra(PLUG, plug)
                 putExtra(TIME, time)
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+        overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
     }
 
     override fun onPaymentError(p0: Int, p1: String?) {

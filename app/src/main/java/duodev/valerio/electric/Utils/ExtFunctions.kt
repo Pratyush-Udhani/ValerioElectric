@@ -107,7 +107,7 @@ fun long2Date(date: Long): String {
 }
 
 fun long2time(time: Long): String {
-    val formatter = SimpleDateFormat("K:mm a")
+    val formatter = SimpleDateFormat("h:mm a")
     return formatter.format(Date(time))
 }
 

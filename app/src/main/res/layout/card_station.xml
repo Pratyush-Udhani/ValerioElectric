@@ -107,117 +107,39 @@
 
 
                 <LinearLayout
-                    android:id="@+id/ccsLayout"
+                    android:id="@+id/singlePortLayout"
                     android:layout_width="wrap_content"
                     android:layout_marginEnd="20dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/ccsIcon"
+                        android:id="@+id/portIcon"
                         android:layout_width="20dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_ccs_icon" />
 
                     <TextView
-                        android:id="@+id/ccsText"
+                        android:id="@+id/portName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/lato"
                         android:text="CCS"
                         android:textColor="@color/color_black"
-                        android:textSize="13sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ccsIcon" />
+                        android:textSize="13sp"/>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/chadLayout"
+                <TextView
+                    android:id="@+id/plusMoreText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_marginEnd="20dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/chadIcon"
-                        android:layout_width="20dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_chad_icon" />
-
-                    <TextView
-                        android:id="@+id/chadText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:text="CHAdeMO"
-                        android:textColor="@color/color_black"
-                        android:textSize="13sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ccsIcon" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/typeOneLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:visibility="gone"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/typeOneIcon"
-                        android:layout_width="20dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_type_one_icon" />
-
-                    <TextView
-                        android:id="@+id/typeOneText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:text="Type-1"
-                        android:textColor="@color/color_black"
-                        android:textSize="13sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ccsIcon" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/typeTwoLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/typeTwoIcon"
-                        android:layout_width="20dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_type_two_icon" />
-
-                    <TextView
-                        android:id="@+id/typeTwoText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato"
-                        android:text="Type-2"
-                        android:textColor="@color/color_black"
-                        android:textSize="13sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/ccsIcon" />
-                </LinearLayout>
-
+                    android:text="+5 more"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/color_black"
+                    android:alpha=".8"
+                    android:textSize="18sp"/>
             </LinearLayout>
 
             <ImageView

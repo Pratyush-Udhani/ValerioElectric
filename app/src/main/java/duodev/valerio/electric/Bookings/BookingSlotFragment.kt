@@ -2,15 +2,15 @@ package duodev.valerio.electric.Bookings
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseFragment
-import duodev.valerio.electric.pojos.Ports
+import duodev.valerio.electric.pojos.Connector
 import kotlinx.android.synthetic.main.fragment_booking_slot.*
 import java.io.Serializable
 import java.util.*
@@ -18,7 +18,7 @@ import kotlin.collections.HashMap
 
 class BookingSlotFragment : BaseFragment() {
 
-    private lateinit var plug: Ports
+    private lateinit var plug: Connector
     private var arrivalTime: Long = 0
     private lateinit var station: Serializable
 
@@ -74,6 +74,10 @@ class BookingSlotFragment : BaseFragment() {
                 activity?.toast("Select arrival time")
             }
         }
+
+        backButton.setOnClickListener {
+            (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
+        }
     }
 
     companion object {
@@ -81,7 +85,7 @@ class BookingSlotFragment : BaseFragment() {
         private const val PLUG = "plug"
         private const val STATION = "Station"
 
-        fun newInstance(plug: Ports, station: Serializable) = BookingSlotFragment().apply {
+        fun newInstance(plug: Connector, station: Serializable) = BookingSlotFragment().apply {
             arguments = Bundle().apply {
                 putParcelable(PLUG, plug)
                 putSerializable(STATION, station)

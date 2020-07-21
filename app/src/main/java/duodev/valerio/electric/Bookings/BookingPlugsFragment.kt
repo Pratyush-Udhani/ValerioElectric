@@ -1,17 +1,18 @@
 package duodev.valerio.electric.Bookings
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import duodev.valerio.electric.Bookings.Adapter.BookingPlugAdapter
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Station.StationListFragment
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.Utils.toast
 import duodev.valerio.electric.base.BaseFragment
-import duodev.valerio.electric.pojos.Ports
+import duodev.valerio.electric.pojos.Connector
 import kotlinx.android.synthetic.main.fragment_booking_plugs.*
 import java.io.Serializable
 
@@ -19,13 +20,13 @@ class BookingPlugsFragment : BaseFragment(), BookingPlugAdapter.OnClick {
 
     private val plugAdapter by lazy { BookingPlugAdapter(mutableListOf(), this) }
     private var selected = false
-    private lateinit var plug: Ports
-    private lateinit var station: Serializable
+    private lateinit var plug: Connector
+    private lateinit var station: HashMap<String, Any>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            station = it.getSerializable(STATION)!!
+            station = it.getSerializable(STATION) as HashMap<String, Any>
         }
     }
 
@@ -45,7 +46,6 @@ class BookingPlugsFragment : BaseFragment(), BookingPlugAdapter.OnClick {
     private fun init() {
         setListeners()
         setUpRecycler()
-        setUpObservers()
     }
 
     private fun setListeners() {
@@ -56,22 +56,15 @@ class BookingPlugsFragment : BaseFragment(), BookingPlugAdapter.OnClick {
                 activity?.toast("Select a plug")
             }
         }
-    }
 
-    private fun setUpObservers() {
-        val list: MutableList<Ports> = mutableListOf()
-        for (i in 0..3) {
-            list.add(
-                Ports(
-                    portName = "CCS$i",
-                    portCost = "Rs. 5.56 per hour"
-                )
-            )
+        backButton.setOnClickListener {
+            (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
         }
-        plugAdapter.addData(list)
     }
 
     private fun setUpRecycler() {
+        plugAdapter.addData(station[StationListFragment.CONNECTOR] as List<Connector>)
+
         plugRecycler.apply {
             adapter = this@BookingPlugsFragment.plugAdapter
             layoutManager = GridLayoutManager(requireContext(), 2)
@@ -89,7 +82,7 @@ class BookingPlugsFragment : BaseFragment(), BookingPlugAdapter.OnClick {
         }
     }
 
-    override fun onItemClicked(ports: Ports) {
+    override fun onItemClicked(ports: Connector) {
         selected = true
         plug = ports
     }

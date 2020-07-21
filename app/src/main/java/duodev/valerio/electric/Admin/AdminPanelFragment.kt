@@ -29,6 +29,7 @@ import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import duodev.valerio.electric.Admin.Adapter.AddedPlugsAdapter
 import duodev.valerio.electric.Home.HomeActivity
+import duodev.valerio.electric.Login.LoginActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseFragment
@@ -89,6 +90,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
     private fun setUpUI() {
         if (flag == ADMIN) {
             (activity as HomeActivity).bottomNavCard.makeGone()
+            adminLogout.makeVisible()
         }
     }
 
@@ -125,6 +127,11 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
 
         addPlugButton.setOnClickListener {
             showPlugDialog()
+        }
+
+        adminLogout.setOnClickListener {
+            startActivity(LoginActivity.newInstance(requireContext()))
+            activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
 
         uploadStationButton.setOnClickListener {

@@ -9,6 +9,8 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
@@ -19,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.GeoPoint
 import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Station.Adapter.StationPlugAdapter
 import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.pojos.Company
 import duodev.valerio.electric.pojos.Connector
@@ -27,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_station_single.*
 
 class StationSingleActivity : AppCompatActivity() {
 
+    private val plugAdapter by lazy { StationPlugAdapter(mutableListOf(), "") }
     private lateinit var googleMap: GoogleMap
     private lateinit var station: HashMap<String, Any>
     private lateinit var distance: String
@@ -47,8 +51,16 @@ class StationSingleActivity : AppCompatActivity() {
         setUpUI()
         mapView.onResume()
         setUpMap()
+        setUpRecycler()
         setUpListeners()
-        setUpStation()
+    }
+
+    private fun setUpRecycler() {
+        plugAdapter.addData(station[StationListFragment.CONNECTOR] as List<Connector>,  station[StationListFragment.SLOTS].toString())
+        portDetailsRecycler.apply {
+            adapter = this@StationSingleActivity.plugAdapter
+            layoutManager = LinearLayoutManager(this@StationSingleActivity)
+        }
     }
 
     private fun setUpStation(): Station {
@@ -67,20 +79,12 @@ class StationSingleActivity : AppCompatActivity() {
     }
 
     private fun setUpUI() {
+        val company = station[StationListFragment.OWNER] as Company
         stationName.text = station[StationListFragment.ADDRESS].toString()
+        Glide.with(this).load(station[StationListFragment.IMAGE_URL].toString()).into(stationImage)
         stationAddress.text = station[StationListFragment.LOCATION].toString()
         distanceLabel.text = "$distance km"
-
-        val list = station[StationListFragment.CONNECTOR] as List<Connector>
-
-        for (connector in list) {
-            when (connector.type) {
-                TYPE_ONE -> typeOneLayoutOut.makeVisible()
-                TYPE_TWO -> typeTwoLayoutOut.makeVisible()
-                CHAD -> chadLayoutOut.makeVisible()
-                CCS -> ccsLayoutOut.makeVisible()
-            }
-        }
+        Glide.with(this).load(company.imageUri).into(companyImage)
     }
 
 
@@ -143,8 +147,18 @@ class StationSingleActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
 
         }
+
+        backButton.setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+        }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+        overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+    }
 
     companion object {
 

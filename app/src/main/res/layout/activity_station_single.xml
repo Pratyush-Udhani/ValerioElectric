@@ -28,11 +28,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/stationImage"
+                        android:layout_width="match_parent"
+                        android:src="@drawable/powerstation_img"
+                        android:layout_height="match_parent"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/powerstation_img"
                     android:elevation="0dp"
                     android:orientation="horizontal">
 
@@ -45,6 +51,7 @@
                         android:layout_marginTop="20dp"
                         android:src="@drawable/ic_back_arrow" />
                 </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
             <androidx.cardview.widget.CardView
@@ -71,15 +78,15 @@
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginBottom="5dp"
                         android:elevation="0dp"
                         app:cardElevation="0dp"
+                        app:layout_constraintBottom_toTopOf="@id/stationAddress"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginBottom="5dp"
-                        app:layout_constraintBottom_toTopOf="@id/stationAddress">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <ImageView
-                            android:id="@+id/stationImage"
+                            android:id="@+id/companyImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:src="@drawable/ndmc_31" />
@@ -90,14 +97,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
+                        android:layout_marginTop="20dp"
                         android:fontFamily="@font/lato_bold"
                         android:text="Cannaught Place station"
                         android:textColor="@color/color_black"
                         android:textSize="17sp"
-                        android:layout_marginTop="20dp"
                         app:layout_constraintEnd_toStartOf="@id/distanceLabel"
                         app:layout_constraintStart_toEndOf="@id/stationImageCard"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/stationAddress"
@@ -258,276 +265,14 @@
                         android:layout_marginTop="10dp"
                         android:background="#979797" />
 
-                    <LinearLayout
-                        android:id="@+id/ccsLayoutOut"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/portDetailsRecycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
+                        android:overScrollMode="never"
+                        android:nestedScrollingEnabled="true"
+                        tools:listitem="@layout/card_station_plug" />
 
-                        <LinearLayout
-                            android:id="@+id/ccsLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="10dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="35dp"
-                                    android:layout_height="match_parent"
-                                    android:src="@drawable/ic_ccs_icon" />
-
-                                <TextView
-                                    android:id="@+id/ccsText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/lato"
-                                    android:gravity="center"
-                                    android:text="CCS"
-                                    android:textColor="@color/color_black"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/stationsNumberCCS"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/lato"
-                                android:gravity="center"
-                                android:text="1"
-                                android:textColor="@color/color_black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/priceCCS"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                android:fontFamily="@font/lato"
-                                android:gravity="center"
-                                android:text="5.65 per kwh"
-                                android:textColor="@color/color_black"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:id="@+id/viewTwo"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:layout_marginTop="10dp"
-                            android:background="#979797" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/chadLayoutOut"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:id="@+id/chadLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="10dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="35dp"
-                                    android:layout_height="match_parent"
-                                    android:src="@drawable/ic_chad_icon" />
-
-                                <TextView
-                                    android:id="@+id/chadText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/lato"
-                                    android:gravity="center"
-                                    android:text="CHAdeMO"
-                                    android:textColor="@color/color_black"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/stationsNumberChad"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/lato"
-                                android:gravity="center"
-                                android:text="1"
-                                android:textColor="@color/color_black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/priceChad"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                android:fontFamily="@font/lato"
-                                android:gravity="center"
-                                android:text="5.65 per kwh"
-                                android:textColor="@color/color_black"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:id="@+id/viewThree"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:layout_marginTop="10dp"
-                            android:background="#979797" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/typeOneLayoutOut"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-
-                        <LinearLayout
-                            android:id="@+id/typeOneLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="10dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="35dp"
-                                    android:layout_height="match_parent"
-                                    android:src="@drawable/ic_type_one_icon" />
-
-                                <TextView
-                                    android:id="@+id/typeOneText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/lato"
-                                    android:gravity="center"
-                                    android:text="Type 1"
-                                    android:textColor="@color/color_black"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/stationsNumberTypeOne"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/lato"
-                                android:gravity="center"
-                                android:text="1"
-                                android:textColor="@color/color_black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/priceTypeOne"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                android:fontFamily="@font/lato"
-                                android:gravity="center"
-                                android:text="5.65 per kwh"
-                                android:textColor="@color/color_black"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:id="@+id/viewfour"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:layout_marginTop="10dp"
-                            android:background="#979797" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/typeTwoLayoutOut"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-
-                        <LinearLayout
-                            android:id="@+id/typeTwoLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="10dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="35dp"
-                                    android:layout_height="match_parent"
-                                    android:src="@drawable/ic_type_two_icon" />
-
-                                <TextView
-                                    android:id="@+id/typeTwoText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/lato"
-                                    android:gravity="center"
-                                    android:text="Type 2"
-                                    android:textColor="@color/color_black"
-                                    android:textSize="12sp" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/stationsNumberTypeTwo"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/lato"
-                                android:gravity="center"
-                                android:text="1"
-                                android:textColor="@color/color_black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/priceTypeTwo"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1.5"
-                                android:fontFamily="@font/lato"
-                                android:gravity="center"
-                                android:text="5.65 per kwh"
-                                android:textColor="@color/color_black"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

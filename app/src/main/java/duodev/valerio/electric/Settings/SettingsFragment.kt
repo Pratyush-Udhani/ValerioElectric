@@ -46,6 +46,9 @@ class SettingsFragment : BaseFragment() {
         changePasswordButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, SettingsChangePassword.newInstance())
         }
+        contactUsButton.setOnClickListener {
+            replaceFragment(this, R.id.homeContainer, ContactUsFragment.newInstance())
+        }
     }
 
     companion object {

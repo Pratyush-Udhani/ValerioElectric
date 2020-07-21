@@ -1,7 +1,6 @@
 package duodev.valerio.electric.Bookings.Adapter
 
 import android.graphics.Color
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,11 +8,12 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseRecyclerViewAdapter
-import duodev.valerio.electric.pojos.Ports
+import duodev.valerio.electric.pojos.Connector
 
 class BookingPlugAdapter(
-    private val list: MutableList<Ports>,
+    private val list: MutableList<Connector>,
     private val listener: OnClick
 ): BaseRecyclerViewAdapter() {
 
@@ -34,21 +34,31 @@ class BookingPlugAdapter(
         }
     }
 
-    fun addData(data: List<Ports>){
+    fun addData(data: List<Connector>){
         list.addAll(data)
         notifyDataSetChanged()
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindItems(item: Ports) {
+        fun bindItems(item: Connector) {
             val portName: TextView = itemView.findViewById(R.id.plugName)
             val portPrice: TextView = itemView.findViewById(R.id.plugCost)
             val portImage: ImageView = itemView.findViewById(R.id.plugLogo)
             val portCard: CardView = itemView.findViewById(R.id.plugCard)
             val view: View = itemView.findViewById(R.id.view)
 
-            portName.text = item.portName
-            portPrice.text = item.portCost
+            portName.text = item.type
+            portPrice.text = "Rs. ${item.price} per hr"
+
+            when (item.type) {
+                CHAD_DC -> portImage.setImageResource(R.drawable.ic_chad_icon)
+                CCS_DC -> portImage.setImageResource(R.drawable.ic_ccs_icon)
+                TYPE_TWO_43 -> portImage.setImageResource(R.drawable.ic_type_two_icon)
+                TYPE_TWO_22 -> portImage.setImageResource(R.drawable.ic_type_two_icon)
+                TYPE_ONE_7 -> portImage.setImageResource(R.drawable.ic_type_one_icon)
+                IEC_PLUG -> portImage.setImageResource(R.drawable.ic_iec_plug)
+                AMP_16 -> portImage.setImageResource(R.drawable.ic_type_one_icon)
+            }
 
             if (selectedPosition == adapterPosition) {
                 portCard.setCardBackgroundColor(Color.parseColor("#0072bc"))
@@ -82,6 +92,6 @@ class BookingPlugAdapter(
     }
 
     interface OnClick {
-        fun onItemClicked(ports: Ports)
+        fun onItemClicked(ports: Connector)
     }
 }

@@ -4,10 +4,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseRecyclerViewAdapter
@@ -48,23 +50,42 @@ class StationListAdapter(
         private val stationAddress: TextView = itemView.findViewById(R.id.stationAddress)
         private val cardView: CardView = itemView.findViewById(R.id.stationCard)
         private val distLabel: TextView = itemView.findViewById(R.id.distanceLabel)
-        private val typeTwoLayout: LinearLayout = itemView.findViewById(R.id.typeTwoLayout)
-        private val typeOneLayout: LinearLayout = itemView.findViewById(R.id.typeOneLayout)
-        private val chadLayout: LinearLayout = itemView.findViewById(R.id.chadLayout)
-        private val ccsLayout: LinearLayout = itemView.findViewById(R.id.ccsLayout)
+        private val portsLayout: LinearLayout = itemView.findViewById(R.id.portsLayout)
+        private val singlePortLayout: LinearLayout = itemView.findViewById(R.id.singlePortLayout)
+        private val extrasText: TextView = itemView.findViewById(R.id.plusMoreText)
+        private val portIcon: ImageView = itemView.findViewById(R.id.portIcon)
+        private val portName: TextView = itemView.findViewById(R.id.portName)
+        private val stationImage: ImageView = itemView.findViewById(R.id.stationImage)
 
         fun bindItems(item: Station, distance: String) {
 
             stationName.text = item.stationAddress
             stationAddress.text = item.stationLocation
             distLabel.text = "${miles2km(distance.toDouble())} km"
+            Glide.with(getContext()).load(item.ownerCompany.imageUri).into(stationImage)
 
-            for (element in item.connectorType) {
-                when (element.type) {
-                    TYPE_ONE -> typeOneLayout.makeVisible()
-                    TYPE_TWO -> typeTwoLayout.makeVisible()
-                    CHAD -> chadLayout.makeVisible()
-                    CCS -> ccsLayout.makeVisible()
+            portName.text = item.connectorType[0].type
+
+            when (item.connectorType[0].type) {
+                CHAD_DC -> portIcon.setImageResource(R.drawable.ic_chad_icon)
+                CCS_DC -> portIcon.setImageResource(R.drawable.ic_ccs_icon)
+                TYPE_TWO_43 -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
+                TYPE_TWO_22 -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
+                TYPE_ONE_7 -> portIcon.setImageResource(R.drawable.ic_type_one_icon)
+                IEC_PLUG -> portIcon.setImageResource(R.drawable.ic_iec_plug)
+                AMP_16 -> portIcon.setImageResource(R.drawable.ic_type_one_icon)
+            }
+
+            when (item.connectorType.size) {
+                0 -> portsLayout.makeGone()
+                1 -> {
+                    portsLayout.makeVisible()
+                    extrasText.makeGone()
+                }
+                else -> {
+                    portsLayout.makeVisible()
+                    extrasText.makeVisible()
+                    extrasText.text = "+${item.connectorType.size - 1} more"
                 }
             }
 

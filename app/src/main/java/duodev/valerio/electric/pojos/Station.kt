@@ -31,7 +31,7 @@ data class Station (
     @SerializedName("location")
     val location: @RawValue GeoPoint,
 
-    @SerializedName("stationImage")
+    @SerializedName("imageUrl")
     val imageUrl: String,
 
     @SerializedName("stationId")
