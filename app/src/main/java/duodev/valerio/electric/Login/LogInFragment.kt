@@ -19,13 +19,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Users
 import kotlinx.android.synthetic.main.fragment_log_in.*
 
-class LogInFragment : Fragment() {
+class LogInFragment : BaseFragment() {
 
     private val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val pm = PreferenceUtils
     private val isAuth = MutableLiveData<Boolean>(false)
     private val noPassword = MutableLiveData<Boolean>(false)
     private val noEmail = MutableLiveData<Boolean>(false)
@@ -164,7 +164,7 @@ class LogInFragment : Fragment() {
                 pm.account = true
                 if (it.exists()) {
                     pm.setUser(convertToPojo(it.data!!, Users::class.java))
-                    intent = HomeActivity.newInstance(requireContext())
+                    intent = HomeActivity.newInstance(requireContext(), USER)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
                 } else {
@@ -172,7 +172,7 @@ class LogInFragment : Fragment() {
                     firebaseFirestore.collection(USERS).document(account?.email.toString().trim())
                         .set(pm.getUser())
                     loader.makeGone()
-                    intent = HomeActivity.newInstance(requireContext())
+                    intent = HomeActivity.newInstance(requireContext(), USER)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
                 }

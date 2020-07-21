@@ -9,21 +9,19 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import duodev.valerio.electric.R
+import duodev.valerio.electric.base.BaseRecyclerViewAdapter
 import duodev.valerio.electric.pojos.Ports
 
 class BookingPlugAdapter(
     private val list: MutableList<Ports>,
     private val listener: OnClick
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+): BaseRecyclerViewAdapter() {
 
     private var selectedPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(
-            R.layout.card_plug,
-            parent,
-            false
-        ))
+        return ViewHolder(getView(R.layout.card_plug, parent))
+
     }
 
     override fun getItemCount(): Int {

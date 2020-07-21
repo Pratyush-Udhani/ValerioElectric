@@ -12,11 +12,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import duodev.valerio.electric.Login.LoginActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.PreferenceUtils
+import duodev.valerio.electric.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_profile.*
 
-class ProfileFragment : Fragment() {
-
-    private val pm = PreferenceUtils
+class ProfileFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

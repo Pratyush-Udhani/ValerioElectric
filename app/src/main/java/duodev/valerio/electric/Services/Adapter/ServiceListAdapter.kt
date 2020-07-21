@@ -9,15 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.Utils.miles2km
+import duodev.valerio.electric.base.BaseRecyclerViewAdapter
 import duodev.valerio.electric.pojos.Station
 
 class ServiceListAdapter(
     private val list: LinkedHashMap<Station, String>,
     private val listener: OnClick
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+): BaseRecyclerViewAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_service, parent, false))
+        return ViewHolder(getView(R.layout.card_service, parent))
     }
 
     override fun getItemCount(): Int {

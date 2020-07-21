@@ -14,16 +14,17 @@ import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.StationListFragment
 import duodev.valerio.electric.Station.StationSingleActivity
 import duodev.valerio.electric.Utils.PreferenceUtils
+import duodev.valerio.electric.Utils.USER
 import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.Utils.toast
+import duodev.valerio.electric.base.BaseActivity
 import duodev.valerio.electric.pojos.*
 import kotlinx.android.synthetic.main.activity_payment.*
 import org.json.JSONObject
 
 
-class PaymentActivity : AppCompatActivity(), PaymentResultListener {
+class PaymentActivity : BaseActivity(), PaymentResultListener {
 
-    private val pm = PreferenceUtils
     private lateinit var station: HashMap<String,Any>
     private lateinit var plug: Ports
     private var time: Long = 0
@@ -121,7 +122,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
     // should could be called after payment success
     private fun confirmBooking() {
         paymentViewModel.confirmBooking(setUpBookings())
-        startActivity(HomeActivity.newInstance(this))
+        startActivity(HomeActivity.newInstance(this, USER))
         overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         this.toast("payment  success")
     }

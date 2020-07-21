@@ -10,11 +10,12 @@ import duodev.valerio.electric.Bookings.Adapter.BookingPlugAdapter
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.Utils.toast
+import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Ports
 import kotlinx.android.synthetic.main.fragment_booking_plugs.*
 import java.io.Serializable
 
-class BookingPlugsFragment : Fragment(), BookingPlugAdapter.OnClick {
+class BookingPlugsFragment : BaseFragment(), BookingPlugAdapter.OnClick {
 
     private val plugAdapter by lazy { BookingPlugAdapter(mutableListOf(), this) }
     private var selected = false

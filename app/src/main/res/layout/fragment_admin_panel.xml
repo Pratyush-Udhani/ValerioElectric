@@ -41,7 +41,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/lato"
                 android:gravity="center"
-                android:text="Admin Panel"
+                android:text="Settings"
                 android:textColor="@color/color_white"
                 android:textSize="23sp" />
         </LinearLayout>

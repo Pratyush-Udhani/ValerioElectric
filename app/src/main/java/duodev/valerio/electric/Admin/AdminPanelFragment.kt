@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -27,18 +28,21 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import duodev.valerio.electric.Admin.Adapter.AddedPlugsAdapter
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Company
 import duodev.valerio.electric.pojos.Connector
 import duodev.valerio.electric.pojos.Station
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_admin_panel.*
 import kotlinx.android.synthetic.main.layout_add_station.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AdminPanelFragment : Fragment(), AddedPlugsAdapter.OnClick {
+class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
 
     private val plugDialog by lazy { Dialog(requireContext()) }
     private var stationUrl: Uri = Uri.EMPTY
@@ -51,10 +55,14 @@ class AdminPanelFragment : Fragment(), AddedPlugsAdapter.OnClick {
     private var uploaded = MutableLiveData<Boolean>(false)
     private val addedPlugsAdapter by lazy { AddedPlugsAdapter(mutableListOf(), this) }
     private val layoutManager by lazy { LinearLayoutManager(requireContext()) }
+    private var lat: Double = 0.0
+    private var long: Double = 0.0
+    private var flag = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            flag = it.getString(FLAG)!!
         }
     }
 
@@ -72,9 +80,16 @@ class AdminPanelFragment : Fragment(), AddedPlugsAdapter.OnClick {
     }
 
     private fun init() {
+        setUpUI()
         setUpObserver()
         setUpListeners()
         setUpRecycler()
+    }
+
+    private fun setUpUI() {
+        if (flag == ADMIN) {
+            (activity as HomeActivity).bottomNavCard.makeGone()
+        }
     }
 
     private fun setUpRecycler() {
@@ -93,14 +108,11 @@ class AdminPanelFragment : Fragment(), AddedPlugsAdapter.OnClick {
             openFilePicker(PICK_STATION_IMAGE)
         }
 
-        privateOwner.setOnClickListener {
-            publicOwner.isChecked = false
-            owner = "Private Owner"
-        }
-
-        publicOwner.setOnClickListener {
-            privateOwner.isChecked = false
-            owner = "Public Owner"
+        ownerGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.privateOwner -> owner = "Private Owner"
+                R.id.publicOwner -> owner = "Public Owner"
+            }
         }
 
         removeCompanyImageButton.setOnClickListener {
@@ -119,15 +131,13 @@ class AdminPanelFragment : Fragment(), AddedPlugsAdapter.OnClick {
             if (stationAddress.text.isNotEmpty()
                 && stationAddress.text.isNotEmpty()
                 && stationCity.text.isNotEmpty()
-                && stationLat.text.isNotEmpty()
-                && stationLong.text.isNotEmpty()
                 && stationSlots.text.isNotEmpty()
                 && companyName.text.isNotEmpty()
                 && owner.isNotEmpty()
             ) {
                 if (stationUrl != Uri.EMPTY && companyUrl != Uri.EMPTY) {
                     if (plugList.size != 0) {
-                        uploadFile()
+                        setLocation()
                     } else {
                         activity?.toast("add a plug")
                     }
@@ -140,10 +150,36 @@ class AdminPanelFragment : Fragment(), AddedPlugsAdapter.OnClick {
         }
     }
 
+    private fun setLocation() {
+        val geoCoder = Geocoder(requireContext()).getFromLocationName(stationAddress.text.toString(), 1)
+        if (geoCoder.size > 0) {
+            if (geoCoder[0].hasLatitude() && geoCoder[0].hasLongitude()){
+
+                lat = Geocoder(requireContext()).getFromLocationName(stationAddress.text.toString(), 1)[0].latitude
+                long = Geocoder(requireContext()).getFromLocationName(stationAddress.text.toString(), 1)[0].longitude
+                uploadFile()
+
+            } else {
+                if (flag == ADMIN)
+                    activity?.toast("No lat long found")
+                else
+                    activity?.toast("Invalid address. Contact us for more details")
+            }
+        } else {
+            activity?.toast("Please enter complete address")
+        }
+    }
+
     private fun setUpObserver() {
         uploaded.observe(viewLifecycleOwner, Observer {
             if (uploaded.value!!) {
-                uploadToDatabase()
+                if (flag == ADMIN)
+                    uploadToDatabase()
+                else {
+                    progressBar.makeGone()
+                    activity?.toast("User side")
+                    // to be implemented
+                }
             }
         })
     }
@@ -161,10 +197,7 @@ class AdminPanelFragment : Fragment(), AddedPlugsAdapter.OnClick {
                     imageUri = companyBitmap.toString()
                 ),
                 serviceProvider = serviceProvider.trimString(),
-                location = GeoPoint(
-                    stationLat.text.toString().toDouble(),
-                    stationLong.text.toString().toDouble()
-                ),
+                location = GeoPoint(lat, long),
                 imageUrl = stationBitmap.toString(),
                 numberOfStations = stationSlots.text.toString().toInt(),
                 stationId = id,
@@ -367,6 +400,13 @@ class AdminPanelFragment : Fragment(), AddedPlugsAdapter.OnClick {
     }
 
     companion object {
-        fun newInstance() = AdminPanelFragment()
+
+        private const val FLAG = "flag"
+
+        fun newInstance(flag: String) = AdminPanelFragment().apply {
+            arguments = Bundle().apply {
+                putString(FLAG, flag)
+            }
+        }
     }
 }

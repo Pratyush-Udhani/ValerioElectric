@@ -13,13 +13,14 @@ import duodev.valerio.electric.Services.Adapter.ServiceCompanyAdapter
 import duodev.valerio.electric.Services.ViewModel.ServiceCompanyViewModel
 import duodev.valerio.electric.Station.StationFilterFragment
 import duodev.valerio.electric.Utils.replaceFragment
+import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Company
 import kotlinx.android.synthetic.main.fragment_station_company.*
 import kotlinx.android.synthetic.main.fragment_station_filter.*
 import kotlinx.android.synthetic.main.fragment_service_list.*
 import kotlinx.android.synthetic.main.fragment_service_list.backButton
 
-class ServiceCompanyFragment : Fragment(), ServiceCompanyAdapter.OnClick {
+class ServiceCompanyFragment : BaseFragment(), ServiceCompanyAdapter.OnClick {
 
     private val companyAdapter by lazy { ServiceCompanyAdapter(mutableListOf(), this) }
     private val serviceCompanyViewModel = ServiceCompanyViewModel()

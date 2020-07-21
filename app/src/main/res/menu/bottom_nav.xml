@@ -10,10 +10,10 @@
         android:icon="@drawable/selector_clock"
         android:title="Services" />
 
-<!--    <item-->
-<!--        android:id="@+id/navigationProfile"-->
-<!--        android:icon="@drawable/selector_profile"-->
-<!--        android:title="Profile" />-->
+    <item
+        android:id="@+id/navigationProfile"
+        android:icon="@drawable/selector_profile"
+        android:title="Profile" />
 
     <item
         android:id="@+id/navigationSettings"

@@ -10,16 +10,17 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.base.BaseRecyclerViewAdapter
 import duodev.valerio.electric.pojos.Station
 
 class StationListAdapter(
     private val list: LinkedHashMap<Station, String>,
     private val listener: OnClick
 ) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    BaseRecyclerViewAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_station, parent, false))
+        return ViewHolder(getView(R.layout.card_station, parent))
     }
 
     override fun getItemCount(): Int {

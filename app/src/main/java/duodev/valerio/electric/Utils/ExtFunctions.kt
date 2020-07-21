@@ -43,14 +43,12 @@ fun replaceFragment(fromFragment : Fragment?, container: Int, fragment: Fragment
         activity != null -> {
             val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fragmentTransaction.replace(container, fragment)
-            if (tag)
                 fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
         fromFragment != null -> {
             val fragmentTransaction = fromFragment.activity?.supportFragmentManager?.beginTransaction()
             fragmentTransaction?.replace(container, fragment)
-            if (tag)
                 fragmentTransaction?.addToBackStack(null)
             fragmentTransaction?.commit()
         }
@@ -65,14 +63,12 @@ fun addFragment(fromFragment: Fragment?, container: Int, fragment: Fragment, act
         activity != null -> {
             val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
             fragmentTransaction.add(container, fragment)
-            if (tag)
                 fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
         fromFragment != null -> {
             val fragmentTransaction = fromFragment.activity?.supportFragmentManager?.beginTransaction()
             fragmentTransaction?.add(container, fragment)
-            if (tag)
                 fragmentTransaction?.addToBackStack(null)
             fragmentTransaction?.commit()
         }

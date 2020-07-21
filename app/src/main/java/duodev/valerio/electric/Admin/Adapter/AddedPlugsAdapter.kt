@@ -7,14 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import duodev.valerio.electric.R
+import duodev.valerio.electric.base.BaseRecyclerViewAdapter
 import duodev.valerio.electric.pojos.Connector
 
 class AddedPlugsAdapter(
     private val list: MutableList<Connector>,
     private val listener: OnClick
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+): BaseRecyclerViewAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_added_plug, parent, false))
+        return ViewHolder(getView(R.layout.card_added_plug, parent))
     }
 
     override fun getItemCount(): Int {

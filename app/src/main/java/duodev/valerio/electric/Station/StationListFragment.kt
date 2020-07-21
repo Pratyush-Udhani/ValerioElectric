@@ -3,6 +3,7 @@ package duodev.valerio.electric.Station
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,9 @@ import duodev.valerio.electric.Station.ViewModel.StationListViewModel
 import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.fragment_station_list.*
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.LinkedHashMap
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
@@ -107,8 +111,13 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
 //            replaceFragment(this, R.id.homeContainer , HomeMapFragment.newInstance())
 //        }
         filterButton.setOnClickListener {
-            addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance(), null, true)
+//            addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance(), null, true)
 //            setUpdb()
+
+            Log.d("GEOCODER",
+
+            Geocoder(requireContext()).getFromLocationName("11, Rajaji Marg, Meena Bagh, Krishna Manon Lane Area, New Delhi, Delhi 110011", 1)[0].latitude.toString()
+            )
         }
 
         permissionText.setOnClickListener {

@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Ports
 import kotlinx.android.synthetic.main.fragment_booking_slot.*
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashMap
 
-class BookingSlotFragment : Fragment() {
+class BookingSlotFragment : BaseFragment() {
 
     private lateinit var plug: Ports
     private var arrivalTime: Long = 0

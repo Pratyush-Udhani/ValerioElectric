@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Services.Adapter.ServiceListAdapter
 import duodev.valerio.electric.Station.Adapter.StationListAdapter
+import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.fragment_service_list.*
 import kotlinx.android.synthetic.main.fragment_station_list.*
 
-class ServiceListFragment: Fragment(), ServiceListAdapter.OnClick  {
+class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
 
     private val serviceListAdapter by lazy { ServiceListAdapter(mutableMapOf<Station, String>() as LinkedHashMap<Station, String>, this) }
 

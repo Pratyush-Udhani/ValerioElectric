@@ -9,10 +9,11 @@ import androidx.fragment.app.Fragment
 import duodev.valerio.electric.Login.ViewModel.LoginViewModel
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Users
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : BaseFragment() {
 
     private val loginViewModel = LoginViewModel()
 

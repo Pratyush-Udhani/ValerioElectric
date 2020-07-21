@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.replaceFragment
+import duodev.valerio.electric.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_forgot_password.*
 
 
-class ForgotPasswordFragment : Fragment() {
+class ForgotPasswordFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

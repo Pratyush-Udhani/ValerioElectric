@@ -8,19 +8,20 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import androidx.cardview.widget.CardView
-import duodev.valerio.electric.Admin.AdminActivity
+import androidx.fragment.app.Fragment
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
-import duodev.valerio.electric.Utils.addFragment
-import duodev.valerio.electric.Utils.toast
-import duodev.valerio.electric.Utils.trimString
+import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.dialog_admin_login.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private val dialog by lazy { Dialog(this) }
+    lateinit var currentFragment: Fragment
+    private var backPressed: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
 
             loginButton.setOnClickListener {
                 if (adminPassword.trimString() == "12345") {
-                    startActivity(AdminActivity.newInstance(this@LoginActivity))
+                    startActivity(HomeActivity.newInstance(this@LoginActivity, ADMIN))
                     overridePendingTransition(R.anim.slideleft, R.anim.slideright)
                     dismiss()
                 } else {
@@ -61,6 +62,25 @@ class LoginActivity : AppCompatActivity() {
             show()
         }
 
+    }
+
+    override fun onBackPressed() {
+        currentFragment = supportFragmentManager.findFragmentById(R.id.loginContainer)!!
+        if (currentFragment is SignUpFragment || currentFragment is ForgotPasswordFragment) {
+            supportFragmentManager.popBackStackImmediate()
+        } else {
+            if (backPressed.plus(2000) >= System.currentTimeMillis()) {
+                super.onBackPressed()
+                finishAffinity()
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    "Press again to exit",
+                    Toast.LENGTH_SHORT
+                ).show()
+                backPressed = System.currentTimeMillis()
+            }
+        }
     }
 
     private fun setUpFragments() {

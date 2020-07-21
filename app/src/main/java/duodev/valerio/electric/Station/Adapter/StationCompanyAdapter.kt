@@ -7,21 +7,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import duodev.valerio.electric.R
+import duodev.valerio.electric.base.BaseRecyclerViewAdapter
 import duodev.valerio.electric.pojos.Company
 
 class StationCompanyAdapter(
     private val list: MutableList<Company>,
     private val listener: OnClick
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : BaseRecyclerViewAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.card_company,
-                parent,
-                false
-            )
-        )
+        return ViewHolder(getView(R.layout.card_company, parent))
     }
 
     override fun getItemCount(): Int {
