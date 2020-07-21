@@ -75,7 +75,7 @@
                 android:fontFamily="@font/lato"
                 android:text="E-mail"
                 android:textColor="@color/color_black"
-                android:textSize="26sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/changePasswordText"
@@ -120,7 +120,7 @@
                 android:fontFamily="@font/lato"
                 android:text="Phone"
                 android:textColor="@color/color_black"
-                android:textSize="26sp" />
+                android:textSize="22sp" />
 
             <TextView
                 android:layout_width="0dp"

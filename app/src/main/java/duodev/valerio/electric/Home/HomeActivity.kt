@@ -13,6 +13,7 @@ import duodev.valerio.electric.Bookings.BookingsFragment
 import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Settings.ContactUsFragment
+import duodev.valerio.electric.Settings.ReportIssueFragment
 import duodev.valerio.electric.Settings.SettingsChangePassword
 import duodev.valerio.electric.Settings.SettingsFragment
 import duodev.valerio.electric.Station.StationCompanyFragment
@@ -96,8 +97,26 @@ class HomeActivity : BaseActivity() {
                             if (currentFragment is ContactUsFragment) {
                                 supportFragmentManager.popBackStackImmediate()
                             } else {
-                                if (currentFragment is AdminPanelFragment) {
-                                    if (flag == ADMIN) {
+                                if (currentFragment is ReportIssueFragment) {
+                                    supportFragmentManager.popBackStackImmediate()
+                                } else {
+                                    if (currentFragment is AdminPanelFragment) {
+                                        if (flag == ADMIN) {
+                                            if (backPressed.plus(2000) >= System.currentTimeMillis()) {
+                                                super.onBackPressed()
+                                                finishAffinity()
+                                            } else {
+                                                Toast.makeText(
+                                                    applicationContext,
+                                                    "Press again to exit",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                                backPressed = System.currentTimeMillis()
+                                            }
+                                        } else {
+                                            supportFragmentManager.popBackStackImmediate()
+                                        }
+                                    } else {
                                         if (backPressed.plus(2000) >= System.currentTimeMillis()) {
                                             super.onBackPressed()
                                             finishAffinity()
@@ -109,20 +128,6 @@ class HomeActivity : BaseActivity() {
                                             ).show()
                                             backPressed = System.currentTimeMillis()
                                         }
-                                    } else {
-                                        supportFragmentManager.popBackStackImmediate()
-                                    }
-                                } else {
-                                    if (backPressed.plus(2000) >= System.currentTimeMillis()) {
-                                        super.onBackPressed()
-                                        finishAffinity()
-                                    } else {
-                                        Toast.makeText(
-                                            applicationContext,
-                                            "Press again to exit",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        backPressed = System.currentTimeMillis()
                                     }
                                 }
                             }

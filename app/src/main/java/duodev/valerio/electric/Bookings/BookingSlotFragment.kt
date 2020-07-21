@@ -86,6 +86,11 @@ class BookingSlotFragment : BaseFragment() {
 
     private fun setUpListeners() {
 
+        slotLayout.setOnClickListener {
+            chargingTimeHours.clearFocus()
+            chargingTimeMinutes.clearFocus()
+        }
+
         val calendar = Calendar.getInstance()
         val timePickerListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
