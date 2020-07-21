@@ -1,5 +1,6 @@
 package duodev.valerio.electric.Bookings
 
+import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
@@ -8,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import duodev.valerio.electric.Home.HomeActivity
@@ -134,23 +137,15 @@ class BookingSlotFragment : BaseFragment() {
             (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
         }
 
-//        hourLayout.setOnClickListener {
-//            chargingTimeHours.requestFocus()
-//            chargingTimeHours.isFocusableInTouchMode = true
-//            chargingTimeHours.setText("")
-//
-//            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.showSoftInput(chargingTimeHours, 0)
-//        }
-//
-//        minuteLayout.setOnClickListener {
-//            chargingTimeMinutes.requestFocus()
-//            chargingTimeMinutes.isFocusableInTouchMode = true
-//            chargingTimeMinutes.setText("")
-//
-//            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            imm.showSoftInput(chargingTimeHours, 0)
-//        }
+        chargingTimeHours.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus)
+                closeKeyboard(requireContext(), v)
+        }
+
+        chargingTimeMinutes.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus)
+                closeKeyboard(requireContext(), v)
+        }
     }
 
     companion object {

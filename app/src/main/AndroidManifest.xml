@@ -34,7 +34,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Home.HomeActivity" />
+        <activity android:name=".Home.HomeActivity"
+            android:windowSoftInputMode="adjustNothing"
+            />
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Payment.PaymentActivity" />
         <activity android:name=".Splash.SplashScreen">

@@ -72,6 +72,10 @@ class SettingsChangePassword : BaseFragment() {
         cancelButton.setOnClickListener {
             (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
         }
+
+        backButton.setOnClickListener {
+            (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
+        }
     }
 
     private fun setUpUI() {

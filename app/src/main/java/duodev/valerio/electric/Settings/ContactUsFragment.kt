@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_contact_us.*
@@ -48,6 +49,10 @@ class ContactUsFragment : BaseFragment() {
             val i = Intent(Intent.ACTION_DIAL)
             i.data = Uri.parse("tel:+917500004895")
             startActivity(i)
+        }
+
+        backButton.setOnClickListener {
+            (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
         }
     }
 

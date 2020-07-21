@@ -91,6 +91,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         if (flag == ADMIN) {
             (activity as HomeActivity).bottomNavCard.makeGone()
             adminLogout.makeVisible()
+            backButton.makeGone()
         }
     }
 
@@ -132,6 +133,10 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         adminLogout.setOnClickListener {
             startActivity(LoginActivity.newInstance(requireContext()))
             activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+        }
+
+        backButton.setOnClickListener {
+            (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
         }
 
         uploadStationButton.setOnClickListener {
