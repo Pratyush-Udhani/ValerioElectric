@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:elevation="1dp"/>
+
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"

@@ -43,6 +43,9 @@ class SettingsFragment : BaseFragment() {
         addStationButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, AdminPanelFragment.newInstance(USER))
         }
+        changePasswordButton.setOnClickListener {
+            replaceFragment(this, R.id.homeContainer, SettingsChangePassword.newInstance())
+        }
     }
 
     companion object {

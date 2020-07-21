@@ -61,7 +61,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/color_white"
                     android:minHeight="150dp"
                     android:paddingVertical="8dp">
@@ -71,11 +71,12 @@
                         android:layout_width="55dp"
                         android:layout_height="55dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
                         android:elevation="0dp"
                         app:cardElevation="0dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginBottom="5dp"
+                        app:layout_constraintBottom_toTopOf="@id/stationAddress">
 
                         <ImageView
                             android:id="@+id/stationImage"
@@ -93,10 +94,10 @@
                         android:text="Cannaught Place station"
                         android:textColor="@color/color_black"
                         android:textSize="17sp"
-                        app:layout_constraintBottom_toBottomOf="@id/stationImageCard"
+                        android:layout_marginTop="20dp"
                         app:layout_constraintEnd_toStartOf="@id/distanceLabel"
                         app:layout_constraintStart_toEndOf="@id/stationImageCard"
-                        app:layout_constraintTop_toTopOf="@id/stationImageCard" />
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/stationAddress"
@@ -112,7 +113,7 @@
                         android:textSize="13sp"
                         app:layout_constraintEnd_toStartOf="@id/stationAvailability"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/likePercent" />
+                        app:layout_constraintTop_toBottomOf="@id/stationName" />
 
                     <TextView
                         android:id="@+id/stationPhone"

@@ -207,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:fontFamily="@font/lato"
-                    android:hint="Retype Password"
+                    android:hint="Confirm Password"
                     android:inputType="textPassword"
                     android:paddingHorizontal="16dp"
                     android:textColor="#000000"

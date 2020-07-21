@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -26,9 +25,7 @@ import kotlinx.android.synthetic.main.fragment_log_in.*
 class LogInFragment : BaseFragment() {
 
     private val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val isAuth = MutableLiveData<Boolean>(false)
-    private val noPassword = MutableLiveData<Boolean>(false)
-    private val noEmail = MutableLiveData<Boolean>(false)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,48 +50,25 @@ class LogInFragment : BaseFragment() {
     }
 
     private fun setUpObservers() {
-        isAuth.observe(this, Observer {
+        isAuth.observe(viewLifecycleOwner, Observer {
             if (isAuth.value!!) {
-                startActivity(Intent(requireContext(), HomeActivity::class.java))
+                startActivity(HomeActivity.newInstance(requireContext(), USER))
+                pm.account = true
                 isAuth.value = false
             }
         })
 
-        noPassword.observe(this, Observer {
+        noPassword.observe(viewLifecycleOwner, Observer {
             if (noPassword.value!!) {
                 activity?.toast("Invalid password")
             }
         })
 
-        noEmail.observe(this, Observer {
+        noEmail.observe(viewLifecycleOwner, Observer {
             if (noEmail.value!!) {
                 activity?.toast("No user found")
             }
         })
-    }
-
-    private fun checkAuth(email: String, password: String) {
-        isAuth.value = false
-        noPassword.value = false
-        noEmail.value = false
-        val hash = generateHash(password)
-
-        firebaseFirestore.collection(USERS).document(email).get()
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    if (it.result!!.exists() && it.result!! != null) {
-                        if (it.result!!.get("hash") == hash) {
-                            isAuth.value = true
-                            pm.setUser(convertToPojo(it.result!!.data!!, Users::class.java))
-                        } else {
-                            noPassword.value = true
-                        }
-                    } else {
-                        noEmail.value = true
-                    }
-                }
-            }
-
     }
 
     private fun setListeners() {
@@ -104,7 +78,6 @@ class LogInFragment : BaseFragment() {
         loginButton.setOnClickListener {
             if (userEmail.text.isNotEmpty() && userPassword.text.isNotEmpty()) {
                 checkAuth(userEmail.text.toString(), userPassword.text.toString())
-                pm.account = true
             } else {
                 activity?.toast("Enter details please")
             }

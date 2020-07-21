@@ -1,28 +1,27 @@
 package duodev.valerio.electric.Home
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.firebase.firestore.FirebaseFirestore
 import duodev.valerio.electric.Admin.AdminPanelFragment
 import duodev.valerio.electric.Bookings.BookingPlugsFragment
 import duodev.valerio.electric.Bookings.BookingSlotFragment
 import duodev.valerio.electric.Bookings.BookingsFragment
 import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Settings.SettingsChangePassword
 import duodev.valerio.electric.Settings.SettingsFragment
 import duodev.valerio.electric.Station.StationCompanyFragment
 import duodev.valerio.electric.Station.StationFilterFragment
 import duodev.valerio.electric.Station.StationListFragment
-import duodev.valerio.electric.Station.StationSingleActivity
-import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.Utils.ADMIN
+import duodev.valerio.electric.Utils.USERS
+import duodev.valerio.electric.Utils.addFragment
+import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.base.BaseActivity
-import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity() {
@@ -90,8 +89,26 @@ class HomeActivity : BaseActivity() {
                     if (currentFragment is StationCompanyFragment) {
                         supportFragmentManager.popBackStackImmediate()
                     } else {
-                        if (currentFragment is AdminPanelFragment) {
-                            if (flag == ADMIN) {
+                        if (currentFragment is SettingsChangePassword) {
+                            supportFragmentManager.popBackStackImmediate()
+                        } else {
+                            if (currentFragment is AdminPanelFragment) {
+                                if (flag == ADMIN) {
+                                    if (backPressed.plus(2000) >= System.currentTimeMillis()) {
+                                        super.onBackPressed()
+                                        finishAffinity()
+                                    } else {
+                                        Toast.makeText(
+                                            applicationContext,
+                                            "Press again to exit",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        backPressed = System.currentTimeMillis()
+                                    }
+                                } else {
+                                    supportFragmentManager.popBackStackImmediate()
+                                }
+                            } else {
                                 if (backPressed.plus(2000) >= System.currentTimeMillis()) {
                                     super.onBackPressed()
                                     finishAffinity()
@@ -103,20 +120,6 @@ class HomeActivity : BaseActivity() {
                                     ).show()
                                     backPressed = System.currentTimeMillis()
                                 }
-                            } else {
-                                supportFragmentManager.popBackStackImmediate()
-                            }
-                        } else {
-                            if (backPressed.plus(2000) >= System.currentTimeMillis()) {
-                                super.onBackPressed()
-                                finishAffinity()
-                            } else {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Press again to exit",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                backPressed = System.currentTimeMillis()
                             }
                         }
                     }

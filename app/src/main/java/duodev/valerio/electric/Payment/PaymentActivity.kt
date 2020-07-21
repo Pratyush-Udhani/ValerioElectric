@@ -1,10 +1,19 @@
 package duodev.valerio.electric.Payment
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
@@ -13,13 +22,14 @@ import duodev.valerio.electric.Payment.ViewModel.PaymentViewModel
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.StationListFragment
 import duodev.valerio.electric.Station.StationSingleActivity
-import duodev.valerio.electric.Utils.PreferenceUtils
-import duodev.valerio.electric.Utils.USER
-import duodev.valerio.electric.Utils.log
-import duodev.valerio.electric.Utils.toast
+import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseActivity
 import duodev.valerio.electric.pojos.*
 import kotlinx.android.synthetic.main.activity_payment.*
+import kotlinx.android.synthetic.main.dialog_complete_details.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 
@@ -30,6 +40,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     private var time: Long = 0
     private val paymentViewModel = PaymentViewModel()
     private var mode = ""
+    private val detailsDialog by lazy { Dialog(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +84,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     private fun setUpListeners() {
         paymentButton.setOnClickListener {
             if (mode != "") {
-            razorPayPayment(mode, "20000")
-                Log.d("TQTQ", pm.mobile)
+                checkDetails()
             } else {
                 this.toast("Select a method")
             }
@@ -92,6 +102,62 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                     mode = "upi"
                 }
             }
+        }
+    }
+
+    private fun checkDetails() {
+        if (pm.mobile.isEmpty()) {
+            showDetailsDialog()
+        } else {
+                razorPayPayment(mode, "20000")
+        }
+    }
+
+    private fun showDetailsDialog() {
+        val view: View = layoutInflater.inflate(R.layout.dialog_complete_details, null)
+
+        detailsDialog.apply {
+            setContentView(view)
+            create()
+            detailsDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            detailsDialog.setCanceledOnTouchOutside(true)
+            detailsDialog.setCancelable(true)
+
+            val phoneText: EditText = view.findViewById(R.id.phoneNumber)
+            val address: EditText = view.findViewById(R.id.userAddress)
+            val submitButton: CardView = view.findViewById(R.id.submitButton)
+            val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+            phoneText.addTextChangedListener {
+                if (phoneText.text.length == 10) {
+                    closeKeyboard(this@PaymentActivity, phoneText)
+                }
+            }
+
+            submitButton.setOnClickListener {
+                if (phoneText.text.length == 10) {
+                    progressBar.makeVisible()
+                    lifecycleScope.launch {
+                        withContext(Dispatchers.Default) {
+                            firebaseFirestore.collection(USERS).document(pm.email)
+                                .update("contact", phoneText.text.toString()).addOnSuccessListener {
+                                    firebaseFirestore.collection(USERS).document(pm.email)
+                                        .update("address", address.text.toString())
+                                }
+                            return@withContext
+                        }
+                        return@launch
+                    }
+                    pm.mobile = phoneText.text.toString()
+                    this@PaymentActivity.toast("Information Updated")
+                    checkDetails()
+                    dismiss()
+                } else {
+                    this@PaymentActivity.toast("Enter a valid phone number")
+                }
+            }
+
+            show()
         }
     }
 
