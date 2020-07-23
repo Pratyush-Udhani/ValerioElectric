@@ -1,18 +1,12 @@
 package duodev.valerio.electric.Bookings
 
-import android.app.Activity
 import android.app.TimePickerDialog
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doAfterTextChanged
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
@@ -23,7 +17,6 @@ import kotlinx.android.synthetic.main.fragment_booking_slot.*
 import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashMap
-import kotlin.math.roundToInt
 
 class BookingSlotFragment : BaseFragment() {
 
@@ -125,7 +118,8 @@ class BookingSlotFragment : BaseFragment() {
                             plug,
                             arrivalTime,
                             duration,
-                            price
+                            price,
+                            BOOKING_FLAG
                         )
                     )
                     activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
@@ -157,6 +151,7 @@ class BookingSlotFragment : BaseFragment() {
 
         private const val PLUG = "plug"
         private const val STATION = "Station"
+        const val BOOKING_FLAG = "StationBooking"
 
         fun newInstance(plug: Connector, station: Serializable) = BookingSlotFragment().apply {
             arguments = Bundle().apply {

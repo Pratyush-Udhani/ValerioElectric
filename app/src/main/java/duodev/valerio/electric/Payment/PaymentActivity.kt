@@ -6,10 +6,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
@@ -17,9 +15,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
+import duodev.valerio.electric.Bookings.BookingSlotFragment
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Payment.ViewModel.PaymentViewModel
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Services.ServiceListFragment
+import duodev.valerio.electric.Services.ServiceSingleActivity
 import duodev.valerio.electric.Station.StationListFragment
 import duodev.valerio.electric.Station.StationSingleActivity
 import duodev.valerio.electric.Utils.*
@@ -31,12 +32,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import java.time.Duration
+import kotlin.math.ceil
 
 
 class PaymentActivity : BaseActivity(), PaymentResultListener {
 
-    private lateinit var station: HashMap<String,Any>
+    private lateinit var station: HashMap<String, Any>
+    private lateinit var serviceMap: HashMap<String, Any>
+    private lateinit var service: ServiceStation
     private lateinit var plug: Connector
     private var time: Long = 0
     private val paymentViewModel = PaymentViewModel()
@@ -44,30 +47,66 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     private var mode = ""
     private var duration = ""
     private var price = ""
+    private var flag = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
         intent?.let {
-            station = it.getSerializableExtra(StationSingleActivity.STATION)!! as HashMap<String,Any>
-            plug = it.getParcelableExtra(PLUG)!!
-            time = it.getLongExtra(TIME, 0)
-            duration = it.getStringExtra(DURATION)!!
-            price = it.getStringExtra(PRICE)!!
+            flag = it?.getStringExtra(FLAG)!!
         }
         init()
     }
 
     private fun init() {
+        handleFlag()
         setUpListeners()
-        setUpBookings()
+
+    }
+
+    private fun handleFlag() {
+        when (flag) {
+            BookingSlotFragment.BOOKING_FLAG -> {
+                intent?.let {
+                    station =
+                        it.getSerializableExtra(StationSingleActivity.STATION)!! as HashMap<String, Any>
+                    plug = it.getParcelableExtra(PLUG)!!
+                    time = it.getLongExtra(TIME, 0)
+                    duration = it.getStringExtra(DURATION)!!
+                    price = it.getStringExtra(PRICE)!!
+                }
+                setUpBookings()
+            }
+
+            ServiceSingleActivity.BOOKING_FLAG -> {
+                intent?.let {
+                    serviceMap = it?.getSerializableExtra(SERVICE)!! as HashMap<String, Any>
+                }
+                service = setupService()
+            }
+        }
+    }
+
+    private fun setupService(): ServiceStation {
+        return ServiceStation(
+            serviceMap[ServiceListFragment.NAME].toString(),
+            serviceMap[ServiceListFragment.ADDRESS].toString(),
+            serviceMap[ServiceListFragment.PROVIDER].toString(),
+            serviceMap[ServiceListFragment.IMAGE_URL].toString(),
+            serviceMap[ServiceListFragment.PRICE].toString(),
+            GeoPoint(serviceMap[ServiceListFragment.LATITUDE] as Double, serviceMap[ServiceListFragment.LONGITUDE] as Double),
+            serviceMap[ServiceListFragment.ID].toString()
+        )
     }
 
     private fun setUpBookings(): Bookings {
         return Bookings(
             Station(
                 stationAddress = station[StationListFragment.ADDRESS].toString(),
-                location = GeoPoint(station[StationListFragment.LATITUDE].toString().toDouble(), station[StationListFragment.LONGITUDE].toString().toDouble() ),
+                location = GeoPoint(
+                    station[StationListFragment.LATITUDE].toString().toDouble(),
+                    station[StationListFragment.LONGITUDE].toString().toDouble()
+                ),
                 stationLocation = station[StationListFragment.LOCATION].toString(),
                 numberOfStations = station[StationListFragment.SLOTS].toString().toInt(),
                 serviceProvider = station[StationListFragment.PROVIDER].toString(),
@@ -102,8 +141,8 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
 
-        payment_radio_group.setOnCheckedChangeListener { _,checkedId ->
-            when(checkedId){
+        payment_radio_group.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
                 (R.id.payment_debit) -> {
                     mode = "card"
                 }
@@ -121,8 +160,11 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
         if (pm.mobile.isEmpty()) {
             showDetailsDialog()
         } else {
-                log(price)
-                razorPayPayment(mode, (price.toFloat() * 100).toString())
+            log(price)
+            if (flag == ServiceSingleActivity.BOOKING_FLAG)
+                razorPayPayment(mode, (ceil(service.servicePrice.toFloat()) * 100).toString())
+            else
+                razorPayPayment(mode, (ceil(price.toFloat()) * 100).toString())
         }
     }
 
@@ -207,27 +249,44 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
         this.toast("payment  success")
     }
 
+    private fun confirmServiceBooking() {
+        paymentViewModel.confirmServiceBooking(service)
+        startActivity(HomeActivity.newInstance(this, USER))
+        overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+        this.toast("payment  success")
+    }
+
     companion object {
 
         private const val TIME = "time"
         private const val PLUG = "plug"
         private const val DURATION = "duration"
         private const val PRICE = "price"
+        private const val FLAG = "flag"
+        private const val SERVICE = "Service"
 
         fun newInstance(
             context: Context,
-            station: HashMap<String,Any>,
+            station: HashMap<String, Any>,
             plug: Connector,
             time: Long,
             duration: String,
-            price: String
-        ) = Intent(context,PaymentActivity::class.java).apply {
-                putExtra(StationSingleActivity.STATION, station)
-                putExtra(PLUG, plug)
-                putExtra(TIME, time)
-                putExtra(DURATION, duration)
-                putExtra(PRICE, price)
+            price: String,
+            flag: String
+        ) = Intent(context, PaymentActivity::class.java).apply {
+            putExtra(StationSingleActivity.STATION, station)
+            putExtra(PLUG, plug)
+            putExtra(TIME, time)
+            putExtra(DURATION, duration)
+            putExtra(PRICE, price)
+            putExtra(FLAG, flag)
         }
+
+        fun newInstance(context: Context, service: HashMap<String, Any>, flag: String) =
+            Intent(context, PaymentActivity::class.java).apply {
+                putExtra(SERVICE, service)
+                putExtra(FLAG, flag)
+            }
     }
 
     override fun onBackPressed() {
@@ -241,7 +300,10 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     }
 
     override fun onPaymentSuccess(p0: String?) {
-        confirmBooking()
+        if (flag == ServiceSingleActivity.BOOKING_FLAG)
+            confirmServiceBooking()
+        else
+            confirmBooking()
     }
 
 }

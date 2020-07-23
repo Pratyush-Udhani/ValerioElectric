@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_service_single.*
@@ -108,6 +109,7 @@ class ServiceSingleActivity : BaseActivity() {
 
         bookNowButton.setOnClickListener {
             // Add instance of service in PaymentActivity with args as below
+            startActivity(PaymentActivity.newInstance(this, service, BOOKING_FLAG))
             // startActivity(PaymentActivity.newInstance(this, service as hash map))
         }
 
@@ -122,6 +124,7 @@ class ServiceSingleActivity : BaseActivity() {
         const val FLAG = "flag"
         const val DIST = "dist"
         const val SERVICE = "service"
+        const val BOOKING_FLAG = "ServiceBooking"
 
         fun newInstance(context: Context,  map: HashMap<String, Any>, dist: String) = Intent(context, ServiceSingleActivity::class.java).apply {
             putExtra(FLAG, map)

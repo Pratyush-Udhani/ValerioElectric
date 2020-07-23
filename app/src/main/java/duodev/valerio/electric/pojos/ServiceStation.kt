@@ -8,6 +8,7 @@ import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class ServiceStation (
+
     @SerializedName("serviceName")
     val serviceName: String,
 
@@ -27,6 +28,6 @@ data class ServiceStation (
     val location: @RawValue GeoPoint,
 
     @SerializedName("id")
-    val id: String
+    var id: String
 
 ) : Parcelable
