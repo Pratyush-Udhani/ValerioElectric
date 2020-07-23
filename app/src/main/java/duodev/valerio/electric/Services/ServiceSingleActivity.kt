@@ -114,9 +114,8 @@ class ServiceSingleActivity : BaseActivity() {
     private fun setListeners() {
 
         bookNowButton.setOnClickListener {
-            // Add instance of service in PaymentActivity with args as below
             startActivity(PaymentActivity.newInstance(this, service, BOOKING_FLAG))
-            // startActivity(PaymentActivity.newInstance(this, service as hash map))
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
 
         backButton.setOnClickListener {

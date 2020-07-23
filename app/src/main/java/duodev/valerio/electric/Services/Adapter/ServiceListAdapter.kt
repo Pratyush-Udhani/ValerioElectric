@@ -2,9 +2,11 @@ package duodev.valerio.electric.Services.Adapter
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.Utils.miles2km
@@ -47,6 +49,7 @@ class ServiceListAdapter(
         private val serviceCompany: TextView = itemView.findViewById(R.id.serviceCompanyName)
         private val cardView: CardView = itemView.findViewById(R.id.serviceStation_cardView)
         private val distLabel: TextView = itemView.findViewById(R.id.serviceStation_distance)
+        private val companyImage: ImageView = itemView.findViewById(R.id.serviceStation_image)
 
         fun bindItems(item: ServiceStation, distance: String) {
 
@@ -54,6 +57,8 @@ class ServiceListAdapter(
             serviceStationAddress.text = item.serviceAddress
             serviceCompany.text = item.serviceProvider.name
             distLabel.text = "${miles2km(distance.toDouble())} km"
+            Glide.with(getContext()).load(item.serviceProvider.imageUri).into(companyImage)
+
             cardView.setOnClickListener {
                 listener.onServiceClicked(item, miles2km(distance.toDouble()).toString())
             }
