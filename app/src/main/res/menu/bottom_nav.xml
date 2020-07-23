@@ -13,6 +13,7 @@
     <item
         android:id="@+id/navigationProfile"
         android:icon="@drawable/selector_profile"
+        android:visible="false"
         android:title="Profile" />
 
     <item

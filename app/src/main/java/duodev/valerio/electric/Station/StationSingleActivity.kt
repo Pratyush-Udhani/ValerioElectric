@@ -23,12 +23,13 @@ import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.Adapter.StationPlugAdapter
 import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.base.BaseActivity
 import duodev.valerio.electric.pojos.Company
 import duodev.valerio.electric.pojos.Connector
 import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.activity_station_single.*
 
-class StationSingleActivity : AppCompatActivity() {
+class StationSingleActivity : BaseActivity() {
 
     private val plugAdapter by lazy { StationPlugAdapter(mutableListOf(), "") }
     private lateinit var googleMap: GoogleMap

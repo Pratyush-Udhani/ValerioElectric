@@ -121,6 +121,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
         if (pm.mobile.isEmpty()) {
             showDetailsDialog()
         } else {
+                log(price)
                 razorPayPayment(mode, (price.toFloat() * 100).toString())
         }
     }
@@ -130,6 +131,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
 
         detailsDialog.apply {
             setContentView(view)
+
             create()
             detailsDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             detailsDialog.setCanceledOnTouchOutside(true)

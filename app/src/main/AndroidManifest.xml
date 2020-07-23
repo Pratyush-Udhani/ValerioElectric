@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -21,6 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Services.ServiceSingleActivity"></activity>
         <activity android:name=".Station.StationSingleActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -34,9 +35,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Home.HomeActivity"
-            android:windowSoftInputMode="adjustNothing"
-            />
+        <activity
+            android:name=".Home.HomeActivity"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".Login.LoginActivity" />
         <activity android:name=".Payment.PaymentActivity" />
         <activity android:name=".Splash.SplashScreen">
@@ -46,6 +47,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

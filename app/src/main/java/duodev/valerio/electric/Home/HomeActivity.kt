@@ -12,6 +12,7 @@ import duodev.valerio.electric.Bookings.BookingSlotFragment
 import duodev.valerio.electric.Bookings.BookingsFragment
 import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Services.ServiceListFragment
 import duodev.valerio.electric.Settings.ContactUsFragment
 import duodev.valerio.electric.Settings.ReportIssueFragment
 import duodev.valerio.electric.Settings.SettingsChangePassword
@@ -61,7 +62,7 @@ class HomeActivity : BaseActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigationClock -> {
-                    replaceFragment(null, R.id.homeContainer, BookingsFragment.newInstance(), this)
+                    replaceFragment(null, R.id.homeContainer, ServiceListFragment.newInstance(), this)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigationProfile -> {

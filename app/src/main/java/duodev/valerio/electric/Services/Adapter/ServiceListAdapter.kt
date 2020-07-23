@@ -1,6 +1,5 @@
 package duodev.valerio.electric.Services.Adapter
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -10,10 +9,10 @@ import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.Utils.miles2km
 import duodev.valerio.electric.base.BaseRecyclerViewAdapter
-import duodev.valerio.electric.pojos.Station
+import duodev.valerio.electric.pojos.ServiceStation
 
 class ServiceListAdapter(
-    private val list: LinkedHashMap<Station, String>,
+    private val list: LinkedHashMap<ServiceStation, String>,
     private val listener: OnClick
 ): BaseRecyclerViewAdapter() {
 
@@ -35,7 +34,7 @@ class ServiceListAdapter(
         }
     }
 
-    fun addData(data: MutableMap<Station, String>) {
+    fun addData(data: MutableMap<ServiceStation, String>) {
         list.putAll(data)
         log("called")
         notifyDataSetChanged()
@@ -43,15 +42,15 @@ class ServiceListAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val serviceStationName: TextView = itemView.findViewById(R.id.serviceStation_name)
+        private val serviceStationName: TextView = itemView.findViewById(R.id.serviceName)
         private val serviceStationAddress: TextView = itemView.findViewById(R.id.serviceStation_address)
         private val cardView: CardView = itemView.findViewById(R.id.serviceStation_cardView)
         private val distLabel: TextView = itemView.findViewById(R.id.serviceStation_distance)
 
-        fun bindItems(item: Station, distance: String) {
+        fun bindItems(item: ServiceStation, distance: String) {
 
-            serviceStationName.text = item.stationAddress
-            serviceStationAddress.text = item.stationLocation
+            serviceStationName.text = item.serviceName
+            serviceStationAddress.text = item.serviceAddress
             distLabel.text = "${miles2km(distance.toDouble())} km"
             cardView.setOnClickListener {
                 listener.onServiceClicked(item, miles2km(distance.toDouble()).toString())
@@ -60,7 +59,7 @@ class ServiceListAdapter(
     }
 
     interface OnClick {
-        fun onServiceClicked(station: Station, dist: String)
+        fun onServiceClicked(serviceStation: ServiceStation, dist: String)
     }
 
 
