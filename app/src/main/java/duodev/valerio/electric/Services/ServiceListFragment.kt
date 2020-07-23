@@ -1,7 +1,6 @@
 package duodev.valerio.electric.Services
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,17 +11,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import duodev.valerio.electric.Bookings.BookingPlugsFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Services.Adapter.ServiceListAdapter
 import duodev.valerio.electric.Services.ViewModel.ServiceListViewModel
-import duodev.valerio.electric.Station.StationListFragment
-import duodev.valerio.electric.Station.StationSingleActivity
-import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.Utils.log
+import duodev.valerio.electric.Utils.makeGone
+import duodev.valerio.electric.Utils.makeVisible
+import duodev.valerio.electric.Utils.toast
 import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.ServiceStation
 import kotlinx.android.synthetic.main.fragment_service_list.*
-import kotlinx.android.synthetic.main.fragment_service_list.loader
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin

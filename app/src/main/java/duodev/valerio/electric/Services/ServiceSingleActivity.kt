@@ -100,6 +100,7 @@ class ServiceSingleActivity : BaseActivity() {
         Glide.with(this).load(service[ServiceListFragment.IMAGE_URL].toString()).into(serviceImage)
         Glide.with(this).load(company.imageUri).into(companyImage)
         distanceLabel.text = "$distance km"
+        serviceCompanyName.text = company.name
         servicePrice.text = "Rs. ${service[ServiceListFragment.PRICE]}"
     }
 

@@ -44,6 +44,7 @@ class ServiceListAdapter(
 
         private val serviceStationName: TextView = itemView.findViewById(R.id.serviceName)
         private val serviceStationAddress: TextView = itemView.findViewById(R.id.serviceStation_address)
+        private val serviceCompany: TextView = itemView.findViewById(R.id.serviceCompanyName)
         private val cardView: CardView = itemView.findViewById(R.id.serviceStation_cardView)
         private val distLabel: TextView = itemView.findViewById(R.id.serviceStation_distance)
 
@@ -51,6 +52,7 @@ class ServiceListAdapter(
 
             serviceStationName.text = item.serviceName
             serviceStationAddress.text = item.serviceAddress
+            serviceCompany.text = item.serviceProvider.name
             distLabel.text = "${miles2km(distance.toDouble())} km"
             cardView.setOnClickListener {
                 listener.onServiceClicked(item, miles2km(distance.toDouble()).toString())

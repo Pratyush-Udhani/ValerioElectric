@@ -16,7 +16,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="15dp">
 
             <ImageView
@@ -24,6 +24,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toTopOf="@id/serviceStation_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/services"/>
@@ -33,16 +34,16 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/lato_bold"
                 app:layout_constraintEnd_toStartOf="@id/linearLayout"
                 android:layout_marginEnd="10dp"
                 android:text="XYZ Service Station"
                 android:textColor="@color/color_black"
                 app:layout_constraintStart_toEndOf="@+id/serviceStation_image"
-                app:layout_constraintTop_toTopOf="@+id/serviceStation_image" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/serviceStation_address"
+                android:id="@+id/serviceCompanyName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -51,8 +52,9 @@
                 app:layout_constraintEnd_toStartOf="@id/linearLayout"
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/lato"
-                android:text="Pitampura, New Delhi, Delhi - 110021 "
-                android:textSize="10sp"
+                android:text="Company name"
+                android:textSize="12sp"
+                android:textColor="@color/main_blue"
                 app:layout_constraintStart_toStartOf="@+id/serviceName"
                 app:layout_constraintTop_toBottomOf="@+id/serviceName" />
 
@@ -139,6 +141,22 @@
                     app:srcCompat="@drawable/ic_star_selected" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/serviceStation_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_location_logo"
+                android:drawablePadding="5dp"
+                android:fontFamily="@font/lato"
+                android:text="Cannaught Place Opp. Max hospitals , New Delhi"
+                android:textColor="@color/color_black"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@id/linearLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/serviceCompanyName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

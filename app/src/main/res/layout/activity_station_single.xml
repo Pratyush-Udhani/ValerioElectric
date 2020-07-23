@@ -9,7 +9,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -268,6 +267,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/portDetailsRecycler"
                         android:layout_width="match_parent"
+                        android:visibility="visible"
                         android:layout_height="wrap_content"
                         android:overScrollMode="never"
                         android:nestedScrollingEnabled="true"
@@ -295,8 +295,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="100dp"
+                android:layout_marginBottom="40dp"
                 app:cardCornerRadius="11dp"
+                app:layout_constraintBottom_toTopOf="@id/bookNowButton"
                 app:layout_constraintHeight_min="wrap"
                 app:layout_constraintTop_toBottomOf="@id/locationText">
 
@@ -321,14 +322,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/button_solid_blue"
                 android:fontFamily="@font/lato_bold"
                 android:text="Book Now"
                 android:textColor="@color/color_white"
                 android:textSize="20sp"
-                app:layout_constraintTop_toBottomOf="@id/mapCard"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
