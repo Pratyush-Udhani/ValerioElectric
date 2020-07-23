@@ -5,7 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import duodev.valerio.electric.Admin.AdminPanelFragment
 import duodev.valerio.electric.Bookings.BookingPlugsFragment
 import duodev.valerio.electric.Bookings.BookingSlotFragment
@@ -32,10 +35,12 @@ class HomeActivity : BaseActivity() {
     lateinit var currentFragment: Fragment
     private var backPressed: Long = 0
     private var flag = ""
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        firebaseAnalytics = Firebase.analytics
         intent?.let {
             flag = it.getStringExtra(FLAG)!!
         }

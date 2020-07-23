@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -40,6 +42,18 @@ class StationSingleActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_station_single)
         mapView.onCreate(savedInstanceState)
+
+//        --------------------------FOR TESTING OF CRASHLYTICS--------------------------
+//        val crashButton = Button(this)
+//        crashButton.text = "Crash!"
+//        crashButton.setOnClickListener {
+//            throw RuntimeException("Test Crash") // Force a crash
+//        }
+//
+//        addContentView(crashButton, ViewGroup.LayoutParams(
+//            ViewGroup.LayoutParams.MATCH_PARENT,
+//            ViewGroup.LayoutParams.WRAP_CONTENT))
+//        --------------------------FOR TESTING OF CRASHLYTICS--------------------------
 
         intent?.let {
             station = it.getSerializableExtra(FLAG) as HashMap<String, Any>
