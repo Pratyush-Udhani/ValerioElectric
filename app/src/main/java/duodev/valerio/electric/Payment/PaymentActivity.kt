@@ -40,6 +40,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     private lateinit var station: HashMap<String, Any>
     private lateinit var serviceMap: HashMap<String, Any>
     private lateinit var service: ServiceStation
+    private lateinit var stationBookings: Bookings
     private lateinit var plug: Connector
     private var time: Long = 0
     private val paymentViewModel = PaymentViewModel()
@@ -48,6 +49,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     private var duration = ""
     private var price = ""
     private var flag = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +77,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                     duration = it.getStringExtra(DURATION)!!
                     price = it.getStringExtra(PRICE)!!
                 }
-                setUpBookings()
+                stationBookings = setUpBookings()
             }
 
             ServiceSingleActivity.BOOKING_FLAG -> {
@@ -91,7 +93,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
         return ServiceStation(
             serviceMap[ServiceListFragment.NAME].toString(),
             serviceMap[ServiceListFragment.ADDRESS].toString(),
-            serviceMap[ServiceListFragment.PROVIDER].toString(),
+            serviceMap[ServiceListFragment.PROVIDER] as Company,
             serviceMap[ServiceListFragment.IMAGE_URL].toString(),
             serviceMap[ServiceListFragment.PRICE].toString(),
             GeoPoint(serviceMap[ServiceListFragment.LATITUDE] as Double, serviceMap[ServiceListFragment.LONGITUDE] as Double),
@@ -243,7 +245,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
 
     // should could be called after payment success
     private fun confirmBooking() {
-        paymentViewModel.confirmBooking(setUpBookings())
+        paymentViewModel.confirmBooking(stationBookings)
         startActivity(HomeActivity.newInstance(this, USER))
         overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         this.toast("payment  success")

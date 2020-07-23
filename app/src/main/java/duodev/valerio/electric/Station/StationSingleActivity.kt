@@ -43,18 +43,6 @@ class StationSingleActivity : BaseActivity() {
         setContentView(R.layout.activity_station_single)
         mapView.onCreate(savedInstanceState)
 
-//        --------------------------FOR TESTING OF CRASHLYTICS--------------------------
-//        val crashButton = Button(this)
-//        crashButton.text = "Crash!"
-//        crashButton.setOnClickListener {
-//            throw RuntimeException("Test Crash") // Force a crash
-//        }
-//
-//        addContentView(crashButton, ViewGroup.LayoutParams(
-//            ViewGroup.LayoutParams.MATCH_PARENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT))
-//        --------------------------FOR TESTING OF CRASHLYTICS--------------------------
-
         intent?.let {
             station = it.getSerializableExtra(FLAG) as HashMap<String, Any>
             distance = it.getStringExtra(DIST)!!
@@ -94,6 +82,7 @@ class StationSingleActivity : BaseActivity() {
     }
 
     private fun setUpUI() {
+        Log.d("TAGA","Image: " + station[StationListFragment.IMAGE_URL].toString())
         val company = station[StationListFragment.OWNER] as Company
         stationName.text = station[StationListFragment.ADDRESS].toString()
         Glide.with(this).load(station[StationListFragment.IMAGE_URL].toString()).into(stationImage)

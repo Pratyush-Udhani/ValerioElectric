@@ -1,5 +1,6 @@
 package duodev.valerio.electric.Services.ViewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +13,7 @@ class ServiceCompanyViewModel: ViewModel() {
         ServiceCompanyRepo()
 
     private var _data = MutableLiveData<List<Company>>()
-    val data: MutableLiveData<List<Company>>
+    val data: LiveData<List<Company>>
         get() = _data
 
     fun fetchData() {

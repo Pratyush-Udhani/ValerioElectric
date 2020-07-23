@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import duodev.valerio.electric.Admin.AdminPanelFragment
+import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.USER
 import duodev.valerio.electric.Utils.replaceFragment
@@ -48,6 +49,9 @@ class SettingsFragment : BaseFragment() {
         }
         contactUsButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, ContactUsFragment.newInstance())
+        }
+        profileButton.setOnClickListener {
+            replaceFragment(this, R.id.homeContainer, ProfileFragment.newInstance())
         }
     }
 

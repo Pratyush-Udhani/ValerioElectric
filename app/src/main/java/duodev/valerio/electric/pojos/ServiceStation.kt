@@ -16,7 +16,7 @@ data class ServiceStation (
     val serviceAddress: String,
 
     @SerializedName("serviceProvider")
-    val serviceProvider: String,
+    val serviceProvider: Company,
 
     @SerializedName("serviceImage")
     val serviceImage: String,

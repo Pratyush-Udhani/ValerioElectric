@@ -1,5 +1,6 @@
 package duodev.valerio.electric.Services.ViewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +14,7 @@ class ServiceListViewModel : ViewModel() {
     private val serviceListRepo = ServiceListRepo()
 
     private var _data = MutableLiveData<List<Station>>()
-    val data: MutableLiveData<List<Station>>
+    val data: LiveData<List<Station>>
         get() = _data
 
     fun fetchData() = serviceListRepo.fetchData()

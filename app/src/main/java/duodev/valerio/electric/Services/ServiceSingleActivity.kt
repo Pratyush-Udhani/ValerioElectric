@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapsInitializer
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.base.BaseActivity
+import duodev.valerio.electric.pojos.Company
 import kotlinx.android.synthetic.main.activity_service_single.*
 
 class ServiceSingleActivity : BaseActivity() {
@@ -92,8 +94,11 @@ class ServiceSingleActivity : BaseActivity() {
     }
 
     private fun setUpUI() {
+        val company = service[ServiceListFragment.PROVIDER] as Company
         serviceName.text = service[ServiceListFragment.NAME].toString()
         serviceAddress.text = service[ServiceListFragment.ADDRESS].toString()
+        Glide.with(this).load(service[ServiceListFragment.IMAGE_URL].toString()).into(serviceImage)
+        Glide.with(this).load(company.imageUri).into(companyImage)
         distanceLabel.text = "$distance km"
         servicePrice.text = "Rs. ${service[ServiceListFragment.PRICE]}"
     }
