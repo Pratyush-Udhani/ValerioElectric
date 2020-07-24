@@ -24,7 +24,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/plugLogo"
@@ -42,6 +43,7 @@
                 android:layout_gravity="center"
                 android:layout_weight=".5"
                 android:text="chademo"
+                android:textAlignment="center"
                 android:textColor="@color/main_blue"
                 android:textSize="14sp" />
 

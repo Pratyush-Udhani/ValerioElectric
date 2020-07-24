@@ -51,34 +51,40 @@ class StationListAdapter(
         private val cardView: CardView = itemView.findViewById(R.id.stationCard)
         private val distLabel: TextView = itemView.findViewById(R.id.distanceLabel)
         private val portsLayout: LinearLayout = itemView.findViewById(R.id.portsLayout)
-        private val singlePortLayout: LinearLayout = itemView.findViewById(R.id.singlePortLayout)
+        private val singlePortLayout1: LinearLayout = itemView.findViewById(R.id.singlePortLayout1)
+        private val singlePortLayout2: LinearLayout = itemView.findViewById(R.id.singlePortLayout2)
         private val extrasText: TextView = itemView.findViewById(R.id.plusMoreText)
-        private val portIcon: ImageView = itemView.findViewById(R.id.portIcon)
-        private val portName: TextView = itemView.findViewById(R.id.portName)
+        private val portIcon1: ImageView = itemView.findViewById(R.id.portIcon1)
+        private val portIcon2: ImageView = itemView.findViewById(R.id.portIcon2)
+        private val portName1: TextView = itemView.findViewById(R.id.portName1)
+        private val portName2: TextView = itemView.findViewById(R.id.portName2)
         private val stationImage: ImageView = itemView.findViewById(R.id.stationImage)
 
         fun bindItems(item: Station, distance: String) {
 
-            stationName.text = item.stationAddress
-            stationAddress.text = item.stationLocation
+//            stationName.text = item.stationAddress
+//            stationAddress.text = item.stationLocation
+            stationAddress.text = item.stationAddress
             distLabel.text = "${miles2km(distance.toDouble())} km"
             Glide.with(getContext()).load(item.ownerCompany.imageUri).into(stationImage)
 
-            portName.text = item.connectorType[0].type
+//            portName1.text = item.connectorType[0].type
+//            portName2.text = item.connectorType[1].type
 
-            when (item.connectorType[0].type) {
-                CHAD_DC -> portIcon.setImageResource(R.drawable.ic_chad_icon)
-                CCS_DC -> portIcon.setImageResource(R.drawable.ic_ccs_icon)
-                TYPE_TWO_43 -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
-                TYPE_TWO_22 -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
-                TYPE_ONE_7 -> portIcon.setImageResource(R.drawable.ic_type_one_icon)
-                IEC_PLUG -> portIcon.setImageResource(R.drawable.ic_iec_plug)
-                AMP_16 -> portIcon.setImageResource(R.drawable.ic_type_one_icon)
+            if(item.connectorType.size >= 2 ) {
+                setPort(item.connectorType[0].type, portIcon1, portName1);
+                setPort(item.connectorType[1].type, portIcon2, portName2);
             }
 
             when (item.connectorType.size) {
                 0 -> portsLayout.makeGone()
                 1 -> {
+                    portsLayout.makeVisible()
+                    extrasText.makeGone()
+                    singlePortLayout2.makeGone()
+                    setPort(item.connectorType[0].type, portIcon1, portName1);
+                }
+                2 -> {
                     portsLayout.makeVisible()
                     extrasText.makeGone()
                 }
@@ -97,5 +103,17 @@ class StationListAdapter(
 
     interface OnClick {
         fun onStationClicked(station: Station, dist: String)
+    }
+    fun setPort(portType: String, portIcon: ImageView, portName: TextView ) {
+        portName.text = portType;
+        when (portType) {
+            CHAD_DC -> portIcon.setImageResource(R.drawable.ic_chad_icon)
+            CCS_DC -> portIcon.setImageResource(R.drawable.ic_ccs_icon)
+            TYPE_TWO_43 -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
+            TYPE_TWO_22 -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
+            TYPE_ONE_7 -> portIcon.setImageResource(R.drawable.ic_type_one_icon)
+            IEC_PLUG -> portIcon.setImageResource(R.drawable.ic_iec_plug)
+            AMP_16 -> portIcon.setImageResource(R.drawable.ic_type_one_icon)
+        }
     }
 }

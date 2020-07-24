@@ -131,6 +131,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:layout_marginLeft="2dp"
                     android:src="@drawable/ic_password_key_icon"
                     android:tint="@color/main_blue" />
 
@@ -146,6 +147,43 @@
                     android:maxLines="1"
                     android:paddingHorizontal="8dp"
                     android:text="Change Password"
+                    android:textColor="@color/color_black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/profileButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_white_soft_box"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="10dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="2dp"
+                    android:src="@drawable/ic_profile_active"
+                    android:tint="@color/main_blue" />
+
+                <TextView
+                    android:id="@+id/profileText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:text="Account"
                     android:textColor="@color/color_black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -179,6 +217,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:layout_marginLeft="2dp"
                     android:src="@drawable/ic_contact_us_icon" />
 
                 <TextView
@@ -240,7 +279,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/bg_white_soft_box"
                 android:clickable="true"
                 android:elevation="5dp"
@@ -252,6 +291,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:layout_marginLeft="2dp"
                     android:src="@drawable/ic_t_and_c_icon" />
 
                 <TextView
@@ -266,41 +306,6 @@
                     android:maxLines="1"
                     android:paddingHorizontal="8dp"
                     android:text="Terms and Conditions"
-                    android:textColor="@color/color_black"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/profileButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/bg_white_soft_box"
-                android:elevation="5dp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="10dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/ic_profile_active"
-                    android:tint="@color/main_blue" />
-
-                <TextView
-                    android:id="@+id/profileText"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/open_sans"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:paddingHorizontal="8dp"
-                    android:text="My Profile"
                     android:textColor="@color/color_black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -321,6 +326,7 @@
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:layout_marginLeft="2dp"
                     android:src="@drawable/ic_plug_logo"
                     android:tint="@color/main_blue" />
 
