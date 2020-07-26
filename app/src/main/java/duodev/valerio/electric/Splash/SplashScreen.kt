@@ -3,6 +3,7 @@ package duodev.valerio.electric.Splash
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -33,8 +34,9 @@ class SplashScreen : BaseActivity() {
 
     private fun setUpUsers() {
         if (pm.email.isNotEmpty()) {
-            firebaseFirestore.collection(USERS).document(pm.email).get().addOnCompleteListener {
-                pm.setUser(convertToPojo(it.result!!.data!!, Users::class.java))
+            firebaseFirestore.collection(USERS).document(pm.email).get().addOnSuccessListener {
+                if (it.exists())
+                    pm.setUser(convertToPojo(it.data!!, Users::class.java))
             }
         }
     }

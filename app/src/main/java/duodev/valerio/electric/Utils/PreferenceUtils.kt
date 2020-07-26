@@ -1,8 +1,6 @@
 package duodev.valerio.electric.Utils
 
-import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.google.android.gms.common.util.SharedPreferencesUtils
 import duodev.valerio.electric.ValerioApp
 import duodev.valerio.electric.pojos.Users
 
