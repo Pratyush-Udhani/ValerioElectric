@@ -83,6 +83,7 @@ class ServiceListRepo {
                 .withUsername(ADMIN_EMAIL)
                 .withPassword(ADMIN_PASS)
                 .withMailto(pm.email)
+                .withType(BackgroundMail.TYPE_PLAIN)
                 .withSubject("Service Booked")
                 .withBody(
                     """
@@ -104,6 +105,7 @@ class ServiceListRepo {
                         .withUsername(ADMIN_EMAIL)
                         .withPassword(ADMIN_PASS)
                         .withMailto(service.serviceEmail)
+                        .withType(BackgroundMail.TYPE_PLAIN)
                         .withSubject("Service Booked")
                         .withBody(
                             """
