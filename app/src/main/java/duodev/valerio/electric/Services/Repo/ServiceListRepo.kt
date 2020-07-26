@@ -100,13 +100,13 @@ class ServiceListRepo {
                 .withProcessVisibility(false)
                 .send()
 
-            BackgroundMail.newBuilder(context)
-                .withUsername(ADMIN_EMAIL)
-                .withPassword(ADMIN_PASS)
-                .withMailto(service.serviceEmail)
-                .withSubject("Service Booked")
-                .withBody(
-                    """
+                BackgroundMail.newBuilder(context)
+                        .withUsername(ADMIN_EMAIL)
+                        .withPassword(ADMIN_PASS)
+                        .withMailto(service.serviceEmail)
+                        .withSubject("Service Booked")
+                        .withBody(
+                            """
                         Dear ${service.serviceProvider.name}
                         
                         ${service.serviceName} has been booked by user ${pm.name}. Your contact details have been shared with them.
@@ -116,9 +116,9 @@ class ServiceListRepo {
                         Regards
                         Valerio Electric
                         """.trimIndent()
-                )
-                .withProcessVisibility(false)
-                .send()
+                        )
+                        .withProcessVisibility(false)
+                        .send()
     }
 
     fun fetchBookings(): LiveData<List<ServiceStation>> {

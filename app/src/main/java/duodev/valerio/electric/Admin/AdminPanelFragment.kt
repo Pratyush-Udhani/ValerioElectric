@@ -112,9 +112,13 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         }
 
         ownerGroup.setOnCheckedChangeListener { _, checkedId ->
-            when (checkedId) {
-                R.id.privateOwner -> owner = "Private Owner"
-                R.id.publicOwner -> owner = "Public Owner"
+            privateOwner.setOnClickListener {
+                publicOwner.isChecked = false
+                owner = "Private Owner"
+            }
+            publicOwner.setOnClickListener {
+                privateOwner.isChecked = false
+                owner = "Public Owner"
             }
         }
 
@@ -166,7 +170,6 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         val geoCoder = Geocoder(requireContext()).getFromLocationName(stationAddress.text.toString(), 1)
         if (geoCoder.size > 0) {
             if (geoCoder[0].hasLatitude() && geoCoder[0].hasLongitude()){
-
                 lat = Geocoder(requireContext()).getFromLocationName(stationAddress.text.toString(), 1)[0].latitude
                 long = Geocoder(requireContext()).getFromLocationName(stationAddress.text.toString(), 1)[0].longitude
                 uploadFile()
@@ -269,7 +272,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
 
     private fun uploadSecond() {
         val stationStorageReference = storeReference.child(STATION_IMAGE).child(
-            stationLat.text.toString() + "." + getFileExtension(stationUrl)
+            long.toString() + "." + getFileExtension(stationUrl)
         )
 
         lifecycleScope.launch {
@@ -390,13 +393,17 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
 
             addPlugButton.setOnClickListener {
                 if (plug != "") {
-                    Connector(
-                        type = plug,
-                        price = plugPrice.text.toString()
-                    ).also {
-                        plugList.add(it)
-                        addedPlugsAdapter.addItem(it)
-                        dismiss()
+                    if (plugPrice.text.isNotEmpty()) {
+                        Connector(
+                            type = plug,
+                            price = plugPrice.text.toString()
+                        ).also {
+                            plugList.add(it)
+                            addedPlugsAdapter.addItem(it)
+                            dismiss()
+                        }
+                    } else {
+                        activity?.toast("enter port price")
                     }
                 } else {
                     activity?.toast("select port type")

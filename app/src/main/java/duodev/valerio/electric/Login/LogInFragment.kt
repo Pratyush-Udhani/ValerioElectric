@@ -52,9 +52,10 @@ class LogInFragment : BaseFragment() {
     private fun setUpObservers() {
         isAuth.observe(viewLifecycleOwner, Observer {
             if (isAuth.value!!) {
-                startActivity(HomeActivity.newInstance(requireContext(), USER))
+                pm.email = userEmail.text.toString()
                 pm.account = true
                 isAuth.value = false
+                startActivity(HomeActivity.newInstance(requireContext(), USER))
             }
         })
 
