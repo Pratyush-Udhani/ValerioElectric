@@ -123,4 +123,7 @@ dependencies {
 
     // razorpay
     implementation 'com.razorpay:checkout:1.5.16'
+
+    // background mail
+    implementation 'com.github.yesidlazaro:GmailBackground:1.2.0'
 }

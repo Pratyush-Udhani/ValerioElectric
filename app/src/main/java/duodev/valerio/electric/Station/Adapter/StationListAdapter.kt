@@ -91,7 +91,7 @@ class StationListAdapter(
                 else -> {
                     portsLayout.makeVisible()
                     extrasText.makeVisible()
-                    extrasText.text = "+${item.connectorType.size - 1} more"
+                    extrasText.text = "+${item.connectorType.size - 2} more"
                 }
             }
 
@@ -104,7 +104,8 @@ class StationListAdapter(
     interface OnClick {
         fun onStationClicked(station: Station, dist: String)
     }
-    fun setPort(portType: String, portIcon: ImageView, portName: TextView ) {
+
+    private fun setPort(portType: String, portIcon: ImageView, portName: TextView ) {
         portName.text = portType;
         when (portType) {
             CHAD_DC -> portIcon.setImageResource(R.drawable.ic_chad_icon)

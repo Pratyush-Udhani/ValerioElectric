@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import duodev.valerio.electric.Admin.AdminPanelFragment
 import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Services.BookingServiceFragment
 import duodev.valerio.electric.Utils.USER
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.Utils.toast
@@ -52,6 +53,9 @@ class SettingsFragment : BaseFragment() {
         }
         profileButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, ProfileFragment.newInstance())
+        }
+        showBookingsButton.setOnClickListener {
+            replaceFragment(this, R.id.homeContainer, BookingServiceFragment.newInstance())
         }
     }
 

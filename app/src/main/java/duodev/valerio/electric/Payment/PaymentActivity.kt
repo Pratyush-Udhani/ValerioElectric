@@ -97,7 +97,9 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
             serviceMap[ServiceListFragment.IMAGE_URL].toString(),
             serviceMap[ServiceListFragment.PRICE].toString(),
             GeoPoint(serviceMap[ServiceListFragment.LATITUDE] as Double, serviceMap[ServiceListFragment.LONGITUDE] as Double),
-            serviceMap[ServiceListFragment.ID].toString()
+            serviceMap[ServiceListFragment.ID].toString(),
+            serviceMap[ServiceListFragment.PHONE].toString(),
+            serviceMap[ServiceListFragment.EMAIL].toString()
         )
     }
 

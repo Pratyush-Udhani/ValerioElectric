@@ -14,17 +14,23 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.firestore.GeoPoint
 import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Services.ViewModel.ServiceListViewModel
+import duodev.valerio.electric.Utils.toast
 import duodev.valerio.electric.base.BaseActivity
 import duodev.valerio.electric.pojos.Company
+import duodev.valerio.electric.pojos.ServiceStation
 import kotlinx.android.synthetic.main.activity_service_single.*
 
 class ServiceSingleActivity : BaseActivity() {
 
     private lateinit var googleMap: GoogleMap
     private lateinit var service: HashMap<String, Any>
+    private lateinit var servicePojo: ServiceStation
     private lateinit var distance: String
+    private val serviceViewModel by lazy { ServiceListViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +79,21 @@ class ServiceSingleActivity : BaseActivity() {
         }
     }
 
+    private fun setupService(): ServiceStation {
+        return ServiceStation(
+            service[ServiceListFragment.NAME].toString(),
+            service[ServiceListFragment.ADDRESS].toString(),
+            service[ServiceListFragment.PROVIDER] as Company,
+            service[ServiceListFragment.IMAGE_URL].toString(),
+            service[ServiceListFragment.PRICE].toString(),
+            GeoPoint(service[ServiceListFragment.LATITUDE] as Double, service[ServiceListFragment.LONGITUDE] as Double),
+            service[ServiceListFragment.ID].toString(),
+            service[ServiceListFragment.PHONE].toString(),
+            service[ServiceListFragment.EMAIL].toString(),
+            service[ServiceListFragment.STATUS].toString()
+        )
+    }
+
     override fun onResume() {
         super.onResume()
         mapView.onResume()
@@ -94,6 +115,15 @@ class ServiceSingleActivity : BaseActivity() {
     }
 
     private fun setUpUI() {
+        servicePojo = setupService()
+
+        when (servicePojo.status) {
+            "booked" -> {
+                bookNowButton.text = "Already Booked"
+                bookNowButton.isEnabled = false
+            }
+        }
+
         val company = service[ServiceListFragment.PROVIDER] as Company
         serviceName.text = service[ServiceListFragment.NAME].toString()
         serviceAddress.text = service[ServiceListFragment.ADDRESS].toString()
@@ -114,7 +144,11 @@ class ServiceSingleActivity : BaseActivity() {
     private fun setListeners() {
 
         bookNowButton.setOnClickListener {
-            startActivity(PaymentActivity.newInstance(this, service, BOOKING_FLAG))
+//            startActivity(PaymentActivity.newInstance(this, service, BOOKING_FLAG))
+//            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+            serviceViewModel.setUpBooking(servicePojo, this)
+            toast("Service booked")
+            finish()
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
 

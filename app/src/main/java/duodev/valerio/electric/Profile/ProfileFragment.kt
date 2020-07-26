@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Login.LoginActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.PreferenceUtils
@@ -41,6 +42,9 @@ class ProfileFragment : BaseFragment() {
     private fun setListeners() {
         logoutButton.setOnClickListener {
             initiateSignOut()
+        }
+        backButton.setOnClickListener {
+            (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
         }
     }
 

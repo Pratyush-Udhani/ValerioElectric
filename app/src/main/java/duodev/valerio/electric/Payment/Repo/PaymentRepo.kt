@@ -19,9 +19,7 @@ class PaymentRepo {
         firebaseFirestore.collection(USERS).document(pm.email).collection(BOOKINGS).document(id).set(bookings)
     }
 
-    fun confirmServiceBooking(serviceStation: ServiceStation) {
-        val id = firebaseFirestore.collection(USERS).document(pm.email).collection(SERVICE_BOOKINGS).document().id
-        serviceStation.id = id
-        firebaseFirestore.collection(USERS).document(pm.email).collection(SERVICE_BOOKINGS).document(id).set(serviceStation)
+    suspend fun confirmServiceBooking(serviceStation: ServiceStation) {
+        firebaseFirestore.collection(USERS).document(pm.email).collection(SERVICE_BOOKINGS).document(serviceStation.id).update("status", "paid")
     }
 }

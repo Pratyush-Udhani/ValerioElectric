@@ -15,6 +15,7 @@ import duodev.valerio.electric.Bookings.BookingSlotFragment
 import duodev.valerio.electric.Bookings.BookingsFragment
 import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Services.BookingServiceFragment
 import duodev.valerio.electric.Services.ServiceListFragment
 import duodev.valerio.electric.Settings.ContactUsFragment
 import duodev.valerio.electric.Settings.ReportIssueFragment
@@ -106,33 +107,41 @@ class HomeActivity : BaseActivity() {
                                 if (currentFragment is ReportIssueFragment) {
                                     supportFragmentManager.popBackStackImmediate()
                                 } else {
-                                    if (currentFragment is AdminPanelFragment) {
-                                        if (flag == ADMIN) {
-                                            if (backPressed.plus(2000) >= System.currentTimeMillis()) {
-                                                super.onBackPressed()
-                                                finishAffinity()
-                                            } else {
-                                                Toast.makeText(
-                                                    applicationContext,
-                                                    "Press again to exit",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                                backPressed = System.currentTimeMillis()
-                                            }
-                                        } else {
-                                            supportFragmentManager.popBackStackImmediate()
-                                        }
+                                    if (currentFragment is BookingServiceFragment) {
+                                        supportFragmentManager.popBackStackImmediate()
                                     } else {
-                                        if (backPressed.plus(2000) >= System.currentTimeMillis()) {
-                                            super.onBackPressed()
-                                            finishAffinity()
+                                        if (currentFragment is ProfileFragment) {
+                                            supportFragmentManager.popBackStackImmediate()
                                         } else {
-                                            Toast.makeText(
-                                                applicationContext,
-                                                "Press again to exit",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            backPressed = System.currentTimeMillis()
+                                            if (currentFragment is AdminPanelFragment) {
+                                                if (flag == ADMIN) {
+                                                    if (backPressed.plus(2000) >= System.currentTimeMillis()) {
+                                                        super.onBackPressed()
+                                                        finishAffinity()
+                                                    } else {
+                                                        Toast.makeText(
+                                                            applicationContext,
+                                                            "Press again to exit",
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                        backPressed = System.currentTimeMillis()
+                                                    }
+                                                } else {
+                                                    supportFragmentManager.popBackStackImmediate()
+                                                }
+                                            } else {
+                                                if (backPressed.plus(2000) >= System.currentTimeMillis()) {
+                                                    super.onBackPressed()
+                                                    finishAffinity()
+                                                } else {
+                                                    Toast.makeText(
+                                                        applicationContext,
+                                                        "Press again to exit",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                    backPressed = System.currentTimeMillis()
+                                                }
+                                            }
                                         }
                                     }
                                 }

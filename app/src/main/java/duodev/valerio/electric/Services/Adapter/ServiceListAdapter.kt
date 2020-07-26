@@ -3,6 +3,7 @@ package duodev.valerio.electric.Services.Adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -36,6 +37,11 @@ class ServiceListAdapter(
         }
     }
 
+    fun clearData() {
+        list.clear()
+        notifyDataSetChanged()
+    }
+
     fun addData(data: MutableMap<ServiceStation, String>) {
         list.putAll(data)
         log("called")
@@ -50,6 +56,7 @@ class ServiceListAdapter(
         private val cardView: CardView = itemView.findViewById(R.id.serviceStation_cardView)
         private val distLabel: TextView = itemView.findViewById(R.id.serviceStation_distance)
         private val companyImage: ImageView = itemView.findViewById(R.id.serviceStation_image)
+        private val paidLayout: LinearLayout = itemView.findViewById(R.id.paidLayout)
 
         fun bindItems(item: ServiceStation, distance: String) {
 

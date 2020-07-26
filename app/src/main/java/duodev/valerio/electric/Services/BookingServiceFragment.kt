@@ -3,61 +3,64 @@ package duodev.valerio.electric.Services
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import duodev.valerio.electric.Home.HomeActivity
+import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Services.Adapter.ServiceListAdapter
 import duodev.valerio.electric.Services.ViewModel.ServiceListViewModel
 import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.Utils.makeGone
 import duodev.valerio.electric.Utils.makeVisible
-import duodev.valerio.electric.Utils.toast
 import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.ServiceStation
-import kotlinx.android.synthetic.main.fragment_service_list.*
+import kotlinx.android.synthetic.main.fragment_booking_service.*
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
 
-class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
+class BookingServiceFragment : BaseFragment(), ServiceListAdapter.OnClick {
 
-    private val serviceListAdapter by lazy { ServiceListAdapter(mutableMapOf<ServiceStation, String>() as LinkedHashMap<ServiceStation, String>, this) }
+    private val serviceAdapter by lazy { ServiceListAdapter(mutableMapOf<ServiceStation, String>() as LinkedHashMap<ServiceStation, String>, this) }
     private val serviceViewModel = ServiceListViewModel()
-    private val sortedList: MutableList<ServiceStation> = mutableListOf()
-    private var serviceList: List<ServiceStation> = emptyList()
-    private var bookedList: List<ServiceStation> = emptyList()
     private var longitude: Double? = 0.0
     private var latitude: Double? = 0.0
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+
+        }
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_service_list, container, false)
+        return inflater.inflate(R.layout.fragment_booking_service, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
-    fun init() {
+
+    private fun init() {
+        setListeners()
         getLocation()
         setUpRecycler()
     }
 
-    private fun setUpRecycler() {
-        serviceListRecycler.apply {
-            adapter = this@ServiceListFragment.serviceListAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+    private fun setListeners() {
+        backButton.setOnClickListener {
+            (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
         }
     }
 
@@ -103,21 +106,13 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
                     log("not null")
                     latitude = it.latitude
                     longitude = it.longitude
-                    serviceViewModel.fetchData().observe(viewLifecycleOwner, Observer {list ->
+                    serviceViewModel.fetchBookings().observe(viewLifecycleOwner, Observer {list ->
                         if (list.isNotEmpty()) {
                             log("called$list")
-                            serviceList = list
+                            sortData(list)
                         } else {
+                            noBookings.makeVisible()
                             loader.makeGone()
-                        }
-                    })
-                    serviceViewModel.fetchBookings().observe(viewLifecycleOwner, Observer { book ->
-                        if (book.isNotEmpty()) {
-                        Log.d("HEHEHE", "here empty")
-                                bookedList = book
-                                checkStatus(serviceList, bookedList)
-                        } else {
-                            sortData(serviceList)
                         }
                     })
                 }
@@ -129,40 +124,6 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
 
         log("$latitude$longitude latlng")
     }
-
-    private fun checkStatus(list: List<ServiceStation>, bookedList: List<ServiceStation>) {
-
-        Log.d("HEHEHE", "inside fun")
-
-        val stringList: MutableList<String> = mutableListOf()
-
-        for (element in bookedList) {
-            if (!stringList.contains(element.id)) {
-                stringList.add(element.id)
-            }
-        }
-
-        for (element in list) {
-            if (stringList.contains(element.id)) {
-                for (elem in bookedList) {
-                    if (elem.id == element.id) {
-                        sortedList.add(elem)
-                        if (sortedList.size == list.size) {
-                            sortData(sortedList)
-                            break
-                        }
-                    }
-                }
-            } else {
-                sortedList.add(element)
-                if (sortedList.size == list.size) {
-                    sortData(sortedList)
-                    break
-                }
-            }
-        }
-    }
-
 
     private fun sortData(list: List<ServiceStation>) {
         //   getLocation()
@@ -185,8 +146,9 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
                 distance(latitude!!, longitude!!, element.location.latitude, element.location.longitude).toString()
         }
         loader.makeGone()
-        serviceListAdapter.addData(sortedMap)
+        serviceAdapter.addData(sortedMap)
     }
+
 
     private fun distance(
         lat1: Double,
@@ -214,35 +176,16 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
         return rad * 180.0 / Math.PI
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1) {
-            if (grantResults.size > 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                fetchServices()
-                permissionText.makeGone()
-            } else {
-                requireContext().toast("Please grant permissions")
-                permissionText.makeVisible()
-                loader.makeGone()
-            }
+    private fun setUpRecycler() {
+        servicesRecycler.apply {
+            adapter = this@BookingServiceFragment.serviceAdapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        serviceListAdapter.clearData()
-        sortedList.clear()
-        serviceList = emptyList()
-        bookedList = emptyList()
-        init()
     }
 
     companion object {
 
+        const val BOOKING_FLAG = "ServiceBooking"
         const val NAME = "name"
         const val ADDRESS = "address"
         const val PROVIDER = "provider"
@@ -253,12 +196,12 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
         const val IMAGE_URL = "imageUrl"
         const val PHONE = "phone"
         const val EMAIL = "email"
-        const val STATUS = "status"
-        const val RESULT_CODE = 14
 
-        fun newInstance() = ServiceListFragment()
+        fun newInstance() = BookingServiceFragment()
     }
+
     override fun onServiceClicked(serviceStation: ServiceStation, dist: String) {
+
         val map: HashMap<String, Any> = hashMapOf()
 
         map[NAME] = serviceStation.serviceName
@@ -271,9 +214,8 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
         map[ID] = serviceStation.id
         map[PHONE] = serviceStation.servicePhone
         map[EMAIL] = serviceStation.serviceEmail
-        map[STATUS] = serviceStation.status
 
-        startActivity(ServiceSingleActivity.newInstance(requireContext(), map, dist))
+        startActivity(PaymentActivity.newInstance(requireContext(), map, BOOKING_FLAG))
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
     }
 }

@@ -28,6 +28,15 @@ data class ServiceStation (
     val location: @RawValue GeoPoint,
 
     @SerializedName("id")
-    var id: String
+    var id: String,
+
+    @SerializedName("phone")
+    var servicePhone: String,
+
+    @SerializedName("email")
+    var serviceEmail: String,
+
+    @SerializedName("status")
+    var status: String = ""
 
 ) : Parcelable
