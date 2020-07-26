@@ -1,7 +1,9 @@
 package duodev.valerio.electric.Services
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -202,6 +204,13 @@ class BookingServiceFragment : BaseFragment(), ServiceListAdapter.OnClick {
 
     override fun onServiceClicked(serviceStation: ServiceStation, dist: String) {
 
+        if (serviceStation.status == "paid") {
+            val uri =
+                Uri.parse("google.navigation:q=${serviceStation.location.latitude},${serviceStation.location.longitude}")
+            val mapIntent = Intent(Intent.ACTION_VIEW, uri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
+        } else {
         val map: HashMap<String, Any> = hashMapOf()
 
         map[NAME] = serviceStation.serviceName
@@ -217,5 +226,6 @@ class BookingServiceFragment : BaseFragment(), ServiceListAdapter.OnClick {
 
         startActivity(PaymentActivity.newInstance(requireContext(), map, BOOKING_FLAG))
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+        }
     }
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.log
+import duodev.valerio.electric.Utils.makeVisible
 import duodev.valerio.electric.Utils.miles2km
 import duodev.valerio.electric.base.BaseRecyclerViewAdapter
 import duodev.valerio.electric.pojos.ServiceStation
@@ -65,6 +66,10 @@ class ServiceListAdapter(
             serviceCompany.text = item.serviceProvider.name
             distLabel.text = "${miles2km(distance.toDouble())} km"
             Glide.with(getContext()).load(item.serviceProvider.imageUri).into(companyImage)
+
+            if (item.status == "paid") {
+                paidLayout.makeVisible()
+            }
 
             cardView.setOnClickListener {
                 listener.onServiceClicked(item, miles2km(distance.toDouble()).toString())

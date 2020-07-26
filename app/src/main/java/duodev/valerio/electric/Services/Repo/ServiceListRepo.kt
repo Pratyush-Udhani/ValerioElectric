@@ -84,8 +84,10 @@ class ServiceListRepo {
                 .withPassword(ADMIN_PASS)
                 .withMailto(pm.email)
                 .withSubject("Service Booked")
-                .withBody("""
-                    Dear ${pm.name.split(" ")[0]}
+                .withBody(
+                    """
+                        Dear ${pm.name.split(" ")[0]}
+                        
                         You have successfully booked ${service.serviceName} service with ${service.serviceProvider.name}.
                         Contact the provider at ${service.serviceEmail} or ${service.servicePhone}. 
                         To confirm the booking head on to the bookings page in the settings menu of your Valerio Electric App.
@@ -93,7 +95,8 @@ class ServiceListRepo {
                         For any queries contact us at $ADMIN_EMAIL
                         Regards
                         Valerio Electric
-                                """)
+                        """.trimIndent()
+                )
                 .withProcessVisibility(false)
                 .send()
 
@@ -102,15 +105,18 @@ class ServiceListRepo {
                 .withPassword(ADMIN_PASS)
                 .withMailto(service.serviceEmail)
                 .withSubject("Service Booked")
-                .withBody("""
-                    Dear ${service.serviceProvider.name}
+                .withBody(
+                    """
+                        Dear ${service.serviceProvider.name}
+                        
                         ${service.serviceName} has been booked by user ${pm.name}. Your contact details have been shared with them.
                         You can also contact them at ${pm.email} or ${pm.mobile}
                         
                         For any queries contact us at $ADMIN_EMAIL
                         Regards
                         Valerio Electric
-                                """)
+                        """.trimIndent()
+                )
                 .withProcessVisibility(false)
                 .send()
     }
