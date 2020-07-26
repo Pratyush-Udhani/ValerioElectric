@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
@@ -15,7 +16,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.GeoPoint
-import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Services.ViewModel.ServiceListViewModel
 import duodev.valerio.electric.Utils.toast
@@ -155,6 +155,16 @@ class ServiceSingleActivity : BaseActivity() {
         backButton.setOnClickListener {
             finish()
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+        }
+
+        mapView.getMapAsync {
+            it.setOnMapClickListener {
+                val uri =
+                    Uri.parse("google.navigation:q=${service[ServiceListFragment.LATITUDE]},${service[ServiceListFragment.LONGITUDE]}")
+                val mapIntent = Intent(Intent.ACTION_VIEW, uri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
+            }
         }
     }
 

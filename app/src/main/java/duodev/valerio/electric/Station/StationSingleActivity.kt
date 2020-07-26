@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -155,6 +156,16 @@ class StationSingleActivity : BaseActivity() {
         backButton.setOnClickListener {
             finish()
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+        }
+
+        mapView.getMapAsync {
+            it.setOnMapClickListener {
+                val uri =
+                    Uri.parse("google.navigation:q=${station[StationListFragment.LATITUDE]},${station[StationListFragment.LONGITUDE]}")
+                val mapIntent = Intent(Intent.ACTION_VIEW, uri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
+            }
         }
     }
 
