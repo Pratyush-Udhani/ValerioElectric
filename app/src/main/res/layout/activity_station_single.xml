@@ -200,12 +200,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
                 android:elevation="0dp"
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="11dp"
                 app:cardElevation="5dp"
-                app:layout_constraintTop_toBottomOf="@id/stationDetailsCard">
+                app:layout_constraintTop_toBottomOf="@id/stationDetailsCard"
+                tools:layout_editor_absoluteX="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -267,14 +267,27 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/portDetailsRecycler"
                         android:layout_width="match_parent"
-                        android:visibility="visible"
                         android:layout_height="wrap_content"
-                        android:overScrollMode="never"
                         android:nestedScrollingEnabled="true"
+                        android:overScrollMode="never"
+                        android:visibility="visible"
                         tools:listitem="@layout/card_station_plug" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/prices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/lato"
+                android:paddingLeft="2dp"
+                android:text="* Prices are subject to change."
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/portDetailsCard" />
 
             <TextView
                 android:id="@+id/locationText"
@@ -287,7 +300,7 @@
                 android:textColor="@color/color_black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/portDetailsCard" />
+                app:layout_constraintTop_toBottomOf="@+id/prices" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/mapCard"
