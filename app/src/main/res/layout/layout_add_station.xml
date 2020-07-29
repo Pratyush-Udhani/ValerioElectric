@@ -47,7 +47,7 @@
             app:layout_constraintEnd_toStartOf="@id/locationButton"
             android:layout_height="match_parent"
             android:drawablePadding="10dp"
-            android:hint="Address"
+            android:hint="Select location"
             android:includeFontPadding="true"
             android:lines="3"
             android:background="@android:color/transparent"
