@@ -69,16 +69,20 @@ class LoginActivity : BaseActivity() {
         if (currentFragment is SignUpFragment || currentFragment is ForgotPasswordFragment) {
             supportFragmentManager.popBackStackImmediate()
         } else {
-            if (backPressed.plus(2000) >= System.currentTimeMillis()) {
-                super.onBackPressed()
-                finishAffinity()
+            if (currentFragment is LogInOneFragment) {
+                supportFragmentManager.popBackStackImmediate()
             } else {
-                Toast.makeText(
-                    applicationContext,
-                    "Press again to exit",
-                    Toast.LENGTH_SHORT
-                ).show()
-                backPressed = System.currentTimeMillis()
+                if (backPressed.plus(2000) >= System.currentTimeMillis()) {
+                    super.onBackPressed()
+                    finishAffinity()
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "Press again to exit",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    backPressed = System.currentTimeMillis()
+                }
             }
         }
     }

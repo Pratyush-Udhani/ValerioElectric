@@ -68,6 +68,11 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
         val list = StationDef.getStationList()
+        val serviceList = ServiceDef.getServiceList()
+
+        serviceList.forEachIndexed { index, serviceStation ->
+            firestore.collection(SERVICES).document("$index").set(serviceStation)
+        }
 
             list.forEachIndexed { index, station ->
                 firestore.collection(STATIONS).document("$index").set(station)
@@ -112,12 +117,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
 //        }
         filterButton.setOnClickListener {
 //            addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance(), null, true)
-//            setUpdb()
-
-            Log.d("GEOCODER",
-
-            Geocoder(requireContext()).getFromLocationName("11, Rajaji Marg, Meena Bagh, Krishna Manon Lane Area, New Delhi, Delhi 110011", 1)[0].latitude.toString()
-            )
+            setUpdb()
         }
 
         permissionText.setOnClickListener {

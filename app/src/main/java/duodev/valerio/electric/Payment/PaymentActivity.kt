@@ -62,7 +62,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
 
     private fun init() {
         handleFlag()
-        setUpListeners()
+//        setUpListeners()
 
     }
 
@@ -78,6 +78,8 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                     price = it.getStringExtra(PRICE)!!
                 }
                 stationBookings = setUpBookings()
+                confirmBooking()
+
             }
 
             ServiceSingleActivity.BOOKING_FLAG -> {
@@ -85,21 +87,22 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                     serviceMap = it?.getSerializableExtra(SERVICE)!! as HashMap<String, Any>
                 }
                 service = setupService()
+                confirmServiceBooking()
             }
         }
     }
 
     private fun setupService(): ServiceStation {
         return ServiceStation(
-            serviceMap[ServiceListFragment.NAME].toString(),
-            serviceMap[ServiceListFragment.ADDRESS].toString(),
-            serviceMap[ServiceListFragment.PROVIDER] as Company,
-            serviceMap[ServiceListFragment.IMAGE_URL].toString(),
-            serviceMap[ServiceListFragment.PRICE].toString(),
-            GeoPoint(serviceMap[ServiceListFragment.LATITUDE] as Double, serviceMap[ServiceListFragment.LONGITUDE] as Double),
-            serviceMap[ServiceListFragment.ID].toString(),
-            serviceMap[ServiceListFragment.PHONE].toString(),
-            serviceMap[ServiceListFragment.EMAIL].toString()
+            serviceName = serviceMap[ServiceListFragment.NAME].toString(),
+            serviceAddress = serviceMap[ServiceListFragment.ADDRESS].toString(),
+            serviceProvider = serviceMap[ServiceListFragment.PROVIDER] as Company,
+            serviceImage = serviceMap[ServiceListFragment.IMAGE_URL].toString(),
+            servicePrice = serviceMap[ServiceListFragment.PRICE].toString(),
+            location = GeoPoint(serviceMap[ServiceListFragment.LATITUDE] as Double, serviceMap[ServiceListFragment.LONGITUDE] as Double),
+            id = serviceMap[ServiceListFragment.ID].toString(),
+            description = serviceMap[ServiceListFragment.DESC].toString(),
+            status = serviceMap[ServiceListFragment.STATUS].toString()
         )
     }
 
@@ -122,7 +125,8 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
             ),
             Connector(
                 type = plug.type,
-                price = plug.price
+                price = plug.price,
+                id = plug.id
             ),
             time = time,
             id = "",
@@ -161,16 +165,12 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     }
 
     private fun checkDetails() {
-        if (pm.mobile.isEmpty()) {
-            showDetailsDialog()
-        } else {
             log(price)
             if (flag == ServiceSingleActivity.BOOKING_FLAG)
                 razorPayPayment(mode, (ceil(service.servicePrice.toFloat()) * 100).toString())
             else
                 razorPayPayment(mode, (ceil(price.toFloat()) * 100).toString())
         }
-    }
 
     private fun showDetailsDialog() {
         val view: View = layoutInflater.inflate(R.layout.dialog_complete_details, null)

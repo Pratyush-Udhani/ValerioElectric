@@ -32,25 +32,43 @@
             android:layout_marginTop="10dp"
             android:text="Please fill in the station details"
             android:textSize="12sp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_white_soft_box"
+            android:layout_marginTop="5dp"
+            android:elevation="5dp"
+            android:layout_marginHorizontal="20dp">
 
         <EditText
             android:id="@+id/stationAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/bg_white_soft_box"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/locationButton"
+            android:layout_height="match_parent"
             android:drawablePadding="10dp"
-            android:elevation="5dp"
             android:hint="Address"
             android:includeFontPadding="true"
-            android:maxLines="3"
+            android:lines="3"
+            android:background="@android:color/transparent"
             android:padding="10dp"
             android:paddingHorizontal="5dp"
             android:paddingVertical="8dp"
             android:textColor="@color/color_black"
             android:textColorHint="@color/gray"
             android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/locationButton"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_location_logo"
+                android:elevation="6dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <EditText
             android:id="@+id/stationCity"
@@ -107,6 +125,35 @@
             android:background="@drawable/bg_white_soft_box"
             android:elevation="5dp"
             android:hint="Service provider"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/color_black"
+            android:textColorHint="@color/gray"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/serviceProviderPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_white_soft_box"
+            android:elevation="5dp"
+            android:hint="Service provider phone"
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="8dp"
+            android:textColor="@color/color_black"
+            android:textColorHint="@color/gray"
+            android:textSize="16sp" />
+        <EditText
+            android:id="@+id/serviceProviderEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_white_soft_box"
+            android:elevation="5dp"
+            android:hint="Service provider email"
             android:paddingHorizontal="5dp"
             android:paddingVertical="8dp"
             android:textColor="@color/color_black"

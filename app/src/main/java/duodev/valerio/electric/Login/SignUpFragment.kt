@@ -72,6 +72,7 @@ class SignUpFragment : BaseFragment() {
             && userEmail.text.isNotEmpty()
             && userPassword.text.isNotEmpty()
             && retypePassword.text.isNotEmpty()
+            && userPhone.text.isNotEmpty()
             && userAddress.text.isNotEmpty()
         ) {
             if (retypePassword.text.trim().toString() == userPassword.text.trim().toString()) {

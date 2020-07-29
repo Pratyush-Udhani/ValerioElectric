@@ -1,0 +1,160 @@
+package duodev.valerio.electric.Admin
+
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
+import duodev.valerio.electric.R
+import duodev.valerio.electric.Utils.log
+import duodev.valerio.electric.Utils.toast
+import kotlinx.android.synthetic.main.activity_add_station_location.*
+
+class AddStationLocation : AppCompatActivity() {
+
+    private var lat: Double = 0.0
+    private var long: Double = 0.0
+    private var mLat: Double = 0.0
+    private var mLong: Double = 0.0
+    private var address = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_add_station_location)
+        stationLocation.onCreate(savedInstanceState)
+        init()
+    }
+
+    private fun init() {
+        stationLocation.onResume()
+        getLocation()
+        setUpListeners()
+    }
+
+    private fun getLocation() {
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+        } else {
+
+            val locationRequest = LocationRequest()
+            locationRequest.interval = 10000
+            locationRequest.fastestInterval = 3000
+            locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            LocationServices.getFusedLocationProviderClient(this).lastLocation.addOnSuccessListener {
+                if (it != null) {
+                    mLat = it.latitude
+                    mLong = it.longitude
+                    setUpMap()
+                }
+            }
+        }
+    }
+
+    private fun setUpListeners() {
+        selectButton.setOnClickListener {
+            if (lat != 0.0 && long != 0.0) {
+                Log.d("TATATA","sent intent")
+
+                val geocoder = Geocoder(this).getFromLocation(lat, long, 1)
+                address = geocoder[0].getAddressLine(0)
+
+                val intent = Intent()
+                intent.putExtra(ADDRESS, address)
+                intent.putExtra(LAT, lat)
+                intent.putExtra(LONG, long)
+                setResult(AdminPanelFragment.CODE, intent)
+                finish()
+                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+            } else {
+                toast("select location")
+            }
+        }
+    }
+
+    private fun setUpMap() {
+        try {
+            MapsInitializer.initialize(applicationContext)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        stationLocation.getMapAsync {
+
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),1)
+            }
+            it.isMyLocationEnabled = true
+            val style = MapStyleOptions.loadRawResourceStyle(this, R.raw.night_maps)
+            it.setMapStyle(style)
+
+            val latLng = LatLng(mLat, mLong)
+            val cameraPosition = CameraPosition.Builder().target(latLng).zoom(12f).build()
+            it.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+
+            it.setOnMapClickListener {latLong ->
+                it.clear()
+                it.addMarker(MarkerOptions().position(latLong))
+                lat = latLong.latitude
+                long = latLong.longitude
+                Log.d("TATATA", "$lat $long")
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        stationLocation.onResume()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stationLocation.onDestroy()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stationLocation.onPause()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        stationLocation.onLowMemory()
+    }
+
+    companion object {
+
+        const val ADDRESS = "address"
+        const val LAT = "latitude"
+        const val LONG = "longitude"
+
+        fun newInstance(context: Context) = Intent(context, AddStationLocation::class.java)
+    }
+}

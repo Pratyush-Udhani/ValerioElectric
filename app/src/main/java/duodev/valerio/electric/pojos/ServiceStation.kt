@@ -30,13 +30,10 @@ data class ServiceStation (
     @SerializedName("id")
     var id: String,
 
-    @SerializedName("phone")
-    var servicePhone: String,
-
-    @SerializedName("email")
-    var serviceEmail: String,
-
     @SerializedName("status")
-    var status: String = ""
+    var status: String = "",
 
-) : Parcelable
+    @SerializedName("description")
+    var description: String
+
+    ) : Parcelable

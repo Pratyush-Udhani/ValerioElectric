@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -15,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.auth.User
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
@@ -56,6 +56,7 @@ class LogInFragment : BaseFragment() {
                 pm.account = true
                 isAuth.value = false
                 startActivity(HomeActivity.newInstance(requireContext(), USER))
+//                replaceFragment(this, R.id.loginContainer, LogInOneFragment.newInstance(pm.getUser()))
             }
         })
 
@@ -132,23 +133,32 @@ class LogInFragment : BaseFragment() {
         Log.d("SIGNUP", "here")
         firebaseFirestore.collection(USERS).document(account?.email.toString().trim()).get()
             .addOnSuccessListener {
-                Log.d("SIGNUP", "SUCCESS")
-                pm.name = account?.givenName.toString()
-                pm.email = account?.email.toString()
-                pm.account = true
+//                Log.d("SIGNUP", "SUCCESS")
+//                pm.name = account?.givenName.toString()
+//                pm.email = account?.email.toString()
+//                pm.account = true
                 if (it.exists()) {
                     pm.setUser(convertToPojo(it.data!!, Users::class.java))
+                    pm.account = true
                     intent = HomeActivity.newInstance(requireContext(), USER)
                     startActivity(intent)
                     requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
                 } else {
                     Log.d("SIGNUP", "NEW")
-                    firebaseFirestore.collection(USERS).document(account?.email.toString().trim())
-                        .set(pm.getUser())
+//                    firebaseFirestore.collection(USERS).document(account?.email.toString().trim())
+//                        .set(pm.getUser())
                     loader.makeGone()
-                    intent = HomeActivity.newInstance(requireContext(), USER)
-                    startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+
+                    Users (
+                        name = account?.givenName.toString(),
+                        email = account?.email.toString(),
+                        imageUrl = account?.photoUrl.toString()
+                    ).also { user ->
+                    replaceFragment(this, R.id.loginContainer, LogInOneFragment.newInstance(user))
+                    }
+//                    intent = HomeActivity.newInstance(requireContext(), USER)
+//                    startActivity(intent)
+//                    requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
                 }
             }
     }

@@ -1,13 +1,16 @@
 package duodev.valerio.electric.Admin
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +18,10 @@ import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.Button
 import android.widget.EditText
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +29,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
@@ -37,6 +49,7 @@ import duodev.valerio.electric.pojos.Company
 import duodev.valerio.electric.pojos.Connector
 import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.dialog_station_location.*
 import kotlinx.android.synthetic.main.fragment_admin_panel.*
 import kotlinx.android.synthetic.main.layout_add_station.*
 import kotlinx.coroutines.Dispatchers
@@ -59,6 +72,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
     private var lat: Double = 0.0
     private var long: Double = 0.0
     private var flag = ""
+    private val dialog by lazy { Dialog(requireContext()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +106,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
             (activity as HomeActivity).bottomNavCard.makeGone()
             adminLogout.makeVisible()
             backButton.makeGone()
+            headingTitle.text = "Panel"
         }
     }
 
@@ -120,6 +135,11 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                 privateOwner.isChecked = false
                 owner = "Public Owner"
             }
+        }
+
+        locationButton.setOnClickListener {
+                startActivityForResult(AddStationLocation.newInstance(requireContext()), CODE)
+                activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
 
         removeCompanyImageButton.setOnClickListener {
@@ -153,7 +173,8 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
             ) {
                 if (stationUrl != Uri.EMPTY && companyUrl != Uri.EMPTY) {
                     if (plugList.size != 0) {
-                        setLocation()
+//                        setLocation()
+                        uploadFile()
                     } else {
                         activity?.toast("add a plug")
                     }
@@ -209,7 +230,9 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                 stationAddress = stationAddress.trimString(),
                 ownerCompany = Company(
                     name = companyName.trimString(),
-                    imageUri = companyBitmap.toString()
+                    imageUri = companyBitmap.toString(),
+                    phone = serviceProviderPhone.text.toString(),
+                    email = serviceProviderEmail.text.toString()
                 ),
                 serviceProvider = serviceProvider.trimString(),
                 location = GeoPoint(lat, long),
@@ -344,6 +367,17 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                 uploadStationImage.makeGone()
             }
         }
+
+        if (requestCode == CODE) {
+            Log.d("TATATA","received intent")
+            if (data != null) {
+                Log.d("TATATA","data not null")
+                lat = data.getDoubleExtra(AddStationLocation.LAT, 0.0)
+                long = data.getDoubleExtra(AddStationLocation.LONG, 0.0)
+                stationAddress.setText(data.getStringExtra(AddStationLocation.ADDRESS))
+                Log.d("TATATATA", "$lat, $long")
+            }
+        }
     }
 
     private fun showPlugDialog() {
@@ -355,6 +389,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
             val plugName: AutoCompleteTextView = view.findViewById(R.id.plugName)
             val plugPrice: EditText = view.findViewById(R.id.plugCost)
             val addPlugButton: CardView = view.findViewById(R.id.addPlugButton)
+            val plugId: EditText = view.findViewById(R.id.plugId)
 
             val plugAdapter = ArrayAdapter.createFromResource(
                 requireContext(),
@@ -396,7 +431,8 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                     if (plugPrice.text.isNotEmpty()) {
                         Connector(
                             type = plug,
-                            price = plugPrice.text.toString()
+                            price = plugPrice.text.toString(),
+                            id = plugId.text.toString()
                         ).also {
                             plugList.add(it)
                             addedPlugsAdapter.addItem(it)
@@ -421,6 +457,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
     companion object {
 
         private const val FLAG = "flag"
+        const val CODE =  19
 
         fun newInstance(flag: String) = AdminPanelFragment().apply {
             arguments = Bundle().apply {

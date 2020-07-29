@@ -254,7 +254,7 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
         const val PHONE = "phone"
         const val EMAIL = "email"
         const val STATUS = "status"
-        const val RESULT_CODE = 14
+        const val DESC = "description"
 
         fun newInstance() = ServiceListFragment()
     }
@@ -269,9 +269,8 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
         map[LATITUDE] = serviceStation.location.latitude
         map[LONGITUDE] = serviceStation.location.longitude
         map[ID] = serviceStation.id
-        map[PHONE] = serviceStation.servicePhone
-        map[EMAIL] = serviceStation.serviceEmail
         map[STATUS] = serviceStation.status
+        map[DESC] = serviceStation.description
 
         startActivity(ServiceSingleActivity.newInstance(requireContext(), map, dist))
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)

@@ -32,32 +32,35 @@ object StationDef {
             77.219663
         )
 
-//        for (i in 0..4) {
-//
-//
-//            list.add(
-//                Station(
-//                    stationAddress = listOfNames[i],
-//                    location = GeoPoint(listOfLats[i], listOnLongs[i]),
-//                    stationLocation = "Delhi",
-//                    numberOfStations = 1,
-//                    serviceProvider = "Delta Electronics",
-//                    imageUrl = "asc",
-//                    stationId = "",
-//                    ownerCompany = Company(
-//                        name = "NDMC",
-//                        imageUri = "as"
-//                    ),
-//                    connectorType = listOf(
-//                        Connector(
-//                            type = TYPE_TWO,
-//                            price = "Rs. 5.56 per hour"
-//                        )
-//                    ),
-//                    ownership = "Private"
-//                )
-//            )
-//        }
+        for (i in 0..4) {
+
+
+            list.add(
+                Station(
+                    stationAddress = listOfNames[i],
+                    location = GeoPoint(listOfLats[i], listOnLongs[i]),
+                    stationLocation = "Delhi",
+                    numberOfStations = 1,
+                    serviceProvider = "Delta Electronics",
+                    imageUrl = "asc",
+                    stationId = "",
+                    ownerCompany = Company(
+                        name = "NDMC",
+                        imageUri = "as",
+                        email = "pratyush.udhani@gmail.com",
+                        phone = "7898164077"
+                    ),
+                    connectorType = listOf(
+                        Connector(
+                            type = TYPE_TWO,
+                            price = "Rs. 5.56 per hour",
+                            id = (i+1).toString()
+                        )
+                    ),
+                    ownership = "Private"
+                )
+            )
+        }
 
         return list
     }

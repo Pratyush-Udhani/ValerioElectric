@@ -221,11 +221,9 @@ class BookingServiceFragment : BaseFragment(), ServiceListAdapter.OnClick {
         map[LATITUDE] = serviceStation.location.latitude
         map[LONGITUDE] = serviceStation.location.longitude
         map[ID] = serviceStation.id
-        map[PHONE] = serviceStation.servicePhone
-        map[EMAIL] = serviceStation.serviceEmail
 
         startActivity(PaymentActivity.newInstance(requireContext(), map, BOOKING_FLAG))
-        activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+//        activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
     }
 }

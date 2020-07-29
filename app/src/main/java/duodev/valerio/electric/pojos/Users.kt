@@ -12,16 +12,16 @@ val pm = PreferenceUtils
 data class Users (
 
     @SerializedName("name")
-    val name: String? = pm.name,
+    var name: String? = pm.name,
 
     @SerializedName("email")
     val email: String? = pm.email,
 
     @SerializedName("contact")
-    val contact: String? = pm.mobile,
+    var contact: String? = pm.mobile,
 
     @SerializedName("address")
-    val address: String? = "",
+    var address: String? = "",
 
     @SerializedName("imageUrl")
     val imageUrl: String? = "",

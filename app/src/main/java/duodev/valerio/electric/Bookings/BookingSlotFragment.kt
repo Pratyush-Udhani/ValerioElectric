@@ -122,7 +122,7 @@ class BookingSlotFragment : BaseFragment() {
                             BOOKING_FLAG
                         )
                     )
-                    activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+//                    activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
                     }
                 } else {
                     activity?.toast("Select duration")

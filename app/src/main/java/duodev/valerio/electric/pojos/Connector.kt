@@ -6,5 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Connector (
     val type: String,
-    val price: String
+    val price: String,
+    val id: String
 ): Parcelable

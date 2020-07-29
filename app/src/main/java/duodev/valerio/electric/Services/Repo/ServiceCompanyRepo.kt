@@ -14,7 +14,9 @@ class ServiceCompanyRepo {
             companyList.add(
                 Company(
                     name = "comapny$i",
-                    imageUri = "asc"
+                    imageUri = "asc",
+                    phone = "",
+                    email = ""
                 )
             )
         }
