@@ -24,13 +24,14 @@ class ServiceListRepo {
 
         firestore.collection(SERVICES).get().addOnSuccessListener {
             for (i in 0 until it.documents.size) {
+                log("called")
                 log(it.documents[i].data!!.toString())
                 serviceList.add(convertToPojo(it.documents[i].data!!, ServiceStation::class.java))
             }
             data.value = serviceList
         }
 
-        data.value = serviceList
+    //    data.value = serviceList
 
         return data
     }

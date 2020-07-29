@@ -1,14 +1,18 @@
 package duodev.valerio.electric.Payment
 
+import android.R.id.message
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.view.View
 import android.widget.EditText
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.FirebaseFirestore
@@ -247,17 +251,61 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
 
     // should could be called after payment success
     private fun confirmBooking() {
-        paymentViewModel.confirmBooking(stationBookings)
-        startActivity(HomeActivity.newInstance(this, USER))
-        overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-        this.toast("payment  success")
+        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.SEND_SMS), 123)
+        } else {
+            val smsManager: SmsManager = SmsManager.getDefault()
+            smsManager.sendTextMessage("78981 64077", null, "message", null, null) // add the phone no of the service provider
+            paymentViewModel.confirmBooking(stationBookings)
+            startActivity(HomeActivity.newInstance(this, USER))
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+            this.toast("payment  success")
+        }
+
     }
 
     private fun confirmServiceBooking() {
-        paymentViewModel.confirmServiceBooking(service)
-        startActivity(HomeActivity.newInstance(this, USER))
-        overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-        this.toast("payment  success")
+        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.SEND_SMS), 12)
+        } else {
+            val smsManager: SmsManager = SmsManager.getDefault()
+            smsManager.sendTextMessage("78981 64077", null, "message", null, null)
+            paymentViewModel.confirmServiceBooking(service)
+            startActivity(HomeActivity.newInstance(this, USER))
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+            this.toast("payment  success")
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 12) {
+            if (grantResults.size > 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val smsManager: SmsManager = SmsManager.getDefault()
+                smsManager.sendTextMessage("78981 64077", null, "message", null, null)
+                paymentViewModel.confirmServiceBooking(service)
+                startActivity(HomeActivity.newInstance(this, USER))
+                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+                this.toast("payment  success")
+            } else {
+                toast("Please grant permissions")
+            }
+        }
+
+        if (requestCode == 123) {
+            val smsManager: SmsManager = SmsManager.getDefault()
+            smsManager.sendTextMessage("78981 64077", null, "message", null, null)
+            paymentViewModel.confirmBooking(stationBookings)
+            startActivity(HomeActivity.newInstance(this, USER))
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+            this.toast("payment  success")
+        } else {
+            toast("Please grant permissions")
+        }
     }
 
     companion object {
