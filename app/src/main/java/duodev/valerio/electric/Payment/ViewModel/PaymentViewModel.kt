@@ -1,5 +1,6 @@
 package duodev.valerio.electric.Payment.ViewModel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import duodev.valerio.electric.Payment.Repo.PaymentRepo
@@ -11,9 +12,9 @@ class PaymentViewModel : ViewModel() {
 
     private val paymentRepo = PaymentRepo()
 
-    fun confirmBooking(booking: Bookings) {
+    fun confirmBooking(booking: Bookings, context: Context) {
         viewModelScope.launch {
-            paymentRepo.confirmBooking(booking)
+            paymentRepo.confirmBooking(booking, context)
         }
     }
 
