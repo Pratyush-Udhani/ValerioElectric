@@ -21,7 +21,7 @@ data class Users (
     var contact: String? = pm.mobile,
 
     @SerializedName("address")
-    var address: String? = "",
+    var address: String? = pm.address,
 
     @SerializedName("imageUrl")
     val imageUrl: String? = "",

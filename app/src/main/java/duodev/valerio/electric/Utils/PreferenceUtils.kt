@@ -11,6 +11,7 @@ object PreferenceUtils {
     private const val NAME = "name"
     private const val EMAIL = "email"
     private const val MOBILE = "mobile"
+    private const val ADDRESS = "address"
     private const val ACCOUNT = "account"
     private const val HASH = "hash"
 
@@ -38,11 +39,18 @@ object PreferenceUtils {
             pm.edit().putString(MOBILE, value).apply()
         }
 
+    var address: String
+        get() = pm.getString(ADDRESS, "") ?: ""
+        set(value) {
+            pm.edit().putString(ADDRESS, value).apply()
+        }
+
     var hash: String
         get() = pm.getString(HASH, "") ?: ""
         set(value) {
             pm.edit().putString(HASH, value).apply()
         }
+
 
     fun getUser(): Users {
         return Users()
@@ -54,6 +62,7 @@ object PreferenceUtils {
         pm.email = users.email?.trimString()!!
         pm.mobile = users.contact?.trimString()!!
         pm.hash = users.hash?.trimString()!!
+        pm.address = users.address?.trimString()!!
     }
 
     fun resetUser() {
@@ -62,6 +71,7 @@ object PreferenceUtils {
         pm.name = ""
         pm.email = ""
         pm.mobile = ""
+        pm.address = ""
         pm.account = false
     }
 

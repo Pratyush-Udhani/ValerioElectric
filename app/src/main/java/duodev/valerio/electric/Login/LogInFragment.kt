@@ -139,10 +139,14 @@ class LogInFragment : BaseFragment() {
 //                pm.account = true
                 if (it.exists()) {
                     pm.setUser(convertToPojo(it.data!!, Users::class.java))
-                    pm.account = true
-                    intent = HomeActivity.newInstance(requireContext(), USER)
-                    startActivity(intent)
-                    requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+                    if (pm.mobile.isEmpty() && pm.address.isEmpty()) {
+                        replaceFragment(this, R.id.loginContainer, LogInOneFragment.newInstance(pm.getUser()))
+                    } else {
+                        pm.account = true
+                        intent = HomeActivity.newInstance(requireContext(), USER)
+                        startActivity(intent)
+                        requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+                    }
                 } else {
                     Log.d("SIGNUP", "NEW")
 //                    firebaseFirestore.collection(USERS).document(account?.email.toString().trim())
