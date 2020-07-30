@@ -34,6 +34,7 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
     private val sortedList: MutableList<ServiceStation> = mutableListOf()
     private var serviceList: List<ServiceStation> = emptyList()
     private var bookedList: List<ServiceStation> = emptyList()
+    private var bookedFetched = MutableLiveData(false)
     private var longitude: Double? = 0.0
     private var latitude: Double? = 0.0
 
@@ -52,6 +53,20 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
     fun init() {
         getLocation()
         setUpRecycler()
+//        setUpObserver()
+    }
+
+    private fun setUpObserver() {
+            Log.d("TREEE", serviceList.toString())
+            bookedFetched.observe(viewLifecycleOwner, Observer {
+                if (bookedFetched.value!!) {
+                  if (bookedList.isNotEmpty()) {
+                      checkStatus(serviceList, bookedList)
+                  } else {
+                      sortData(serviceList)
+                  }
+                }
+            })
     }
 
     private fun setUpRecycler() {
@@ -105,19 +120,22 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
                     longitude = it.longitude
                     serviceViewModel.fetchData().observe(viewLifecycleOwner, Observer {list ->
                         if (list.isNotEmpty()) {
-                            log("called$list")
+                            Log.d("TREEE", "service list not empty")
                             serviceList = list
+                            setUpObserver()
                         } else {
                             loader.makeGone()
                         }
                     })
                     serviceViewModel.fetchBookings().observe(viewLifecycleOwner, Observer { book ->
                         if (book.isNotEmpty()) {
-                        Log.d("HEHEHE", "here empty")
-                                bookedList = book
-                                checkStatus(serviceList, bookedList)
+                            Log.d("TREEE", "booked list not empty")
+                            bookedList = book
+                            bookedFetched.value = true
+//                                checkStatus(serviceList, bookedList)
                         } else {
-                            sortData(serviceList)
+                            Log.d("TREEE", "service list empty")
+                            bookedFetched.value = true
                         }
                     })
                 }
@@ -137,8 +155,10 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
         val stringList: MutableList<String> = mutableListOf()
 
         for (element in bookedList) {
-            if (!stringList.contains(element.id)) {
-                stringList.add(element.id)
+            if (element.status != "paid") {
+                if (!stringList.contains(element.id)) {
+                    stringList.add(element.id)
+                }
             }
         }
 
@@ -146,12 +166,12 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
             if (stringList.contains(element.id)) {
                 for (elem in bookedList) {
                     if (elem.id == element.id) {
-                        sortedList.add(elem)
-                        if (sortedList.size == list.size) {
-                            sortData(sortedList)
-                            break
+                            sortedList.add(elem)
+                            if (sortedList.size == list.size) {
+                                sortData(sortedList)
+                                break
+                            }
                         }
-                    }
                 }
             } else {
                 sortedList.add(element)
@@ -236,6 +256,7 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
         super.onResume()
         serviceListAdapter.clearData()
         sortedList.clear()
+        bookedFetched.value = false
         serviceList = emptyList()
         bookedList = emptyList()
         init()

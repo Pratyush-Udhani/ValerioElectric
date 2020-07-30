@@ -30,9 +30,6 @@ class ServiceListRepo {
             }
             data.value = serviceList
         }
-
-    //    data.value = serviceList
-
         return data
     }
 

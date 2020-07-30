@@ -149,12 +149,12 @@ class ServiceSingleActivity : BaseActivity() {
     private fun setListeners() {
 
         bookNowButton.setOnClickListener {
-            startActivity(PaymentActivity.newInstance(this, service, BOOKING_FLAG))
+//            startActivity(PaymentActivity.newInstance(this, service, BOOKING_FLAG))
 //            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-//            serviceViewModel.setUpBooking(servicePojo, this)
+            serviceViewModel.setUpBooking(servicePojo, this)
             toast("Service booked")
-//            finish()
-//            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+            finish()
+            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
         }
 
         backButton.setOnClickListener {

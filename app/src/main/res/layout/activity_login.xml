@@ -59,8 +59,9 @@
             android:layout_height="130dp"
             android:layout_margin="5dp"
             android:background="@drawable/bg_shadow"
+            android:padding="8dp"
             android:elevation="8dp"
-            android:src="@drawable/ic_valerio_logo" />
+            android:src="@mipmap/vecharge_logo" />
     </androidx.cardview.widget.CardView>
 
     <FrameLayout

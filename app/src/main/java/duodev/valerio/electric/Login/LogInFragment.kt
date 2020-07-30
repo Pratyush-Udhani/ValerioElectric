@@ -26,7 +26,6 @@ class LogInFragment : BaseFragment() {
 
     private val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
