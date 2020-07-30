@@ -18,7 +18,7 @@
         app:layout_constraintDimensionRatio="1:1"
         android:layout_marginHorizontal="@dimen/normal_spacing"
         android:gravity="center"
-        android:src="@drawable/ic_valerio_logo_individual"
+        android:src="@mipmap/vecharge_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
