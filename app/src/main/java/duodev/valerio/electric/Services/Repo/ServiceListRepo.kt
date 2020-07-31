@@ -59,7 +59,7 @@ class ServiceListRepo {
                          
                         For any queries contact us at $ADMIN_EMAIL
                         Regards
-                        Valerio Electric
+                        VEcharge Bharat
                         """.trimIndent()
                 )
                 .withProcessVisibility(false)
@@ -80,7 +80,7 @@ class ServiceListRepo {
                         
                         For any queries contact us at $ADMIN_EMAIL
                         Regards
-                        Valerio Electric
+                        VEcharge Bharat
                         """.trimIndent()
                         )
                         .withProcessVisibility(false)

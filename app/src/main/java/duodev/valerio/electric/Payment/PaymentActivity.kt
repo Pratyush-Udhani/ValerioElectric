@@ -1,5 +1,6 @@
 package duodev.valerio.electric.Payment
 
+import android.Manifest
 import android.R.id.message
 import android.app.Dialog
 import android.content.Context
@@ -9,6 +10,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.telephony.SmsManager
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import androidx.cardview.widget.CardView
@@ -253,7 +255,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     private fun confirmBooking() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.SEND_SMS), 123)
+            requestPermissions(arrayOf<String>(Manifest.permission.SEND_SMS), 123)
         } else {
             val smsManager: SmsManager = SmsManager.getDefault()
             smsManager.sendTextMessage(
@@ -297,7 +299,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     private fun confirmServiceBooking() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.SEND_SMS), 12)
+            requestPermissions(arrayOf<String>(Manifest.permission.SEND_SMS), 12)
         } else {
             val smsManagerProvider: SmsManager = SmsManager.getDefault()
             smsManagerProvider.sendTextMessage(
@@ -342,7 +344,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 123) {
-            if (grantResults.size > 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 val smsManager: SmsManager = SmsManager.getDefault()
                 smsManager.sendTextMessage(
                     stationBookings.station.ownerCompany.phone,
@@ -380,46 +382,54 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                 overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
                 this.toast("payment  success")
             } else {
-                toast("Please grant permissions")
+                Log.d("PAYMEN", "station")
+                toast("Please grant permissions. Booking failed")
+                startActivity(HomeActivity.newInstance(this, USER))
+                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
             }
         }
 
         if (requestCode == 12) {
-            val smsManagerProvider: SmsManager = SmsManager.getDefault()
-            smsManagerProvider.sendTextMessage(
-                pm.mobile,
-                null,
-                """
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                val smsManagerProvider: SmsManager = SmsManager.getDefault()
+                smsManagerProvider.sendTextMessage(
+                    pm.mobile,
+                    null,
+                    """
                     Greetings from VEcharge Bharat! Your service booking has been confirmed. 
                     Service: ${service.serviceName}
                     Service Provider: ${service.serviceProvider.name}, ${service.serviceAddress}
                     Contact Details: ${service.serviceProvider.phone}
                     Looking forward to serving you again!
                 """.trimIndent(),
-                null,
-                null
-            )
+                    null,
+                    null
+                )
 
-            val smsManagerCust: SmsManager = SmsManager.getDefault()
-            smsManagerCust.sendTextMessage(
-                service.serviceProvider.phone,
-                null,
-                """
+                val smsManagerCust: SmsManager = SmsManager.getDefault()
+                smsManagerCust.sendTextMessage(
+                    service.serviceProvider.phone,
+                    null,
+                    """
                     Greetings from VEcharge Bharat! Your service has received a booking. 
                     Service: ${service.serviceName}
                     Customer: ${pm.name}
                     Contact Details: ${pm.email}, ${pm.mobile}
                     Looking forward to serving you again!
                 """.trimIndent(),
-                null,
-                null
-            )
-            paymentViewModel.confirmServiceBooking(service)
-            startActivity(HomeActivity.newInstance(this, USER))
-            overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-            this.toast("payment  success")
-        } else {
-            toast("Please grant permissions")
+                    null,
+                    null
+                )
+                paymentViewModel.confirmServiceBooking(service)
+                startActivity(HomeActivity.newInstance(this, USER))
+                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+                this.toast("payment  success")
+            } else {
+                Log.d("PAYMEN", "service")
+                toast("Please grant permissions. Booking failed")
+                startActivity(HomeActivity.newInstance(this, USER))
+                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+            }
         }
     }
 

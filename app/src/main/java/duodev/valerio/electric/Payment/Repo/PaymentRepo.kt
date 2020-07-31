@@ -32,7 +32,7 @@ class PaymentRepo {
             .withPassword(ADMIN_PASS)
             .withMailto(pm.email)
             .withType(BackgroundMail.TYPE_PLAIN)
-            .withSubject("Service Booked")
+            .withSubject("Station Booked")
             .withBody(
                 """
                         Dear ${pm.name.split(" ")[0]}
@@ -42,7 +42,7 @@ class PaymentRepo {
                         
                         For any queries contact us at $ADMIN_EMAIL
                         Regards
-                        Valerio Electric
+                        VEcharge Bharat
                         """.trimIndent()
             )
             .withProcessVisibility(false)
@@ -53,7 +53,7 @@ class PaymentRepo {
             .withPassword(ADMIN_PASS)
             .withMailto(stationBooking.station.ownerCompany.email)
             .withType(BackgroundMail.TYPE_PLAIN)
-            .withSubject("Service Booked")
+            .withSubject("Station Booked")
             .withBody(
                 """
                         Dear ${stationBooking.station.ownerCompany.name}
@@ -63,7 +63,7 @@ class PaymentRepo {
                          
                         For any queries contact us at $ADMIN_EMAIL
                         Regards
-                        Valerio Electric
+                        VEcharge Bharat
                         """.trimIndent()
             )
             .withProcessVisibility(false)

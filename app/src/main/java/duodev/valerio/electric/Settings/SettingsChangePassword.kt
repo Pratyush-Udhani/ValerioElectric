@@ -55,6 +55,7 @@ class SettingsChangePassword : BaseFragment() {
                         currentPassword.setText("")
                         newPassword.setText("")
                         retypeNewPassword.setText("")
+                        closeKeyboard(requireContext(), submitButton)
                         activity?.toast("Password changes successfully")
                     }
                 })
@@ -85,6 +86,9 @@ class SettingsChangePassword : BaseFragment() {
 
         retypeNewPassword.addTextChangedListener {
             passwordMatchText.isVisible = it.toString() != newPassword.text.toString()
+        }
+        newPassword.addTextChangedListener {
+            passwordMatchText.isVisible = it.toString() != retypeNewPassword.text.toString()
         }
     }
 
