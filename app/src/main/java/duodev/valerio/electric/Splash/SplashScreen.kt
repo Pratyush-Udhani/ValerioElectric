@@ -11,10 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.Login.LoginActivity
 import duodev.valerio.electric.R
-import duodev.valerio.electric.Utils.PreferenceUtils
-import duodev.valerio.electric.Utils.USER
-import duodev.valerio.electric.Utils.USERS
-import duodev.valerio.electric.Utils.convertToPojo
+import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseActivity
 import duodev.valerio.electric.pojos.Users
 import kotlinx.android.synthetic.main.activity_splash_screen.*
@@ -27,6 +24,7 @@ class SplashScreen : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+        log("${pm.account}${pm.email}")
         setUpUsers()
         animateViews()
         handleLogin()
