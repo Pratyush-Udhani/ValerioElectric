@@ -27,7 +27,6 @@ class SplashScreen : BaseActivity() {
         log("${pm.account}${pm.email}")
         setUpUsers()
         animateViews()
-        handleLogin()
     }
 
     private fun setUpUsers() {
@@ -35,6 +34,7 @@ class SplashScreen : BaseActivity() {
             firebaseFirestore.collection(USERS).document(pm.email).get().addOnSuccessListener {
                 if (it.exists())
                     pm.setUser(convertToPojo(it.data!!, Users::class.java))
+                handleLogin()
             }
         }
     }
