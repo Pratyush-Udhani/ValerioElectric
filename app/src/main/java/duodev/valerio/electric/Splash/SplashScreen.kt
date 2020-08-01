@@ -36,6 +36,8 @@ class SplashScreen : BaseActivity() {
                     pm.setUser(convertToPojo(it.data!!, Users::class.java))
                 handleLogin()
             }
+        } else {
+            handleLogin()
         }
     }
 
