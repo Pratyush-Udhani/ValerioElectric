@@ -102,6 +102,7 @@
             android:elevation="5dp"
             app:hintEnabled="false"
             app:hintTextColor="@color/main_blue"
+            android:visibility="gone"
             app:startIconDrawable="@drawable/ic_home_icon"
             app:startIconTint="@color/main_blue">
 

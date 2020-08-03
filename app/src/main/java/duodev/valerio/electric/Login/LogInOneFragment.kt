@@ -57,7 +57,7 @@ class LogInOneFragment : BaseFragment() {
     private fun setListeners() {
 
         loginButton.setOnClickListener {
-            if (userAddress.text.isNotEmpty() && userName.text.isNotEmpty() && userPhone.text.isNotEmpty()) {
+            if (userName.text.isNotEmpty() && userPhone.text.isNotEmpty()) {
                 loader.makeVisible()
                 user.name = userName.text.toString()
                 user.address = userAddress.text.toString()

@@ -131,6 +131,7 @@
                 android:background="@drawable/bg_white_soft_box"
                 android:elevation="5dp"
                 app:hintEnabled="false"
+                android:visibility="gone"
                 app:hintTextColor="@color/main_blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
