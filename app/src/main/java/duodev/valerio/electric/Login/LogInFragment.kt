@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail
+import com.creativityapps.gmailbackgroundlibrary.util.GmailSender
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -21,6 +23,9 @@ import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Users
 import kotlinx.android.synthetic.main.fragment_log_in.*
+import kotlinx.android.synthetic.main.fragment_log_in.userEmail
+import kotlinx.android.synthetic.main.fragment_log_in.userPassword
+import kotlinx.android.synthetic.main.fragment_sign_up.*
 
 class LogInFragment : BaseFragment() {
 
@@ -110,7 +115,9 @@ class LogInFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 100) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
             handleSignInResult(task)
+
             Log.d("SIGNUP", "result caode")
         }
     }
@@ -147,6 +154,28 @@ class LogInFragment : BaseFragment() {
                         requireActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
                     }
                 } else {
+//                    ----------------------WELCOME MAIL TO THE NEW USER---------------------------
+                    val bm =    BackgroundMail.newBuilder(context)
+                    BackgroundMail.newBuilder(context)
+                        .withUsername(ADMIN_EMAIL)
+                        .withPassword(ADMIN_PASS)
+                        .withMailto(account?.email.toString())
+                        .withType(BackgroundMail.TYPE_PLAIN)
+                        .withSubject("Welcome to the VEcharge Bharat community!")
+                        .withBody(
+                            """
+                            Hi ${account?.givenName.toString()},
+                            Welcome to the VEcharge Bharat community! We’re excited to have you onboard!
+                            Log in to your account to locate and book charging stations and choose from a wide range of operators and EV service centers! 
+                            Looking forward to serving you. 
+    
+                            Team VEcharge
+                        """.trimIndent()
+                        )
+                        .withProcessVisibility(false)
+                        .send()
+//                    ----------------------WELCOME MAIL TO THE NEW USER---------------------------
+
                     Log.d("SIGNUP", "NEW")
 //                    firebaseFirestore.collection(USERS).document(account?.email.toString().trim())
 //                        .set(pm.getUser())

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail
 import duodev.valerio.electric.Login.ViewModel.LoginViewModel
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
@@ -86,6 +87,26 @@ class SignUpFragment : BaseFragment() {
                         loginViewModel.setUser(users = it)
                     }
                     activity?.toast("account added")
+
+                    BackgroundMail.newBuilder(context)
+                        .withUsername(ADMIN_EMAIL)
+                        .withPassword(ADMIN_PASS)
+                        .withMailto(userEmail.text.toString())
+                        .withType(BackgroundMail.TYPE_PLAIN)
+                        .withSubject("Welcome to the VEcharge Bharat community!")
+                        .withBody(
+                            """
+                            Hi ${userName.text.toString()},
+                            Welcome to the VEcharge Bharat community! We’re excited to have you onboard!
+                            Log in to your account to locate and book charging stations and choose from a wide range of operators and EV service centers! 
+                            Looking forward to serving you. 
+    
+                            Team VEcharge
+                        """.trimIndent()
+                        )
+                        .withProcessVisibility(false)
+                        .send()
+
                     replaceFragment(this, R.id.loginContainer, LogInFragment.newInstance())
                 } else {
                     activity?.toast("Enter a valid phone number")
