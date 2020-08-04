@@ -11,6 +11,7 @@
     <color name="card_bg_color">#E6E6E6</color>
     <color name="shadow_color">#2E2E2E</color>
     <color name="gray">#808080</color>
+    <color name="red_password">#F00</color>
     <color name="transparent">#00000000</color>
 
 </resources>

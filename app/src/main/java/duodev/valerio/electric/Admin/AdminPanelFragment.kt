@@ -29,6 +29,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
@@ -353,7 +354,10 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         if (requestCode == PICK_COMPANY_IMAGE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 companyUrl = data?.data!!
-                Glide.with(this).load(companyUrl).into(companyImage)
+                Glide.with(this)
+                    .load(companyUrl)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(companyImage)
                 companyImageLayout.makeVisible()
                 uploadCompanyImage.makeGone()
             }
@@ -362,7 +366,10 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         if (requestCode == PICK_STATION_IMAGE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 stationUrl = data?.data!!
-                Glide.with(this).load(stationUrl).into(stationImage)
+                Glide.with(this)
+                    .load(stationUrl)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(stationImage)
                 stationImageLayout.makeVisible()
                 uploadStationImage.makeGone()
             }

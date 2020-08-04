@@ -293,7 +293,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
             paymentViewModel.confirmBooking(stationBookings, this)
             startActivity(HomeActivity.newInstance(this, USER))
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-            this.toast("payment  success")
+            this.toast("check your registered email for details")
         }
     }
     private fun confirmServiceBooking() {
@@ -333,7 +333,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
             paymentViewModel.confirmServiceBooking(service)
             startActivity(HomeActivity.newInstance(this, USER))
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-            this.toast("payment  success")
+            this.toast("check your registered email for details")
         }
     }
 
@@ -380,7 +380,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                 paymentViewModel.confirmBooking(stationBookings, this)
                 startActivity(HomeActivity.newInstance(this, USER))
                 overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-                this.toast("payment  success")
+                this.toast("check your registered email for details")
             } else {
                 Log.d("PAYMEN", "station")
                 toast("Please grant permissions. Booking failed")
@@ -423,7 +423,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                 paymentViewModel.confirmServiceBooking(service)
                 startActivity(HomeActivity.newInstance(this, USER))
                 overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-                this.toast("payment  success")
+                this.toast("check your registered email for details")
             } else {
                 Log.d("PAYMEN", "service")
                 toast("Please grant permissions. Booking failed")

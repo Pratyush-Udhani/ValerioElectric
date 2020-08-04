@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseRecyclerViewAdapter
@@ -66,7 +67,10 @@ class StationListAdapter(
 //            stationAddress.text = item.stationLocation
             stationAddress.text = item.stationAddress
             distLabel.text = "${miles2km(distance.toDouble())} km"
-            Glide.with(getContext()).load(item.ownerCompany.imageUri).into(stationImage)
+            Glide.with(getContext())
+                .load(item.ownerCompany.imageUri)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(stationImage)
 
 //            portName1.text = item.connectorType[0].type
 //            portName2.text = item.connectorType[1].type

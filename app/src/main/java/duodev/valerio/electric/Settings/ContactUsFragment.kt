@@ -41,13 +41,13 @@ class ContactUsFragment : BaseFragment() {
         emailLayout.setOnClickListener {
             val i = Intent(Intent.ACTION_SEND)
             i.type = "plain/text"
-            i.putExtra(Intent.EXTRA_EMAIL, arrayOf("valerioelectric20@gmail.com"))
+            i.putExtra(Intent.EXTRA_EMAIL, arrayOf("contact@valerio-electric.tech"))
             startActivity(i)
         }
 
         phoneLayout.setOnClickListener {
             val i = Intent(Intent.ACTION_DIAL)
-            i.data = Uri.parse("tel:+917500004895")
+            i.data = Uri.parse("tel:+919810455724")
             startActivity(i)
         }
 
