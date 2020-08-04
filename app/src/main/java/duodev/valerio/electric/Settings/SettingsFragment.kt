@@ -1,18 +1,16 @@
 package duodev.valerio.electric.Settings
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import duodev.valerio.electric.Admin.AdminPanelFragment
 import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Services.BookingServiceFragment
+import duodev.valerio.electric.Station.BookingStationFragment
 import duodev.valerio.electric.Utils.USER
 import duodev.valerio.electric.Utils.replaceFragment
-import duodev.valerio.electric.Utils.toast
 import duodev.valerio.electric.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_settings.*
 
@@ -56,6 +54,10 @@ class SettingsFragment : BaseFragment() {
         }
         showBookingsButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, BookingServiceFragment.newInstance())
+        }
+
+        showStationBookingsButton.setOnClickListener {
+            replaceFragment(this, R.id.homeContainer, BookingStationFragment.newInstance())
         }
     }
 

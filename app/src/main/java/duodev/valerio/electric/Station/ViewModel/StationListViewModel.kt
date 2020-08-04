@@ -17,6 +17,8 @@ class StationListViewModel : ViewModel() {
         get() = _data
 
     fun fetchData() = stationListRepo.fetchData()
+
+    fun fetchBookedData() = stationListRepo.fetchBookedData()
 //    {
 //
 //        viewModelScope.launch {

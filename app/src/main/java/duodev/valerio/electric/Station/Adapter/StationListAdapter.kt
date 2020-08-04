@@ -40,7 +40,7 @@ class StationListAdapter(
 
     fun addData(data: MutableMap<Station, String>) {
         list.putAll(data)
-        log("called")
+        Log.d("PK","called${data.size}")
         notifyDataSetChanged()
     }
 

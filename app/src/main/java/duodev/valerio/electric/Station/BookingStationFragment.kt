@@ -14,32 +14,34 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import com.google.firebase.firestore.FirebaseFirestore
 import duodev.valerio.electric.Bookings.BookingPlugsFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.Adapter.StationListAdapter
 import duodev.valerio.electric.Station.ViewModel.StationListViewModel
 import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.base.BaseFragment
+import duodev.valerio.electric.pojos.Bookings
 import duodev.valerio.electric.pojos.Station
-import kotlinx.android.synthetic.main.fragment_station_list.*
+import kotlinx.android.synthetic.main.fragment_booking_station.*
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
 
-class StationListFragment : Fragment(), StationListAdapter.OnClick {
+class BookingStationFragment : BaseFragment(), StationListAdapter.OnClick {
 
     private val stationAdapter by lazy { StationListAdapter(mutableMapOf<Station, String>() as LinkedHashMap<Station, String>, this) }
     private val stationListViewModel = StationListViewModel()
-    private var stationList: MutableList<Station> = mutableListOf()
     private var longitude: Double? = 0.0
     private var latitude: Double? = 0.0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
+    }
 
-        }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
     }
 
     override fun onCreateView(
@@ -47,12 +49,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_station_list, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        init()
+        return inflater.inflate(R.layout.fragment_booking_station, container, false)
     }
 
     private fun init() {
@@ -61,37 +58,15 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         setUpListeners()
     }
 
-    private fun setUpdb() {
-        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-
-        val list = StationDef.getStationList()
-        val serviceList = ServiceDef.getServiceList()
-
-        serviceList.forEachIndexed { index, serviceStation ->
-            firestore.collection(SERVICES).document("$index").set(serviceStation)
-        }
-
-            list.forEachIndexed { index, station ->
-                firestore.collection(STATIONS).document("$index").set(station)
-            }
-    }
-
-//    private fun setUpObservers() {
-//        stationListViewModel.fetchData().observe(viewLifecycleOwner, Observer {
-//            if (it.isNotEmpty()) {
-//                sortData(it)
-//            }
-//        })
-//    }
-
-    private fun sortData(list: List<Station>) {
+    private fun sortData(list: List<Bookings>) {
         //   getLocation()
+        Log.d("PK",list.size.toString())
         val sortedMap: LinkedHashMap<Station, String> = mutableMapOf<Station, String>() as LinkedHashMap<Station, String>
-        val sortedList: MutableList<Station> = list as MutableList<Station>
+        val sortedList: MutableList<Bookings> = list as MutableList<Bookings>
         for (i in list.indices) {
             for (j in 0 until list.size - i -1) {
-                val distanceOne = distance(latitude!!, longitude!!, sortedList[j].location.latitude, sortedList[j].location.longitude)
-                val distanceTwo = distance(latitude!!, longitude!!, sortedList[j+1].location.latitude, sortedList[j+1].location.longitude)
+                val distanceOne = distance(latitude!!, longitude!!, sortedList[j].station.location.latitude, sortedList[j].station.location.longitude)
+                val distanceTwo = distance(latitude!!, longitude!!, sortedList[j+1].station.location.latitude, sortedList[j+1].station.location.longitude)
                 if (distanceOne > distanceTwo) {
                     val temp = sortedList[j]
                     sortedList[j] = sortedList[j+1]
@@ -100,23 +75,14 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
             }
         }
         for (element in sortedList) {
-
-            sortedMap[element] =
-                distance(latitude!!, longitude!!, element.location.latitude, element.location.longitude).toString()
+            sortedMap[element.station] =
+                distance(latitude!!, longitude!!, element.station.location.latitude, element.station.location.longitude).toString()
         }
         loader.makeGone()
         stationAdapter.addData(sortedMap)
     }
 
     private fun setUpListeners() {
-//        backButton.setOnClickListener {
-//            replaceFragment(this, R.id.homeContainer , HomeMapFragment.newInstance())
-//        }
-        filterButton.setOnClickListener {
-//            addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance(), null, true)
-            setUpdb()
-        }
-
         permissionText.setOnClickListener {
             Log.d("CLICKEDS", "clicked")
             getLocation()
@@ -124,8 +90,8 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     }
 
     private fun setUpRecycler() {
-        stationListRecycler.apply {
-            adapter = this@StationListFragment.stationAdapter
+        stationRecycler.apply {
+            adapter = stationAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
     }
@@ -213,13 +179,13 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
                     log("not null")
                     latitude = it.latitude
                     longitude = it.longitude
-                    stationListViewModel.fetchData().observe(viewLifecycleOwner, Observer {list ->
+                    stationListViewModel.fetchBookedData().observe(viewLifecycleOwner, Observer {list ->
                         if (list.isNotEmpty()) {
-                            log("called$list")
+                            log("calledbooked$list")
                             sortData(list)
                         } else {
                             loader.makeGone()
-                            noStationText.makeVisible()
+                            noBookings.makeVisible()
                         }
                     })
                 }
@@ -250,7 +216,6 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         }
     }
 
-
     companion object {
 
         const val ADDRESS = "address"
@@ -265,8 +230,9 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         const val OWNERSHIP = "ownership"
         const val SLOTS = "slots"
         const val RESULT_CODE = 12
+        private const val INSTANCE = "BookingStationFragment"
 
-        fun newInstance() = StationListFragment()
+        fun newInstance() = BookingStationFragment()
     }
 
     override fun onStationClicked(station: Station, dist: String) {
@@ -286,10 +252,11 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         map[SLOTS] = station.numberOfStations
         log("called")
         startActivityForResult(
-            StationSingleActivity.newInstance(requireContext(), map, dist),
+            StationSingleActivity.newInstance(requireContext(), map, dist, INSTANCE),
             RESULT_CODE
         )
 //        startActivity(StationSingleActivity.newInstance(requireContext(), map, dist))
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
     }
+
 }

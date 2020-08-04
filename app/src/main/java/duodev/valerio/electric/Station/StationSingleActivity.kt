@@ -7,11 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.ViewGroup
-import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,10 +18,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.GeoPoint
-import duodev.valerio.electric.Payment.PaymentActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.Adapter.StationPlugAdapter
-import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.Utils.makeGone
 import duodev.valerio.electric.base.BaseActivity
 import duodev.valerio.electric.pojos.Company
 import duodev.valerio.electric.pojos.Connector
@@ -38,6 +33,7 @@ class StationSingleActivity : BaseActivity() {
     private lateinit var googleMap: GoogleMap
     private lateinit var station: HashMap<String, Any>
     private lateinit var distance: String
+    private var flag = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +41,9 @@ class StationSingleActivity : BaseActivity() {
         mapView.onCreate(savedInstanceState)
 
         intent?.let {
-            station = it.getSerializableExtra(FLAG) as HashMap<String, Any>
+            station = it.getSerializableExtra(MAP) as HashMap<String, Any>
             distance = it.getStringExtra(DIST)!!
+            flag = it.getStringExtra(FLAG)!!
         }
         init()
     }
@@ -90,6 +87,10 @@ class StationSingleActivity : BaseActivity() {
         stationAddress.text = station[StationListFragment.LOCATION].toString()
         distanceLabel.text = "$distance km"
         Glide.with(this).load(company.imageUri).into(companyImage)
+        if (flag != INSTANCE) {
+            bookNowButton.text = "Booked"
+            prices.makeGone()
+        }
     }
 
 
@@ -177,13 +178,16 @@ class StationSingleActivity : BaseActivity() {
 
     companion object {
 
-        const val FLAG = "flag"
+        const val MAP = "map"
         const val DIST = "dist"
         const val STATION = "Station"
+        const val FLAG = "flag"
+        private const val INSTANCE = "StationSingleActivity"
 
-        fun newInstance(context: Context, map: HashMap<String, Any>, dist: String) = Intent(context, StationSingleActivity::class.java).apply {
-            putExtra(FLAG, map)
+        fun newInstance(context: Context, map: HashMap<String, Any>, dist: String, flag: String = INSTANCE) = Intent(context, StationSingleActivity::class.java).apply {
+            putExtra(MAP, map)
             putExtra(DIST, dist)
+            putExtra(FLAG,flag)
         }
     }
 }
