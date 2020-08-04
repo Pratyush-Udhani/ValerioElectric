@@ -1,287 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/slotLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
-    tools:context=".Bookings.BookingSlotFragment">
+    android:fillViewport="true">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/headerLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/slotLayout"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@null"
-        android:elevation="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_white"
+        tools:context=".Bookings.BookingSlotFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_header_two"
-            android:elevation="0dp">
+            android:layout_height="250dp"
+            android:background="@null"
+            android:elevation="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/backButton"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/ic_back_arrow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_header_two"
+                android:elevation="0dp">
 
-            <ImageView
-                android:id="@+id/plugLogo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_clock_img"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias=".4" />
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_back_arrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/headingTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/lato_bold"
-                android:text="Select Time Slot"
-                android:textColor="@color/color_white"
-                android:textSize="23sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plugLogo" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                <ImageView
+                    android:id="@+id/plugLogo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/ic_clock_img"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias=".4" />
 
-    <LinearLayout
-        android:id="@+id/arrivalTimeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:background="@drawable/bg_white_soft_box"
-        android:elevation="5dp"
-        android:orientation="horizontal"
-        android:paddingVertical="15dp"
-        app:layout_constraintBottom_toBottomOf="@id/headerLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headerLayout">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/lato"
-            android:gravity="center"
-            android:text="Arrival Time"
-            android:textColor="@color/color_black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/arrivalTimeText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_weight="1"
-            android:fontFamily="@font/lato"
-            android:gravity="center"
-            android:text="select time"
-            android:textColor="@color/main_blue"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/timeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:background="@android:color/transparent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/priceLayout"
-        app:layout_constraintTop_toBottomOf="@id/arrivalTimeLayout">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:alpha=".8"
-            android:fontFamily="@font/lato"
-            android:gravity="start"
-            android:text="Enter charging duration"
-            android:textColor="@color/color_black"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/headingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="Select Time Slot"
+                    android:textColor="@color/color_white"
+                    android:textSize="23sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/plugLogo" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <LinearLayout
+            android:id="@+id/arrivalTimeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="30dp"
             android:background="@drawable/bg_white_soft_box"
             android:elevation="5dp"
             android:orientation="horizontal"
+            android:paddingVertical="15dp"
             app:layout_constraintBottom_toBottomOf="@id/headerLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/headerLayout">
 
-            <LinearLayout
-                android:id="@+id/hourLayout"
+
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="@null"
+                android:fontFamily="@font/lato"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:text="Arrival Time"
+                android:textColor="@color/color_black"
+                android:textSize="20sp" />
 
-                <EditText
-                    android:id="@+id/chargingTimeHours"
-                    android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/arrivalTimeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:text="select time"
+                android:textColor="@color/main_blue"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/timeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/priceLayout"
+            app:layout_constraintTop_toBottomOf="@+id/arrivalTimeLayout"
+            app:layout_constraintVertical_bias="0.354"
+            tools:layout_editor_absoluteX="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:alpha=".8"
+                android:fontFamily="@font/lato"
+                android:gravity="start"
+                android:text="Enter charging duration"
+                android:textColor="@color/color_black"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/bg_white_soft_box"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/headerLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/headerLayout">
+
+                <LinearLayout
+                    android:id="@+id/hourLayout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
                     android:background="@null"
-                    android:fontFamily="@font/lato"
-                    android:inputType="number"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="10dp"
-                    android:text="0"
-                    android:textColor="@color/color_black"
-                    android:textSize="22sp" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/chargingTimeHours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/lato"
+                        android:inputType="number"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        android:text="0"
+                        android:textColor="@color/color_black"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/lato"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        android:text=" hrs"
+                        android:textColor="@color/color_black"
+                        android:textSize="22sp" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:background="@null"
                     android:fontFamily="@font/lato"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="10dp"
-                    android:text=" hrs"
+                    android:text=":"
                     android:textColor="@color/color_black"
                     android:textSize="22sp" />
+
+                <LinearLayout
+                    android:id="@+id/minuteLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/chargingTimeMinutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/lato"
+                        android:inputType="number"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        android:text="0"
+                        android:textColor="@color/color_black"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:fontFamily="@font/lato"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        android:text=" mins"
+                        android:textColor="@color/color_black"
+                        android:textSize="22sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/priceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/bg_white_rounded_top"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:paddingVertical="15dp"
+            app:layout_constraintBottom_toTopOf="@id/bookSlotButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_money" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:alpha=".8"
+                    android:text="Total Price"
+                    android:textColor="@color/color_black" />
             </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/totalPrice"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="@null"
                 android:fontFamily="@font/lato"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="10dp"
-                android:text=":"
+                android:gravity="center"
+                android:text="Rs. 0.00"
                 android:textColor="@color/color_black"
                 android:textSize="22sp" />
 
-            <LinearLayout
-                android:id="@+id/minuteLayout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/chargingTimeMinutes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:fontFamily="@font/lato"
-                    android:inputType="number"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="10dp"
-                    android:text="0"
-                    android:textColor="@color/color_black"
-                    android:textSize="22sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:fontFamily="@font/lato"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="10dp"
-                    android:text=" mins"
-                    android:textColor="@color/color_black"
-                    android:textSize="22sp" />
-            </LinearLayout>
-
-
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/priceLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:background="@drawable/bg_white_rounded_top"
-        android:elevation="2dp"
-        android:orientation="vertical"
-        android:paddingVertical="15dp"
-        app:layout_constraintBottom_toTopOf="@id/bookSlotButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_money" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:alpha=".8"
-                android:text="Total Price"
-                android:textColor="@color/color_black" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/totalPrice"
+        <Button
+            android:id="@+id/bookSlotButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/lato"
-            android:gravity="center"
-            android:text="Rs. 0.00"
-            android:textColor="@color/color_black"
-            android:textSize="22sp" />
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/button_blue_bottom_rounded"
+            android:elevation="2dp"
+            android:fontFamily="@font/lato_bold"
+            android:text="Check"
+            android:textColor="@color/color_white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="20dp" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-    <Button
-        android:id="@+id/bookSlotButton"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button_blue_bottom_rounded"
-        android:elevation="2dp"
-        android:fontFamily="@font/lato_bold"
-        android:text="Check"
-        android:textColor="@color/color_white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="1" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

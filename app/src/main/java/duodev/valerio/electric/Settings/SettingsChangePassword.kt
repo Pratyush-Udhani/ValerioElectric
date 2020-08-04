@@ -56,7 +56,7 @@ class SettingsChangePassword : BaseFragment() {
                         newPassword.setText("")
                         retypeNewPassword.setText("")
                         closeKeyboard(requireContext(), submitButton)
-                        activity?.toast("Password changes successfully")
+                        activity?.toast("Password changed successfully")
                     }
                 })
 
@@ -66,6 +66,7 @@ class SettingsChangePassword : BaseFragment() {
                     }
                 })
             } else {
+                retypeNewPassword.requestFocus()
                 activity?.toast("Passwords do not match")
             }
         }
@@ -88,7 +89,7 @@ class SettingsChangePassword : BaseFragment() {
             passwordMatchText.isVisible = it.toString() != newPassword.text.toString()
         }
         newPassword.addTextChangedListener {
-            passwordMatchText.isVisible = it.toString() != retypeNewPassword.text.toString()
+//            passwordMatchText.isVisible = it.toString() != retypeNewPassword.text.toString()
         }
     }
 

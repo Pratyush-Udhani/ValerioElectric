@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Utils.log
 import duodev.valerio.electric.Utils.makeVisible
@@ -65,7 +66,10 @@ class ServiceListAdapter(
             serviceStationAddress.text = item.serviceAddress
             serviceCompany.text = item.serviceProvider.name
             distLabel.text = "${miles2km(distance.toDouble())} km"
-            Glide.with(getContext()).load(item.serviceProvider.imageUri).into(companyImage)
+            Glide.with(getContext())
+                .load(item.serviceProvider.imageUri)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(companyImage)
 
             if (item.status == "paid") {
                 paidLayout.makeVisible()

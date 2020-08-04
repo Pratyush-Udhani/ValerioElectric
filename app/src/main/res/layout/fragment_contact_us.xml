@@ -88,7 +88,7 @@
                 android:gravity="center_vertical|end"
                 android:maxLines="1"
                 android:paddingHorizontal="8dp"
-                android:text="valerioelectric20@gmail.com"
+                android:text="contact@valerio-electric.tech"
                 android:textColor="@color/color_black"
                 android:textSize="14sp" />
 
@@ -132,7 +132,7 @@
                 android:gravity="center_vertical|end"
                 android:maxLines="1"
                 android:paddingHorizontal="8dp"
-                android:text="(+91)  7500004895"
+                android:text="(+91)  9810455724"
                 android:textColor="@color/color_black"
                 android:textSize="14sp" />
 
