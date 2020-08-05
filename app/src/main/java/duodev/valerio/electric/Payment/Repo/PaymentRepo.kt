@@ -30,7 +30,8 @@ class PaymentRepo {
         BackgroundMail.newBuilder(context)
             .withUsername(ADMIN_EMAIL)
             .withPassword(ADMIN_PASS)
-            .withMailto(pm.email)
+            .withSenderName("VEcharge Bharat")
+            .withMailTo(pm.email)
             .withType(BackgroundMail.TYPE_PLAIN)
             .withSubject("Station Booked")
             .withBody(
@@ -45,13 +46,14 @@ class PaymentRepo {
                         VEcharge Bharat
                         """.trimIndent()
             )
-            .withProcessVisibility(false)
+//            .withProcessVisibility(false)
             .send()
 
         BackgroundMail.newBuilder(context)
             .withUsername(ADMIN_EMAIL)
             .withPassword(ADMIN_PASS)
-            .withMailto(stationBooking.station.ownerCompany.email)
+            .withSenderName("VEcharge Bharat")
+            .withMailTo(stationBooking.station.ownerCompany.email)
             .withType(BackgroundMail.TYPE_PLAIN)
             .withSubject("Station Booked")
             .withBody(
@@ -66,7 +68,7 @@ class PaymentRepo {
                         VEcharge Bharat
                         """.trimIndent()
             )
-            .withProcessVisibility(false)
+//            .withProcessVisibility(false)
             .send()
     }
 

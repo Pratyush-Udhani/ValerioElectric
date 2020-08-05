@@ -159,7 +159,8 @@ class LogInFragment : BaseFragment() {
                     BackgroundMail.newBuilder(context)
                         .withUsername(ADMIN_EMAIL)
                         .withPassword(ADMIN_PASS)
-                        .withMailto(account?.email.toString())
+                        .withSenderName("VEcharge Bharat")
+                        .withMailTo(account?.email.toString())
                         .withType(BackgroundMail.TYPE_PLAIN)
                         .withSubject("Welcome to the VEcharge Bharat community!")
                         .withBody(
@@ -172,7 +173,6 @@ class LogInFragment : BaseFragment() {
                             Team VEcharge
                         """.trimIndent()
                         )
-                        .withProcessVisibility(false)
                         .send()
 //                    ----------------------WELCOME MAIL TO THE NEW USER---------------------------
 

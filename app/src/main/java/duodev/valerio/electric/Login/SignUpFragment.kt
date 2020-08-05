@@ -91,7 +91,8 @@ class SignUpFragment : BaseFragment() {
                     BackgroundMail.newBuilder(context)
                         .withUsername(ADMIN_EMAIL)
                         .withPassword(ADMIN_PASS)
-                        .withMailto(userEmail.text.toString())
+                        .withSenderName("VEcharge Bharat")
+                        .withMailTo(userEmail.text.toString())
                         .withType(BackgroundMail.TYPE_PLAIN)
                         .withSubject("Welcome to the VEcharge Bharat community!")
                         .withBody(
@@ -104,7 +105,6 @@ class SignUpFragment : BaseFragment() {
                             Team VEcharge
                         """.trimIndent()
                         )
-                        .withProcessVisibility(false)
                         .send()
 
                     replaceFragment(this, R.id.loginContainer, LogInFragment.newInstance())
