@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import duodev.valerio.electric.Bookings.BookingPlugsFragment
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.Adapter.StationListAdapter
 import duodev.valerio.electric.Station.ViewModel.StationListViewModel
@@ -22,7 +23,9 @@ import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Bookings
 import duodev.valerio.electric.pojos.Station
+import kotlinx.android.synthetic.main.fragment_booking_plugs.*
 import kotlinx.android.synthetic.main.fragment_booking_station.*
+import kotlinx.android.synthetic.main.fragment_booking_station.backButton
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
@@ -86,6 +89,9 @@ class BookingStationFragment : BaseFragment(), StationListAdapter.OnClick {
         permissionText.setOnClickListener {
             Log.d("CLICKEDS", "clicked")
             getLocation()
+        }
+        backButton.setOnClickListener {
+            (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
         }
     }
 

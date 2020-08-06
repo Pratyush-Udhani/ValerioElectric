@@ -1,5 +1,6 @@
 package duodev.valerio.electric.Settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,18 +44,29 @@ class SettingsFragment : BaseFragment() {
         addStationButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, AdminPanelFragment.newInstance(USER))
         }
+
         changePasswordButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, SettingsChangePassword.newInstance())
         }
+
         contactUsButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, ContactUsFragment.newInstance())
         }
+
         profileButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, ProfileFragment.newInstance())
         }
+
+        conditionsButton.setOnClickListener{
+            val i = Intent(context,ConditionsActivity::class.java)
+            startActivity(i)
+            allowEnterTransitionOverlap
+        }
+
         showBookingsButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, BookingServiceFragment.newInstance())
         }
+
 
         showStationBookingsButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, BookingStationFragment.newInstance())
