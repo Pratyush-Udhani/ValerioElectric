@@ -23,7 +23,7 @@
                 android:id="@+id/serviceStation_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/services"
+                android:src="@mipmap/ic_services"
                 app:layout_constraintBottom_toTopOf="@id/serviceStation_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/serviceName"
