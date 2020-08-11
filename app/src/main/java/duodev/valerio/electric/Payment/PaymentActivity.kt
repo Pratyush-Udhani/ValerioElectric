@@ -1,20 +1,14 @@
 package duodev.valerio.electric.Payment
 
-import android.Manifest
-import android.R.id.message
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.telephony.SmsManager
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.FirebaseFirestore
@@ -253,185 +247,185 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
 
     // should could be called after payment success
     private fun confirmBooking() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(arrayOf<String>(Manifest.permission.SEND_SMS), 123)
-        } else {
-            val smsManager: SmsManager = SmsManager.getDefault()
-            smsManager.sendTextMessage(
-                stationBookings.station.ownerCompany.phone,
-                null,
-                """
-                    Greetings from VEcharge Bharat! Your station booking has been confirmed. 
-                    Company: ${stationBookings.station.ownerCompany.name}
-                    Charger ID: ${stationBookings.plug.id}
-                    Plug Type: ${stationBookings.plug.type}
-                    Arrival time: ${long2time(stationBookings.time)} for duration ${stationBookings.duration}
-                    Contact Details: ${pm.email}, ${pm.mobile}
-                    Looking forward to serving you again!
-                """.trimIndent(),
-                null,
-                null
-            )
-
-            val smsManagerCustomer: SmsManager = SmsManager.getDefault()
-            smsManagerCustomer.sendTextMessage(
-                pm.email,
-                null,
-                """
-                    Greetings from VEcharge Bharat! Your station booking has been confirmed. 
-                    Company: ${stationBookings.station.ownerCompany.name}
-                    Charger ID: ${stationBookings.plug.id}
-                    Plug Type: ${stationBookings.plug.type}
-                    Arrival time: ${long2time(stationBookings.time)} for duration ${stationBookings.duration}
-                    Contact Details: ${stationBookings.station.ownerCompany.email}, ${stationBookings.station.ownerCompany.phone}
-                    Looking forward to serving you again!
-                """.trimIndent(),
-                null,
-                null
-            )
+//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            requestPermissions(arrayOf<String>(Manifest.permission.SEND_SMS), 123)
+//        } else {
+//            val smsManager: SmsManager = SmsManager.getDefault()
+//            smsManager.sendTextMessage(
+//                stationBookings.station.ownerCompany.phone,
+//                null,
+//                """
+//                    Greetings from VEcharge Bharat! Your station booking has been confirmed.
+//                    Company: ${stationBookings.station.ownerCompany.name}
+//                    Charger ID: ${stationBookings.plug.id}
+//                    Plug Type: ${stationBookings.plug.type}
+//                    Arrival time: ${long2time(stationBookings.time)} for duration ${stationBookings.duration}
+//                    Contact Details: ${pm.email}, ${pm.mobile}
+//                    Looking forward to serving you again!
+//                """.trimIndent(),
+//                null,
+//                null
+//            )
+//
+//            val smsManagerCustomer: SmsManager = SmsManager.getDefault()
+//            smsManagerCustomer.sendTextMessage(
+//                pm.email,
+//                null,
+//                """
+//                    Greetings from VEcharge Bharat! Your station booking has been confirmed.
+//                    Company: ${stationBookings.station.ownerCompany.name}
+//                    Charger ID: ${stationBookings.plug.id}
+//                    Plug Type: ${stationBookings.plug.type}
+//                    Arrival time: ${long2time(stationBookings.time)} for duration ${stationBookings.duration}
+//                    Contact Details: ${stationBookings.station.ownerCompany.email}, ${stationBookings.station.ownerCompany.phone}
+//                    Looking forward to serving you again!
+//                """.trimIndent(),
+//                null,
+//                null
+//            )
             paymentViewModel.confirmBooking(stationBookings, this)
             startActivity(HomeActivity.newInstance(this, USER))
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
             this.toast("check your registered email for details")
-        }
+//        }
     }
     private fun confirmServiceBooking() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermissions(arrayOf<String>(Manifest.permission.SEND_SMS), 12)
-        } else {
-            val smsManagerProvider: SmsManager = SmsManager.getDefault()
-            smsManagerProvider.sendTextMessage(
-                pm.mobile,
-                null,
-                """
-                    Greetings from VEcharge Bharat! Your service booking has been confirmed. 
-                    Service: ${service.serviceName}
-                    Service Provider: ${service.serviceProvider.name}, ${service.serviceAddress}
-                    Contact Details: ${service.serviceProvider.phone}
-                    Looking forward to serving you again!
-                """.trimIndent(),
-                null,
-                null
-            )
-
-            val smsManagerCust: SmsManager = SmsManager.getDefault()
-            smsManagerCust.sendTextMessage(
-                service.serviceProvider.phone,
-                null,
-                """
-                    Greetings from VEcharge Bharat! Your service has received a booking. 
-                    Service: ${service.serviceName}
-                    Customer: ${pm.name}
-                    Contact Details: ${pm.email}, ${pm.mobile}
-                    Looking forward to serving you again!
-                """.trimIndent(),
-                null,
-                null
-            )
+//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            requestPermissions(arrayOf<String>(Manifest.permission.SEND_SMS), 12)
+//        } else {
+//            val smsManagerProvider: SmsManager = SmsManager.getDefault()
+//            smsManagerProvider.sendTextMessage(
+//                pm.mobile,
+//                null,
+//                """
+//                    Greetings from VEcharge Bharat! Your service booking has been confirmed.
+//                    Service: ${service.serviceName}
+//                    Service Provider: ${service.serviceProvider.name}, ${service.serviceAddress}
+//                    Contact Details: ${service.serviceProvider.phone}
+//                    Looking forward to serving you again!
+//                """.trimIndent(),
+//                null,
+//                null
+//            )
+//
+//            val smsManagerCust: SmsManager = SmsManager.getDefault()
+//            smsManagerCust.sendTextMessage(
+//                service.serviceProvider.phone,
+//                null,
+//                """
+//                    Greetings from VEcharge Bharat! Your service has received a booking.
+//                    Service: ${service.serviceName}
+//                    Customer: ${pm.name}
+//                    Contact Details: ${pm.email}, ${pm.mobile}
+//                    Looking forward to serving you again!
+//                """.trimIndent(),
+//                null,
+//                null
+//            )
             paymentViewModel.confirmServiceBooking(service)
             startActivity(HomeActivity.newInstance(this, USER))
             overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
             this.toast("check your registered email for details")
-        }
+//        }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 123) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val smsManager: SmsManager = SmsManager.getDefault()
-                smsManager.sendTextMessage(
-                    stationBookings.station.ownerCompany.phone,
-                    null,
-                    """
-                    Greetings from VEcharge Bharat! Your station booking has been confirmed.
-                    Company: ${stationBookings.station.ownerCompany.name}
-                    Charger ID: ${stationBookings.plug.id}
-                    Plug Type: ${stationBookings.plug.type}
-                    Arrival time: ${long2time(stationBookings.time)} for duration ${stationBookings.duration}
-                    Contact Details: ${pm.email}, ${pm.mobile}
-                    Looking forward to serving you again!
-                """.trimIndent(),
-                    null,
-                    null
-                )
-                val smsManagerCustomer: SmsManager = SmsManager.getDefault()
-                smsManagerCustomer.sendTextMessage(
-                    pm.email,
-                    null,
-                    """
-                    Greetings from VEcharge Bharat! Your station booking has been confirmed. 
-                    Company: ${stationBookings.station.ownerCompany.name}
-                    Charger ID: ${stationBookings.plug.id}
-                    Plug Type: ${stationBookings.plug.type}
-                    Arrival time: ${long2time(stationBookings.time)} for duration ${stationBookings.duration}
-                    Contact Details: ${stationBookings.station.ownerCompany.email}, ${stationBookings.station.ownerCompany.phone}
-                    Looking forward to serving you again!
-                """.trimIndent(),
-                    null,
-                    null
-                )
-                paymentViewModel.confirmBooking(stationBookings, this)
-                startActivity(HomeActivity.newInstance(this, USER))
-                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-                this.toast("check your registered email for details")
-            } else {
-                Log.d("PAYMEN", "station")
-                toast("Please grant permissions. Booking failed")
-                startActivity(HomeActivity.newInstance(this, USER))
-                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-            }
-        }
-
-        if (requestCode == 12) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                val smsManagerProvider: SmsManager = SmsManager.getDefault()
-                smsManagerProvider.sendTextMessage(
-                    pm.mobile,
-                    null,
-                    """
-                    Greetings from VEcharge Bharat! Your service booking has been confirmed. 
-                    Service: ${service.serviceName}
-                    Service Provider: ${service.serviceProvider.name}, ${service.serviceAddress}
-                    Contact Details: ${service.serviceProvider.phone}
-                    Looking forward to serving you again!
-                """.trimIndent(),
-                    null,
-                    null
-                )
-
-                val smsManagerCust: SmsManager = SmsManager.getDefault()
-                smsManagerCust.sendTextMessage(
-                    service.serviceProvider.phone,
-                    null,
-                    """
-                    Greetings from VEcharge Bharat! Your service has received a booking. 
-                    Service: ${service.serviceName}
-                    Customer: ${pm.name}
-                    Contact Details: ${pm.email}, ${pm.mobile}
-                    Looking forward to serving you again!
-                """.trimIndent(),
-                    null,
-                    null
-                )
-                paymentViewModel.confirmServiceBooking(service)
-                startActivity(HomeActivity.newInstance(this, USER))
-                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-                this.toast("check your registered email for details")
-            } else {
-                Log.d("PAYMEN", "service")
-                toast("Please grant permissions. Booking failed")
-                startActivity(HomeActivity.newInstance(this, USER))
-                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
-            }
-        }
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == 123) {
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                val smsManager: SmsManager = SmsManager.getDefault()
+//                smsManager.sendTextMessage(
+//                    stationBookings.station.ownerCompany.phone,
+//                    null,
+//                    """
+//                    Greetings from VEcharge Bharat! Your station booking has been confirmed.
+//                    Company: ${stationBookings.station.ownerCompany.name}
+//                    Charger ID: ${stationBookings.plug.id}
+//                    Plug Type: ${stationBookings.plug.type}
+//                    Arrival time: ${long2time(stationBookings.time)} for duration ${stationBookings.duration}
+//                    Contact Details: ${pm.email}, ${pm.mobile}
+//                    Looking forward to serving you again!
+//                """.trimIndent(),
+//                    null,
+//                    null
+//                )
+//                val smsManagerCustomer: SmsManager = SmsManager.getDefault()
+//                smsManagerCustomer.sendTextMessage(
+//                    pm.email,
+//                    null,
+//                    """
+//                    Greetings from VEcharge Bharat! Your station booking has been confirmed.
+//                    Company: ${stationBookings.station.ownerCompany.name}
+//                    Charger ID: ${stationBookings.plug.id}
+//                    Plug Type: ${stationBookings.plug.type}
+//                    Arrival time: ${long2time(stationBookings.time)} for duration ${stationBookings.duration}
+//                    Contact Details: ${stationBookings.station.ownerCompany.email}, ${stationBookings.station.ownerCompany.phone}
+//                    Looking forward to serving you again!
+//                """.trimIndent(),
+//                    null,
+//                    null
+//                )
+//                paymentViewModel.confirmBooking(stationBookings, this)
+//                startActivity(HomeActivity.newInstance(this, USER))
+//                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+//                this.toast("check your registered email for details")
+//            } else {
+//                Log.d("PAYMEN", "station")
+//                toast("Please grant permissions. Booking failed")
+//                startActivity(HomeActivity.newInstance(this, USER))
+//                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+//            }
+//        }
+//
+//        if (requestCode == 12) {
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                val smsManagerProvider: SmsManager = SmsManager.getDefault()
+//                smsManagerProvider.sendTextMessage(
+//                    pm.mobile,
+//                    null,
+//                    """
+//                    Greetings from VEcharge Bharat! Your service booking has been confirmed.
+//                    Service: ${service.serviceName}
+//                    Service Provider: ${service.serviceProvider.name}, ${service.serviceAddress}
+//                    Contact Details: ${service.serviceProvider.phone}
+//                    Looking forward to serving you again!
+//                """.trimIndent(),
+//                    null,
+//                    null
+//                )
+//
+//                val smsManagerCust: SmsManager = SmsManager.getDefault()
+//                smsManagerCust.sendTextMessage(
+//                    service.serviceProvider.phone,
+//                    null,
+//                    """
+//                    Greetings from VEcharge Bharat! Your service has received a booking.
+//                    Service: ${service.serviceName}
+//                    Customer: ${pm.name}
+//                    Contact Details: ${pm.email}, ${pm.mobile}
+//                    Looking forward to serving you again!
+//                """.trimIndent(),
+//                    null,
+//                    null
+//                )
+//                paymentViewModel.confirmServiceBooking(service)
+//                startActivity(HomeActivity.newInstance(this, USER))
+//                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+//                this.toast("check your registered email for details")
+//            } else {
+//                Log.d("PAYMEN", "service")
+//                toast("Please grant permissions. Booking failed")
+//                startActivity(HomeActivity.newInstance(this, USER))
+//                overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+//            }
+//        }
+//    }
 
     companion object {
 
