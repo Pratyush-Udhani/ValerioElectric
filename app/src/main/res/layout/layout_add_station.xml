@@ -412,12 +412,13 @@
             android:paddingHorizontal="8dp"
             app:cardCornerRadius="10dp">
                 <TextView
+                    android:id="@+id/addStationText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:background="@color/main_blue"
                     android:paddingVertical="8dp"
-                    android:text="Upload Station"
+                    android:text="Add Station"
                     android:textColor="@color/color_white"
                     android:textSize="18sp" />
         </androidx.cardview.widget.CardView>

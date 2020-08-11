@@ -30,6 +30,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.creativityapps.gmailbackgroundlibrary.BackgroundMail
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.MapsInitializer
@@ -108,6 +109,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
             adminLogout.makeVisible()
             backButton.makeGone()
             headingTitle.text = "Panel"
+            addStationText.text = "Upload Station"
         }
     }
 
@@ -165,6 +167,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         }
 
         uploadStationButton.setOnClickListener {
+            if (flag == ADMIN) {
             if (stationAddress.text.isNotEmpty()
                 && stationAddress.text.isNotEmpty()
                 && stationCity.text.isNotEmpty()
@@ -184,6 +187,35 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                 }
             } else {
                 activity?.toast("Enter all details")
+            }
+            } else {
+                if (stationAddress.text.isNotEmpty()
+                    && stationCity.text.isNotEmpty()
+                    && companyName.text.isNotEmpty()) {
+
+                BackgroundMail.newBuilder(requireContext())
+                    .withUsername(ADMIN_EMAIL)
+                    .withPassword(ADMIN_PASS)
+                    .withSenderName("VEcharge Bharat")
+                    .withMailTo("valerioappdev@gmail.com")
+                    .withType(BackgroundMail.TYPE_PLAIN)
+                    .withSubject("Station Add Request")
+                    .withBody(
+                        """
+                            Please add the following station with details as follows
+                            
+                            Station Address: ${stationAddress.text}
+                            Station city: ${stationCity.text}
+                            Station Company: ${companyName.text}
+                        """.trimIndent()
+                    )
+//            .withProcessVisibility(false)
+                    .send()
+
+                    setDefs()
+                } else {
+                    requireContext().toast("Please enter address, company name, and city")
+                }
             }
         }
     }
