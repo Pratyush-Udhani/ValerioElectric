@@ -23,20 +23,20 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-    signingConfigs {
-        release {
-            storeFile file("/home/prinzz1208/Documents/Work/AppD/KeyStore/vecharge.jks")
-            storePassword "vechargeBharatKeyStore@8021"
-            keyAlias "key0"
-            keyPassword "vechargeBharatKey@8021"
-        }
-    }
+//    signingConfigs {
+//        release {
+//            storeFile file('/home/pratyushudhani/Desktop/vecharge.jks')
+//            storePassword "vechargeBharatKeyStore@8021"
+//            keyAlias "key0"
+//            keyPassword "vechargeBharatKey@8021"
+//        }
+//    }
     
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
 
