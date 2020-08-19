@@ -15,13 +15,7 @@ import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_settings.*
 
-
 class SettingsFragment : BaseFragment() {
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +35,11 @@ class SettingsFragment : BaseFragment() {
     }
 
     private fun setListeners() {
+        routingButton.setOnClickListener {
+            replaceFragment(this, R.id.homeContainer, RoutingFragment.newInstance())
+        }
+
+
         addStationButton.setOnClickListener {
             replaceFragment(this, R.id.homeContainer, AdminPanelFragment.newInstance(USER))
         }
@@ -57,8 +56,8 @@ class SettingsFragment : BaseFragment() {
             replaceFragment(this, R.id.homeContainer, ProfileFragment.newInstance())
         }
 
-        conditionsButton.setOnClickListener{
-            val i = Intent(context,ConditionsActivity::class.java)
+        conditionsButton.setOnClickListener {
+            val i = Intent(context, ConditionsActivity::class.java)
             startActivity(i)
             allowEnterTransitionOverlap
         }

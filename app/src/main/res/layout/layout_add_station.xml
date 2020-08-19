@@ -32,6 +32,7 @@
             android:layout_marginTop="10dp"
             android:text="Please fill in the station details"
             android:textSize="12sp" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

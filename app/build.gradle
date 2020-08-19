@@ -138,4 +138,5 @@ dependencies {
 
     // background mail
     implementation 'com.github.luongvo:GmailBackground:2.1.1'
+
 }
