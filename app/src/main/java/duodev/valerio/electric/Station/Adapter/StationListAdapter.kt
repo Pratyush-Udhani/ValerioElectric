@@ -44,6 +44,11 @@ class StationListAdapter(
         Log.d("PK","called${data.size}")
         notifyDataSetChanged()
     }
+    fun removeStation(data: Station){
+        list.remove(data)
+        Log.d("TAG", "removeStation: StationRemoved")
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -64,6 +69,7 @@ class StationListAdapter(
         fun bindItems(item: Station, distance: String) {
 
 //            stationName.text = item.stationAddress
+            stationName.text = item.ownerCompany.name
 //            stationAddress.text = item.stationLocation
             stationAddress.text = item.stationAddress
             distLabel.text = "${miles2km(distance.toDouble())} km"
@@ -102,11 +108,17 @@ class StationListAdapter(
             cardView.setOnClickListener {
                 listener.onStationClicked(item, miles2km(distance.toDouble()).toString())
             }
+            cardView.setOnLongClickListener {
+                listener.onStationLongClicked(item)
+                true
+            }
         }
     }
 
     interface OnClick {
         fun onStationClicked(station: Station, dist: String)
+        fun onStationLongClicked(station: Station)
+
     }
 
     private fun setPort(portType: String, portIcon: ImageView, portName: TextView ) {

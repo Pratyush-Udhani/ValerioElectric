@@ -28,6 +28,10 @@ class AddedPlugsAdapter(
         }
     }
 
+    fun addAll(item: MutableList<Connector>){
+        list.addAll(item)
+        notifyDataSetChanged()
+    }
     fun addItem(item: Connector) {
         list.add(0, item)
         notifyItemInserted(0)

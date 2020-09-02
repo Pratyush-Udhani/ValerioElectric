@@ -13,7 +13,7 @@ class StationCompanyRepo {
         for (i in 0..10) {
             companyList.add(
                 Company(
-                    name = "comapny$i",
+                    name = "company$i",
                     imageUri = "asc",
                     phone = "",
                     email = ""

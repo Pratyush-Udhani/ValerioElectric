@@ -22,6 +22,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
+import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.MutableLiveData
@@ -54,16 +55,20 @@ import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.dialog_station_location.*
 import kotlinx.android.synthetic.main.fragment_admin_panel.*
 import kotlinx.android.synthetic.main.layout_add_station.*
+import kotlinx.android.synthetic.main.layout_add_station.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.Serializable
 
 class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
 
     private val plugDialog by lazy { Dialog(requireContext()) }
     private var stationUrl: Uri = Uri.EMPTY
     private var companyUrl: Uri = Uri.EMPTY
-    private val plugList: MutableList<Connector> = mutableListOf()
+    private var editStationUrl: Uri = Uri.EMPTY
+    private var editCompanyUrl: Uri = Uri.EMPTY
+    private var plugList: MutableList<Connector> = mutableListOf()
     private var owner = ""
     private var storeReference = FirebaseStorage.getInstance().reference
     private var companyBitmap = Uri.EMPTY
@@ -74,12 +79,17 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
     private var lat: Double = 0.0
     private var long: Double = 0.0
     private var flag = ""
+    private lateinit var editStation: HashMap<String,Any>
     private val dialog by lazy { Dialog(requireContext()) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             flag = it.getString(FLAG)!!
+            if(flag === EDIT){
+                editStation = it.getSerializable(STATION) as HashMap<String, Any>
+            }
         }
     }
 
@@ -105,12 +115,53 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
 
     private fun setUpUI() {
         if (flag == ADMIN) {
-            (activity as HomeActivity).bottomNavCard.makeGone()
+//            (activity as HomeActivity).bottomNavCard.makeGone()
             adminLogout.makeVisible()
             backButton.makeGone()
             headingTitle.text = "Panel"
             addStationText.text = "Upload Station"
         }
+
+        if (flag === EDIT) {
+            headingText.text = "Edit Station"
+            addStationText.text = "Edit Station"
+            stationAddress.setText(editStation[ADDRESS].toString())
+            stationSlots.setText(editStation[SLOTS].toString())
+            stationCity.setText(editStation[LOCATION].toString())
+            companyName.setText((editStation[OWNER] as Company).name)
+            plugList = editStation[CONNECTOR] as MutableList<Connector>
+            addedPlugsAdapter.addAll(plugList)
+            serviceProviderPhone.setText((editStation[OWNER] as Company).phone)
+            serviceProviderEmail.setText((editStation[OWNER] as Company).email)
+            serviceProvider.setText(editStation[PROVIDER].toString())
+            lat = editStation[LATITUDE] as Double
+            long = editStation[LONGITUDE] as Double
+            editCompanyUrl = (editStation[OWNER] as Company).imageUri.toUri()
+            editStationUrl = editStation[IMAGE_URL].toString().toUri()
+            stationUrl = editStation[IMAGE_URL].toString().toUri()
+            companyUrl = (editStation[OWNER] as Company).imageUri.toUri()
+            owner = editStation[OWNERSHIP].toString()
+
+            when(editStation[OWNERSHIP].toString()) {
+                "Private" -> ownerGroup.check(R.id.privateOwner)
+                "Public" -> ownerGroup.check(R.id.publicOwner)
+            }
+            Glide.with(this)
+                .load((editStation[OWNER] as Company).imageUri.toUri())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(companyImage)
+            companyImageLayout.makeVisible()
+            uploadCompanyImage.makeGone()
+
+            Glide.with(this)
+                .load(editStation[IMAGE_URL].toString().toUri())
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(stationImage)
+            stationImageLayout.makeVisible()
+            uploadStationImage.makeGone()
+
+        }
+
     }
 
     private fun setUpRecycler() {
@@ -167,27 +218,29 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         }
 
         uploadStationButton.setOnClickListener {
-            if (flag == ADMIN) {
-            if (stationAddress.text.isNotEmpty()
-                && stationAddress.text.isNotEmpty()
-                && stationCity.text.isNotEmpty()
-                && stationSlots.text.isNotEmpty()
-                && companyName.text.isNotEmpty()
-                && owner.isNotEmpty()
-            ) {
-                if (stationUrl != Uri.EMPTY && companyUrl != Uri.EMPTY) {
-                    if (plugList.size != 0) {
-//                        setLocation()
-                        uploadFile()
+            if (flag == ADMIN || flag == EDIT) {
+                if (stationAddress.text.isNotEmpty()
+                    && stationAddress.text.isNotEmpty()
+                    && stationCity.text.isNotEmpty()
+                    && stationSlots.text.isNotEmpty()
+                    && companyName.text.isNotEmpty()
+                    && owner.isNotEmpty()
+                ) {
+                    if (stationUrl != Uri.EMPTY && companyUrl != Uri.EMPTY) {
+                        if (plugList.size != 0) {
+    //                        setLocation()
+                            uploadFile()
+    //                        activity?.toast("Station Edited Successfully")
+    //                        (activity as HomeActivity).supportFragmentManager.popBackStackImmediate()
+                        } else {
+                            activity?.toast("add a plug")
+                        }
                     } else {
-                        activity?.toast("add a plug")
+                        activity?.toast("upload company image")
                     }
                 } else {
-                    activity?.toast("upload company image")
+                    activity?.toast("Enter all details")
                 }
-            } else {
-                activity?.toast("Enter all details")
-            }
             } else {
                 if (stationAddress.text.isNotEmpty()
                     && stationCity.text.isNotEmpty()
@@ -211,7 +264,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                     )
 //            .withProcessVisibility(false)
                     .send()
-
+                    activity?.toast("Your Station Add request has been sent.")
                     setDefs()
                 } else {
                     requireContext().toast("Please enter address, company name, and city")
@@ -244,14 +297,34 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
             if (uploaded.value!!) {
                 if (flag == ADMIN)
                     uploadToDatabase()
-                else {
+                else if (flag === EDIT){
+                    updateDatabase()
+                }else{
                     progressBar.makeGone()
                     activity?.toast("User side")
-                    // to be implemented
                 }
             }
         })
     }
+
+    private fun setDefs() {
+        addedPlugsAdapter.removeAll()
+        plugList.clear()
+        removePreviewImage(STATION)
+        removePreviewImage(COMPANY)
+        stationAddress.setText("")
+        stationCity.setText("")
+        stationSlots.setText("")
+        companyName.setText("")
+        serviceProvider.setText("")
+        serviceProviderPhone.setText("")
+        serviceProviderEmail.setText("")
+        stationLat.setText("")
+        stationLong.setText("")
+        privateOwner.isChecked = false
+        publicOwner.isChecked = false
+    }
+
 
     private fun uploadToDatabase() {
         val firestore = FirebaseFirestore.getInstance()
@@ -282,73 +355,115 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         }
     }
 
-    private fun setDefs() {
-        addedPlugsAdapter.removeAll()
-        plugList.clear()
-        removePreviewImage(STATION)
-        removePreviewImage(COMPANY)
-        stationAddress.setText("")
-        stationCity.setText("")
-        stationSlots.setText("")
-        companyName.setText("")
-        serviceProvider.setText("")
-        stationLat.setText("")
-        stationLong.setText("")
-        privateOwner.isChecked = false
-        publicOwner.isChecked = false
+    private fun updateDatabase() {
+        val firestore = FirebaseFirestore.getInstance()
+        val id = editStation[ID].toString()
+        val StationBitmap = if(stationUrl.toString() !== editStationUrl.toString())  {
+            stationBitmap.toString()
+        }  else{
+            editStationUrl.toString()
+        }
+        val companyBitmap = if(companyUrl.toString() !== editCompanyUrl.toString())  {
+            companyBitmap.toString()
+        }  else{
+            editCompanyUrl.toString()
+        }
+        Log.d("TAG", "updateDatabase: editStationID: $id")
+        firestore.collection(STATIONS).document(id).set(
+            Station(
+                stationLocation = stationCity.trimString(),
+                stationAddress = stationAddress.trimString(),
+                ownerCompany = Company(
+                    name = companyName.trimString(),
+                    imageUri = companyBitmap.toString(),
+                    phone = serviceProviderPhone.text.toString(),
+                    email = serviceProviderEmail.text.toString()
+                ),
+                serviceProvider = serviceProvider.trimString(),
+                location = GeoPoint(lat, long),
+                imageUrl = StationBitmap.toString(),
+                numberOfStations = stationSlots.text.toString().toInt(),
+                stationId = id,
+                connectorType = plugList,
+                ownership = owner
+            )
+        ).addOnSuccessListener {
+            Log.d("TAG", "updateDatabase: Updated")
+            activity?.toast("Station Edit Successful")
+            progressBar.makeGone()
+            setDefs()
+        }
+        .addOnFailureListener {
+            Log.d("TAG", "updateDatabase: Station Update Failed" + it.message)
+            activity?.toast("Station update Failed")
+            progressBar.makeGone()
+            throw it
+
+
+        }
     }
 
     private fun uploadFile() {
-        progressBar.makeVisible()
-        val companyStorageReference = storeReference.child(COMPANY_IMAGE).child(
-            companyName.text.toString() + "." + getFileExtension(companyUrl)
-        )
-        lifecycleScope.launch {
-            withContext(Dispatchers.Default) {
-                companyStorageReference.putFile(companyUrl).continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
+
+        if(companyUrl.toString() !== editCompanyUrl.toString()) {
+
+            progressBar.makeVisible()
+            val companyStorageReference = storeReference.child(COMPANY_IMAGE).child(
+                companyName.text.toString() + "." + getFileExtension(companyUrl)
+            )
+            lifecycleScope.launch {
+                withContext(Dispatchers.Default) {
+                    companyStorageReference.putFile(companyUrl).continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            task.exception?.let {
+                                throw it
+                            }
+                        }
+                        companyStorageReference.downloadUrl
+                    }.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // uploaded.value = true
+                            companyBitmap = task.result
+                            uploadSecond()
                         }
                     }
-                    companyStorageReference.downloadUrl
-                }.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                       // uploaded.value = true
-                        companyBitmap = task.result
-                        uploadSecond()
-                    }
+                    return@withContext
                 }
-                return@withContext
+                return@launch
             }
-            return@launch
+        }else{
+            uploaded.value = true
         }
 
     }
 
     private fun uploadSecond() {
-        val stationStorageReference = storeReference.child(STATION_IMAGE).child(
-            long.toString() + "." + getFileExtension(stationUrl)
-        )
+        if(stationUrl.toString() !== editStationUrl.toString()) {
+            val stationStorageReference = storeReference.child(STATION_IMAGE).child(
+                long.toString() + "." + getFileExtension(stationUrl)
+            )
 
-        lifecycleScope.launch {
-            withContext(Dispatchers.Default) {
-                stationStorageReference.putFile(stationUrl).continueWithTask { task ->
-                    if (!task.isSuccessful) {
-                        task.exception?.let {
-                            throw it
+            lifecycleScope.launch {
+                withContext(Dispatchers.Default) {
+                    stationStorageReference.putFile(stationUrl).continueWithTask { task ->
+                        if (!task.isSuccessful) {
+                            task.exception?.let {
+                                throw it
+                            }
+                        }
+                        stationStorageReference.downloadUrl
+                    }.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            stationBitmap = task.result
+                            uploaded.value = true
                         }
                     }
-                    stationStorageReference.downloadUrl
-                }.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        stationBitmap = task.result
-                        uploaded.value = true
-                    }
+                    return@withContext
                 }
-                return@withContext
+                return@launch
             }
-            return@launch
+        }else{
+            uploaded.value = true
         }
     }
 
@@ -488,13 +603,23 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
         }
     }
 
-
     override fun onRemoved(item: Connector, position: Int) {
         plugList.remove(item)
     }
 
     companion object {
 
+        const val ADDRESS = "address"
+        const val PROVIDER = "provider"
+        const val CONNECTOR = "connector"
+        const val OWNER = "owner"
+        const val LATITUDE = "latitude"
+        const val LONGITUDE = "longitude"
+        const val ID = "id"
+        const val LOCATION = "location"
+        const val IMAGE_URL = "imageUrl"
+        const val OWNERSHIP = "ownership"
+        const val SLOTS = "slots"
         private const val FLAG = "flag"
         const val CODE =  19
 
@@ -503,5 +628,17 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                 putString(FLAG, flag)
             }
         }
+        fun editInstance(flag: String,station: Serializable?) = AdminPanelFragment().apply {
+            arguments = Bundle().apply {
+                putString(FLAG,flag)
+                putSerializable(STATION,station)
+            }
+        }
+
+
+
+
+
+
     }
 }

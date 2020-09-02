@@ -32,7 +32,7 @@
                 android:id="@+id/headingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/frank_ruhl_libre_bold"
+                android:fontFamily="@font/lato"
                 android:text="Sign In"
                 android:textColor="@color/main_blue"
                 android:textSize="30sp"

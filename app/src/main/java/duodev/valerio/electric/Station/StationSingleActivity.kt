@@ -85,6 +85,7 @@ class StationSingleActivity : BaseActivity() {
         stationName.text = station[StationListFragment.ADDRESS].toString()
         Glide.with(this).load(station[StationListFragment.IMAGE_URL].toString()).into(stationImage)
         stationAddress.text = station[StationListFragment.LOCATION].toString()
+        stationPhone.text = (station[StationListFragment.OWNER] as Company).phone
         distanceLabel.text = "$distance km"
         Glide.with(this).load(company.imageUri).into(companyImage)
         if (flag != INSTANCE) {

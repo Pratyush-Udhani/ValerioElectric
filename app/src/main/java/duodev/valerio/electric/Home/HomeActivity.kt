@@ -1,5 +1,6 @@
 package duodev.valerio.electric.Home
 
+import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -25,10 +26,7 @@ import duodev.valerio.electric.Station.BookingStationFragment
 import duodev.valerio.electric.Station.StationCompanyFragment
 import duodev.valerio.electric.Station.StationFilterFragment
 import duodev.valerio.electric.Station.StationListFragment
-import duodev.valerio.electric.Utils.ADMIN
-import duodev.valerio.electric.Utils.USERS
-import duodev.valerio.electric.Utils.addFragment
-import duodev.valerio.electric.Utils.replaceFragment
+import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -57,19 +55,52 @@ class HomeActivity : BaseActivity() {
     private fun setUpFragment() {
         if (flag == ADMIN)
             addFragment(null, R.id.homeContainer, AdminPanelFragment.newInstance(flag), this)
-        else
-            addFragment(null, R.id.homeContainer, StationListFragment.newInstance(), this)
+        else {
+            if(pm.email == ADMIN_EMAIL){
+                addFragment(null, R.id.homeContainer, StationListFragment.newInstance(ADMIN), this)
+            }else
+                addFragment(null, R.id.homeContainer, StationListFragment.newInstance(), this)
+
+        }
     }
 
     private fun setListeners() {
         bottomNav.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navigationMap -> {
-                    replaceFragment(null, R.id.homeContainer, StationListFragment.newInstance(), this)
-                    return@setOnNavigationItemSelectedListener true
-                }
+                    if (pm.email == ADMIN_EMAIL) {
+                        replaceFragment(
+                            null,
+                            R.id.homeContainer,
+                            StationListFragment.newInstance(ADMIN),
+                            this
+                        )
+                    } else
+                        replaceFragment(
+                            null,
+                            R.id.homeContainer,
+                            StationListFragment.newInstance(),
+                            this
+                        )
+
+                return@setOnNavigationItemSelectedListener true
+            }
+
                 R.id.navigationClock -> {
-                    replaceFragment(null, R.id.homeContainer, ServiceListFragment.newInstance(), this)
+                    if (pm.email == ADMIN_EMAIL) {
+                        replaceFragment(
+                            null,
+                            R.id.homeContainer,
+                            ServiceListFragment.newInstance(ADMIN),
+                            this
+                        )
+                    } else
+                        replaceFragment(
+                            null,
+                            R.id.homeContainer,
+                            ServiceListFragment.newInstance(),
+                            this
+                        )
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigationProfile -> {

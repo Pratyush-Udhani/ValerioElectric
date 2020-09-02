@@ -42,11 +42,11 @@ object StationDef {
                     stationLocation = "Delhi",
                     numberOfStations = 1,
                     serviceProvider = "Delta Electronics",
-                    imageUrl = "asc",
-                    stationId = "",
+                    imageUrl = "https://firebasestorage.googleapis.com/v0/b/valerio-ac7ff.appspot.com/o/stationimage%2F73.8247188.jpg?alt=media&token=56525f51-5deb-44d0-af50-3adfb6c907eb",
+                    stationId = "$i",
                     ownerCompany = Company(
                         name = "NDMC",
-                        imageUri = "as",
+                        imageUri = "https://firebasestorage.googleapis.com/v0/b/valerio-ac7ff.appspot.com/o/companyimage%2Fnsjs.jpg?alt=media&token=8f3f8136-9876-4960-b890-4f09f4800db9",
                         email = "pratyush.udhani@gmail.com",
                         phone = "7898164077"
                     ),

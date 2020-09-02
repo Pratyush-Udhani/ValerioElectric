@@ -10,6 +10,8 @@ import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Services.BookingServiceFragment
 import duodev.valerio.electric.Station.BookingStationFragment
+import duodev.valerio.electric.Utils.ADMIN
+import duodev.valerio.electric.Utils.ADMIN_EMAIL
 import duodev.valerio.electric.Utils.USER
 import duodev.valerio.electric.Utils.replaceFragment
 import duodev.valerio.electric.base.BaseFragment
@@ -42,7 +44,11 @@ class SettingsFragment : BaseFragment() {
 
     private fun setListeners() {
         addStationButton.setOnClickListener {
-            replaceFragment(this, R.id.homeContainer, AdminPanelFragment.newInstance(USER))
+            if(pm.email == ADMIN_EMAIL){
+                replaceFragment(this, R.id.homeContainer, AdminPanelFragment.newInstance(ADMIN))
+            }else{
+                replaceFragment(this, R.id.homeContainer, AdminPanelFragment.newInstance(USER))
+            }
         }
 
         changePasswordButton.setOnClickListener {

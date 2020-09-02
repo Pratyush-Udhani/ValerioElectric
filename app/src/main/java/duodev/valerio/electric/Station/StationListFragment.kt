@@ -1,13 +1,19 @@
 package duodev.valerio.electric.Station
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,11 +21,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.firestore.FirebaseFirestore
+import duodev.valerio.electric.Admin.AdminPanelFragment
 import duodev.valerio.electric.Bookings.BookingPlugsFragment
+import duodev.valerio.electric.Home.HomeActivity
 import duodev.valerio.electric.R
 import duodev.valerio.electric.Station.Adapter.StationListAdapter
 import duodev.valerio.electric.Station.ViewModel.StationListViewModel
 import duodev.valerio.electric.Utils.*
+import duodev.valerio.electric.base.BaseActivity
 import duodev.valerio.electric.pojos.Station
 import kotlinx.android.synthetic.main.fragment_station_list.*
 import kotlin.math.acos
@@ -33,12 +42,15 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     private var stationList: MutableList<Station> = mutableListOf()
     private var longitude: Double? = 0.0
     private var latitude: Double? = 0.0
-
+    private var flag = ""
+    private val dialog by lazy { Dialog(requireContext()) }
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private var isDeleted = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            flag = it.getString(FLAG).toString()
         }
     }
 
@@ -62,7 +74,6 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     }
 
     private fun setUpdb() {
-        val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
         val list = StationDef.getStationList()
         val serviceList = ServiceDef.getServiceList()
@@ -232,6 +243,40 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         log("$latitude$longitude latlng")
     }
 
+    private fun showDialog(station: HashMap<String, Any>,stationToRemove: Station){
+        val view: View = layoutInflater.inflate(R.layout.dialog_station_menu, null)
+
+        dialog.apply {
+            setContentView(view)
+            create()
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            val editButton = findViewById<Button>(R.id.editButton)
+            val deleteButton = findViewById<Button>(R.id.deleteButton)
+            deleteButton.setOnClickListener{
+                firestore.collection("Stations")
+                    .document(station[ID].toString())
+                    .delete()
+                    .addOnSuccessListener {
+                        activity?.toast("Deletion Successful")
+                        isDeleted = true;
+                        stationAdapter.removeStation(stationToRemove)
+                        dismiss()
+                        Log.d("StationListFragment", "showDialog: Deletion Successful")
+                    }
+                    .addOnFailureListener{
+                        activity?.toast("Deletion Failed")
+                        Log.d("StationListFragment", "showDialog: Deletion failed ")
+                    }
+            }
+            editButton.setOnClickListener {
+                replaceFragment(this@StationListFragment,R.id.homeContainer,AdminPanelFragment.editInstance(EDIT,station),null)
+                dismiss()
+            }
+            show()
+        }
+
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -265,8 +310,14 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         const val OWNERSHIP = "ownership"
         const val SLOTS = "slots"
         const val RESULT_CODE = 12
+        private const val FLAG = "flag"
 
-        fun newInstance() = StationListFragment()
+        fun newInstance(flag: String = "") = StationListFragment().apply {
+            arguments = Bundle().apply {
+                putString(FLAG, flag)
+            }
+        }
+
     }
 
     override fun onStationClicked(station: Station, dist: String) {
@@ -291,5 +342,27 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         )
 //        startActivity(StationSingleActivity.newInstance(requireContext(), map, dist))
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
+    }
+
+    override fun onStationLongClicked(station: Station) {
+        val map: HashMap<String, Any> = hashMapOf()
+        map[OWNER] = station.ownerCompany
+        map[CONNECTOR] = station.connectorType
+        map[ADDRESS] = station.stationAddress
+        map[PROVIDER] = station.serviceProvider
+        map[LATITUDE] = station.location.latitude
+        map[LONGITUDE] = station.location.longitude
+        map[LOCATION] = station.stationLocation
+        map[ID] = station.stationId
+        map[IMAGE_URL] = station.imageUrl
+        map[OWNERSHIP] = station.ownership
+        map[SLOTS] = station.numberOfStations
+
+        Log.d("onStationLongClicked","LongClicked")
+        Log.d("onStationLongClicked","Station ${station.stationId}" )
+        Log.d("onStationLongClicked", "Flag ${pm.email} ")
+        if(flag == ADMIN) {
+            showDialog(map,station)
+        }
     }
 }

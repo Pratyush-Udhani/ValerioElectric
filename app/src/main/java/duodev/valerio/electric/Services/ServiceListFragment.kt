@@ -276,8 +276,13 @@ class ServiceListFragment: BaseFragment(), ServiceListAdapter.OnClick  {
         const val EMAIL = "email"
         const val STATUS = "status"
         const val DESC = "description"
+        private const val FLAG = "flag"
 
-        fun newInstance() = ServiceListFragment()
+        fun newInstance(flag: String = " ") = ServiceListFragment().apply {
+            arguments = Bundle().apply {
+                putString(FLAG, flag)
+            }
+        }
     }
     override fun onServiceClicked(serviceStation: ServiceStation, dist: String) {
         val map: HashMap<String, Any> = hashMapOf()

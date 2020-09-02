@@ -265,4 +265,8 @@ class BookingStationFragment : BaseFragment(), StationListAdapter.OnClick {
         activity?.overridePendingTransition(R.anim.slide_down, R.anim.slide_up)
     }
 
+    override fun onStationLongClicked(station: Station) {
+
+    }
+
 }

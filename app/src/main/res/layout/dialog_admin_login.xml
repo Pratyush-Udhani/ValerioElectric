@@ -42,10 +42,11 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_white_soft_box"
                 android:elevation="5dp"
+                android:hint="Enter password"
                 android:inputType="textPassword"
-                android:hint="enter password"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="8dp"
+                android:paddingStart="10dp"
                 android:textColor="@color/color_black"
                 android:textColorHint="@color/gray"
                 android:textSize="16sp" />
