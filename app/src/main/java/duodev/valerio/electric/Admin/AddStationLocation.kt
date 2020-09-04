@@ -43,7 +43,7 @@ class AddStationLocation : AppCompatActivity(), OnMapReadyCallback {
         stationLocation.onCreate(savedInstanceState)
 
         Log.d("TAG", "onCreate: " + R.string.google_maps_key)
-        Places.initialize(applicationContext, "AIzaSyCE3OiFE3yTHdGMU1unJ2tXd2Gv7Em4Jbg")
+        Places.initialize(applicationContext, getString(R.string.google_maps_key))
 
 
 
