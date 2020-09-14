@@ -42,8 +42,8 @@
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="-16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -408,7 +408,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/bg_white_soft_box"
                 android:elevation="5dp"
                 android:orientation="horizontal"
@@ -438,6 +438,42 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/routingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_white_soft_box"
+                android:elevation="5dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="10dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="2dp"
+                    android:src="@drawable/ic_map_active"
+                    android:tint="@color/main_blue" />
+
+                <TextView
+                    android:id="@+id/routingText"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/open_sans"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:text="Routing"
+                    android:textColor="@color/color_black"
+                    android:textSize="16sp" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,14 +52,14 @@
                 android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                android:id="@+id/plugName"
+                android:id="@+id/plugType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_white_soft_box"
                 android:elevation="5dp"
-                android:hint="Plug name"
+                android:hint="Plug Type"
                 android:includeFontPadding="false"
                 android:paddingHorizontal="5dp"
                 android:paddingVertical="8dp"
@@ -69,14 +69,68 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/plugCost"
+                android:id="@+id/plugPower"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_white_soft_box"
                 android:elevation="5dp"
-                android:hint="Plug cost (per hour)"
+                android:hint="Power in kWh"
+                android:includeFontPadding="false"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="8dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/color_black"
+                android:textColorHint="@color/gray"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/plugSpeed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_white_soft_box"
+                android:elevation="5dp"
+                android:hint="Plug Speed"
+                android:includeFontPadding="false"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="8dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/color_black"
+                android:textColorHint="@color/gray"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/plugPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_white_soft_box"
+                android:elevation="5dp"
+                android:hint="Plug Price (per kWh )"
+                android:includeFontPadding="false"
+                android:inputType="numberDecimal"
+                android:paddingHorizontal="5dp"
+                android:paddingVertical="8dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/color_black"
+                android:textColorHint="@color/gray"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/plugPorts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_white_soft_box"
+                android:elevation="5dp"
+                android:hint="Number of Plugs"
                 android:includeFontPadding="false"
                 android:inputType="numberDecimal"
                 android:paddingHorizontal="5dp"

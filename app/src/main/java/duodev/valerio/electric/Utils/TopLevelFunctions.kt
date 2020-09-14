@@ -3,6 +3,7 @@ package duodev.valerio.electric.Utils
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
+import duodev.valerio.electric.pojos.Station
 import duodev.valerio.electric.pojos.Users
 
 private val firebaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -47,3 +48,4 @@ fun checkAuth(email: String, password: String) {
 fun changePassword(password: String) {
     firebaseFirestore.collection(USERS).document(pm.email).update("hash", password)
 }
+var Station_List: MutableList<Station> = ArrayList()

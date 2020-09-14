@@ -43,14 +43,15 @@ class StationPlugAdapter(
         private val slot: TextView = itemView.findViewById(R.id.portNumber)
 
         fun bindItems(item: Connector) {
-            slot.text = slots
+            slot.text = item.ports
             plugName.text = item.type
-            plugPrice.text = "Rs. ${item.price} per hr"
+            plugPrice.text = "Rs. ${item.price} per kWh"
+
 
             when (item.type) {
-                CHAD_DC -> plugImage.setImageResource(R.drawable.ic_chad_icon)
-                CCS_DC -> plugImage.setImageResource(R.drawable.ic_ccs_icon)
-                TYPE_TWO_43 -> plugImage.setImageResource(R.drawable.ic_type_two_icon)
+                CHAD -> plugImage.setImageResource(R.drawable.ic_chad_icon)
+                CCS -> plugImage.setImageResource(R.drawable.ic_ccs_icon)
+                TYPE_TWO -> plugImage.setImageResource(R.drawable.ic_type_two_icon)
                 TYPE_TWO_22 -> plugImage.setImageResource(R.drawable.ic_type_two_icon)
                 TYPE_ONE_7 -> plugImage.setImageResource(R.drawable.ic_type_one_icon)
                 IEC_PLUG -> plugImage.setImageResource(R.drawable.ic_iec_plug)

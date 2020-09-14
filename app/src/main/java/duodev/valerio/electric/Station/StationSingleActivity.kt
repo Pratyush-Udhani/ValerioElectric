@@ -69,7 +69,7 @@ class StationSingleActivity : BaseActivity() {
             stationAddress = station[StationListFragment.ADDRESS].toString(),
             location = GeoPoint(station[StationListFragment.LATITUDE].toString().toDouble(), station[StationListFragment.LONGITUDE].toString().toDouble() ),
             stationLocation = station[StationListFragment.LOCATION].toString(),
-            numberOfStations = station[StationListFragment.SLOTS].toString().toInt(),
+//            numberOfStations = station[StationListFragment.SLOTS].toString().toInt(),
             serviceProvider = station[StationListFragment.PROVIDER].toString(),
             imageUrl = station[StationListFragment.IMAGE_URL].toString(),
             stationId = station[StationListFragment.ID].toString(),

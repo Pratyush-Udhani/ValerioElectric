@@ -255,7 +255,7 @@ class BookingStationFragment : BaseFragment(), StationListAdapter.OnClick {
         map[ID] = station.stationId
         map[IMAGE_URL] = station.imageUrl
         map[OWNERSHIP] = station.ownership
-        map[SLOTS] = station.numberOfStations
+//        map[SLOTS] = station.numberOfStations
         log("called")
         startActivityForResult(
             StationSingleActivity.newInstance(requireContext(), map, dist, INSTANCE),

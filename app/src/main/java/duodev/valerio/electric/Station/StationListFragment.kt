@@ -29,7 +29,9 @@ import duodev.valerio.electric.Station.Adapter.StationListAdapter
 import duodev.valerio.electric.Station.ViewModel.StationListViewModel
 import duodev.valerio.electric.Utils.*
 import duodev.valerio.electric.base.BaseActivity
+import duodev.valerio.electric.pojos.Company
 import duodev.valerio.electric.pojos.Station
+import kotlinx.android.synthetic.main.activity_home.view.*
 import kotlinx.android.synthetic.main.fragment_station_list.*
 import kotlin.math.acos
 import kotlin.math.cos
@@ -46,11 +48,18 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     private val dialog by lazy { Dialog(requireContext()) }
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private var isDeleted = false;
+    private var filterList: HashMap<String,Any> = hashMapOf()
+    private var isFilter: HashMap<String,Boolean> = hashMapOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             flag = it.getString(FLAG).toString()
+            Log.d("StationListFragment", "onCreate flag: $flag")
+            if(flag == FILTER){
+                filterList = (it.getSerializable("filterList") as HashMap<String,Any> )
+            }
         }
     }
 
@@ -68,9 +77,19 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
     }
 
     private fun init() {
+        if(flag == FILTER)
+            setUpFilterList()
         setUpRecycler()
         getLocation()
         setUpListeners()
+    }
+
+    private fun setUpFilterList(){
+        Log.d("FilterList", "setUpFilterList ")
+        isFilter[FILTER_CHARGER_COMPANY] = (filterList[FILTER_CHARGER_COMPANY] as ArrayList<String>).isNotEmpty()
+        isFilter[FILTER_PORT_TYPE] = (filterList[FILTER_PORT_TYPE] as MutableList<String>).isNotEmpty()
+        isFilter[FILTER_RADIUS] = (filterList[FILTER_RADIUS] as Int) > 0
+        isFilter[FILTER_CHARGER_SPEED] = (filterList[FILTER_CHARGER_SPEED] as MutableList<String>).isNotEmpty()
     }
 
     private fun setUpdb() {
@@ -87,36 +106,110 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
             }
     }
 
-//    private fun setUpObservers() {
-//        stationListViewModel.fetchData().observe(viewLifecycleOwner, Observer {
-//            if (it.isNotEmpty()) {
-//                sortData(it)
-//            }
-//        })
-//    }
-
-    private fun sortData(list: List<Station>) {
-        //   getLocation()
-        val sortedMap: LinkedHashMap<Station, String> = mutableMapOf<Station, String>() as LinkedHashMap<Station, String>
-        val sortedList: MutableList<Station> = list as MutableList<Station>
-        for (i in list.indices) {
-            for (j in 0 until list.size - i -1) {
-                val distanceOne = distance(latitude!!, longitude!!, sortedList[j].location.latitude, sortedList[j].location.longitude)
-                val distanceTwo = distance(latitude!!, longitude!!, sortedList[j+1].location.latitude, sortedList[j+1].location.longitude)
-                if (distanceOne > distanceTwo) {
-                    val temp = sortedList[j]
-                    sortedList[j] = sortedList[j+1]
-                    sortedList[j+1] = temp
+    private fun filterSpeed(station: Station): Boolean {
+        if (station.connectorType.isNotEmpty()) {
+            for (i in station.connectorType) {
+                if ((filterList[FILTER_CHARGER_SPEED] as MutableList<String>).contains(i.speed.toUpperCase())) {
+                    return true
                 }
             }
         }
-        for (element in sortedList) {
+        return false
+    }
+    private fun filterPortType(station: Station): Boolean {
+        if (station.connectorType.isNotEmpty()) {
+            for (i in station.connectorType) {
+                if ((filterList[FILTER_PORT_TYPE] as MutableList<String>).contains(i.type)) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    private fun sortData(list: List<Station>) {
+        //   getLocation()
+        val sortedMap: LinkedHashMap<Station, String> = mutableMapOf<Station, String>() as LinkedHashMap<Station, String>
+        var sortedList: MutableList<Station> = list as MutableList<Station>
 
-            sortedMap[element] =
-                distance(latitude!!, longitude!!, element.location.latitude, element.location.longitude).toString()
+        if(flag == FILTER) {
+            if (isFilter[FILTER_CHARGER_COMPANY]!!) {
+                Log.d(FILTER, "sortData: FILTER CHARGER COMPANY LIST "+(filterList[FILTER_CHARGER_COMPANY] as MutableList<String>).toString())
+
+                sortedList = sortedList.filter {
+                    (filterList[FILTER_CHARGER_COMPANY] as MutableList<String>).contains(it.ownerCompany.name)
+                } as MutableList<Station>
+
+            }
+            Log.d(FILTER, "sortData: FILTER CHARGER COMPANY "+filterList[FILTER_CHARGER_COMPANY].toString())
+            if (isFilter[FILTER_CHARGER_SPEED]!!) {
+                sortedList = sortedList.filter {
+                    filterSpeed(it)
+                } as MutableList<Station>
+            }
+            Log.d(FILTER, "sortData: FILTER CHARGER SPEED "+filterList[FILTER_CHARGER_SPEED].toString())
+
+            if (isFilter[FILTER_PORT_TYPE]!!) {
+                sortedList = sortedList.filter {
+                    filterPortType(it)
+                } as MutableList<Station>
+            }
+            Log.d(FILTER, "sortData: FILTER PORT TYPE "+filterList[FILTER_PORT_TYPE].toString())
+
+        }
+        if(sortedList.isNotEmpty()) {
+            for (i in sortedList.indices) {
+                for (j in 0 until sortedList.size - i - 1) {
+                    val distanceOne = distance(
+                        latitude!!,
+                        longitude!!,
+                        sortedList[j].location.latitude,
+                        sortedList[j].location.longitude
+                    )
+                    val distanceTwo = distance(
+                        latitude!!,
+                        longitude!!,
+                        sortedList[j + 1].location.latitude,
+                        sortedList[j + 1].location.longitude
+                    )
+
+                    if (distanceOne > distanceTwo) {
+                        val temp = sortedList[j]
+                        sortedList[j] = sortedList[j + 1]
+                        sortedList[j + 1] = temp
+                    }
+
+                }
+            }
+
+            for (element in sortedList) {
+                val dist =  distance(
+                    latitude!!,
+                    longitude!!,
+                    element.location.latitude,
+                    element.location.longitude
+                )
+                if(flag == FILTER ) {
+                    if(isFilter[FILTER_RADIUS]!!) {
+                        Log.d("FILTER", "sortData: filterList[FILTER_RADIUS] "+filterList[FILTER_RADIUS])
+
+                        if (miles2km(dist) <= (filterList[FILTER_RADIUS] as Int)) {
+                            sortedMap[element] = dist.toString()
+                            Log.d("FILTER", "sortedMap[element]: dist "+ dist)
+                        }
+                    }
+                    else
+                        sortedMap[element] = dist.toString()
+
+                }else {
+                    sortedMap[element] = dist.toString()
+                }
+            }
+            loader.makeGone()
+            stationAdapter.addData(sortedMap)
         }
         loader.makeGone()
-        stationAdapter.addData(sortedMap)
+
+
     }
 
     private fun setUpListeners() {
@@ -124,8 +217,11 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
 //            replaceFragment(this, R.id.homeContainer , HomeMapFragment.newInstance())
 //        }
         filterButton.setOnClickListener {
-//            addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance(), null, true)
-            setUpdb()
+            if( flag == FILTER)
+                addFragment(this,R.id.homeContainer, StationFilterFragment.filteredInstance(FILTER,filterList))
+            else
+                addFragment(this, R.id.homeContainer, StationFilterFragment.newInstance(), null, true)
+//            setUpdb()
         }
 
         permissionText.setOnClickListener {
@@ -139,32 +235,6 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
             adapter = this@StationListFragment.stationAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
-    }
-
-    private fun distance(
-        lat1: Double,
-        lon1: Double,
-        lat2: Double,
-        lon2: Double
-    ): Double {
-        val theta = lon1 - lon2
-        var dist = (sin(deg2rad(lat1))
-                * sin(deg2rad(lat2))
-                + (cos(deg2rad(lat1))
-                * cos(deg2rad(lat2))
-                * cos(deg2rad(theta))))
-        dist = acos(dist)
-        dist = rad2deg(dist)
-        dist *= 60 * 1.1515
-        return dist
-    }
-
-    private fun deg2rad(deg: Double): Double {
-        return deg * Math.PI / 180.0
-    }
-
-    private fun rad2deg(rad: Double): Double {
-        return rad * 180.0 / Math.PI
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -227,6 +297,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
                     stationListViewModel.fetchData().observe(viewLifecycleOwner, Observer {list ->
                         if (list.isNotEmpty()) {
                             log("called$list")
+                            Station_List = list as MutableList<Station>
                             sortData(list)
                         } else {
                             loader.makeGone()
@@ -318,6 +389,13 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
             }
         }
 
+        fun filteredInstance(flag: String = "",filterList: HashMap<String,Any>) = StationListFragment().apply {
+            arguments = Bundle().apply {
+                putString(FLAG,flag)
+                putSerializable("filterList",filterList)
+            }
+        }
+
     }
 
     override fun onStationClicked(station: Station, dist: String) {
@@ -334,7 +412,7 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         map[ID] = station.stationId
         map[IMAGE_URL] = station.imageUrl
         map[OWNERSHIP] = station.ownership
-        map[SLOTS] = station.numberOfStations
+//        map[SLOTS] = station.numberOfStations
         log("called")
         startActivityForResult(
             StationSingleActivity.newInstance(requireContext(), map, dist),
@@ -356,12 +434,12 @@ class StationListFragment : Fragment(), StationListAdapter.OnClick {
         map[ID] = station.stationId
         map[IMAGE_URL] = station.imageUrl
         map[OWNERSHIP] = station.ownership
-        map[SLOTS] = station.numberOfStations
+//        map[SLOTS] = station.numberOfStations
 
         Log.d("onStationLongClicked","LongClicked")
         Log.d("onStationLongClicked","Station ${station.stationId}" )
         Log.d("onStationLongClicked", "Flag ${pm.email} ")
-        if(flag == ADMIN) {
+        if(flag == ADMIN || pm.email == ADMIN_EMAIL ) {
             showDialog(map,station)
         }
     }

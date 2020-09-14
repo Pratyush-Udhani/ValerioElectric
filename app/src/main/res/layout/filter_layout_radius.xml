@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/RadiusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/open_sans_semibold"
+        android:text="Radius ( km )"
+        android:textColor="@color/color_black"
+        android:textSize="18sp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="5dp"
+        android:elevation="0dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="10dp">
+
+            <TextView
+                android:id="@+id/radiusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="7dp"
+                android:fontFamily="@font/lato"
+                android:text="0 km"
+                android:textColor="@color/main_blue"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <SeekBar
+                android:id="@+id/radiusSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbars="horizontal" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

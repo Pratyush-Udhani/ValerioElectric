@@ -1,27 +1,22 @@
 package duodev.valerio.electric.Admin
 
-import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Button
 import android.widget.EditText
 import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityCompat
 import androidx.core.net.toUri
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doOnTextChanged
@@ -32,13 +27,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.creativityapps.gmailbackgroundlibrary.BackgroundMail
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.MapsInitializer
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
@@ -51,11 +39,9 @@ import duodev.valerio.electric.base.BaseFragment
 import duodev.valerio.electric.pojos.Company
 import duodev.valerio.electric.pojos.Connector
 import duodev.valerio.electric.pojos.Station
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.dialog_station_location.*
 import kotlinx.android.synthetic.main.fragment_admin_panel.*
 import kotlinx.android.synthetic.main.layout_add_station.*
-import kotlinx.android.synthetic.main.layout_add_station.view.*
+import kotlinx.android.synthetic.main.layout_add_station.addPlugButton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -130,7 +116,10 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
             stationCity.setText(editStation[LOCATION].toString())
             companyName.setText((editStation[OWNER] as Company).name)
             plugList = editStation[CONNECTOR] as MutableList<Connector>
-            addedPlugsAdapter.addAll(plugList)
+            if((editStation[CONNECTOR] as MutableList<Connector>).size !== 0){
+                plugList = (editStation[CONNECTOR] as MutableList<Connector>)
+                addedPlugsAdapter.addAll(plugList)
+            }
             serviceProviderPhone.setText((editStation[OWNER] as Company).phone)
             serviceProviderEmail.setText((editStation[OWNER] as Company).email)
             serviceProvider.setText(editStation[PROVIDER].toString())
@@ -146,20 +135,22 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                 "Private" -> ownerGroup.check(R.id.privateOwner)
                 "Public" -> ownerGroup.check(R.id.publicOwner)
             }
-            Glide.with(this)
-                .load((editStation[OWNER] as Company).imageUri.toUri())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(companyImage)
-            companyImageLayout.makeVisible()
-            uploadCompanyImage.makeGone()
-
-            Glide.with(this)
-                .load(editStation[IMAGE_URL].toString().toUri())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(stationImage)
-            stationImageLayout.makeVisible()
-            uploadStationImage.makeGone()
-
+            if((editStation[OWNER] as Company).imageUri.toString().isNotEmpty()) {
+                Glide.with(this)
+                    .load((editStation[OWNER] as Company).imageUri.toUri())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(companyImage)
+                companyImageLayout.makeVisible()
+                uploadCompanyImage.makeGone()
+            }
+            if(editStation[IMAGE_URL].toString().isNotEmpty()) {
+                Glide.with(this)
+                    .load(editStation[IMAGE_URL].toString().toUri())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(stationImage)
+                stationImageLayout.makeVisible()
+                uploadStationImage.makeGone()
+            }
         }
 
     }
@@ -343,7 +334,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                 serviceProvider = serviceProvider.trimString(),
                 location = GeoPoint(lat, long),
                 imageUrl = stationBitmap.toString(),
-                numberOfStations = stationSlots.text.toString().toInt(),
+//                numberOfStations = stationSlots.text.toString().toInt(),
                 stationId = id,
                 connectorType = plugList,
                 ownership = owner
@@ -382,7 +373,7 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                 serviceProvider = serviceProvider.trimString(),
                 location = GeoPoint(lat, long),
                 imageUrl = StationBitmap.toString(),
-                numberOfStations = stationSlots.text.toString().toInt(),
+//                numberOfStations = stationSlots.text.toString().toInt(),
                 stationId = id,
                 connectorType = plugList,
                 ownership = owner
@@ -540,8 +531,11 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
             setContentView(view)
             create()
             plugDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val plugName: AutoCompleteTextView = view.findViewById(R.id.plugName)
-            val plugPrice: EditText = view.findViewById(R.id.plugCost)
+            val plugName: AutoCompleteTextView = view.findViewById(R.id.plugType)
+            val plugPrice: EditText = view.findViewById(R.id.plugPrice)
+            val plugPower: EditText = view.findViewById(R.id.plugPower)
+            val plugPorts: EditText = view.findViewById(R.id.plugPorts)
+            val plugSpeed: EditText = view.findViewById(R.id.plugSpeed)
             val addPlugButton: CardView = view.findViewById(R.id.addPlugButton)
             val plugId: EditText = view.findViewById(R.id.plugId)
 
@@ -586,6 +580,9 @@ class AdminPanelFragment : BaseFragment(), AddedPlugsAdapter.OnClick {
                         Connector(
                             type = plug,
                             price = plugPrice.text.toString(),
+                            ports = plugPorts.text.toString(),
+                            power = plugPower.text.toString(),
+                            speed = plugSpeed.text.toString(),
                             id = plugId.text.toString()
                         ).also {
                             plugList.add(it)

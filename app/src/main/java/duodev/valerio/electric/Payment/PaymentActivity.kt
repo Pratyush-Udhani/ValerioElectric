@@ -115,7 +115,7 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
                     station[StationListFragment.LONGITUDE].toString().toDouble()
                 ),
                 stationLocation = station[StationListFragment.LOCATION].toString(),
-                numberOfStations = station[StationListFragment.SLOTS].toString().toInt(),
+//                numberOfStations = station[StationListFragment.SLOTS].toString().toInt(),
                 serviceProvider = station[StationListFragment.PROVIDER].toString(),
                 imageUrl = station[StationListFragment.IMAGE_URL].toString(),
                 stationId = station[StationListFragment.ID].toString(),
@@ -126,6 +126,9 @@ class PaymentActivity : BaseActivity(), PaymentResultListener {
             Connector(
                 type = plug.type,
                 price = plug.price,
+                power = plug.power,
+                ports = plug.ports,
+                speed = plug.speed,
                 id = plug.id
             ),
             time = time,

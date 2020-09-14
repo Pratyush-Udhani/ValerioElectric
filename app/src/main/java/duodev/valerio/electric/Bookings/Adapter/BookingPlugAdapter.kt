@@ -42,18 +42,18 @@ class BookingPlugAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(item: Connector) {
             val portName: TextView = itemView.findViewById(R.id.plugName)
-            val portPrice: TextView = itemView.findViewById(R.id.plugCost)
+            val portPrice: TextView = itemView.findViewById(R.id.plugPower)
             val portImage: ImageView = itemView.findViewById(R.id.plugLogo)
             val portCard: CardView = itemView.findViewById(R.id.plugCard)
             val view: View = itemView.findViewById(R.id.view)
 
             portName.text = item.type
-            portPrice.text = "Rs. ${item.price} per hr"
+            portPrice.text = "Rs. ${item.price.toDouble()} per kWh"
 
-            when (item.type) {
-                CHAD_DC -> portImage.setImageResource(R.drawable.ic_chad_icon)
-                CCS_DC -> portImage.setImageResource(R.drawable.ic_ccs_icon)
-                TYPE_TWO_43 -> portImage.setImageResource(R.drawable.ic_type_two_icon)
+            when (item.type.trimString()) {
+                CHAD -> portImage.setImageResource(R.drawable.ic_chad_icon)
+                CCS -> portImage.setImageResource(R.drawable.ic_ccs_icon)
+                TYPE_TWO -> portImage.setImageResource(R.drawable.ic_type_two_icon)
                 TYPE_TWO_22 -> portImage.setImageResource(R.drawable.ic_type_two_icon)
                 TYPE_ONE_7 -> portImage.setImageResource(R.drawable.ic_type_one_icon)
                 IEC_PLUG -> portImage.setImageResource(R.drawable.ic_iec_plug)

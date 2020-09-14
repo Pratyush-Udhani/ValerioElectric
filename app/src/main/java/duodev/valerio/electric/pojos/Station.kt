@@ -22,8 +22,8 @@ data class Station (
     @SerializedName("serviceProvider")
     val serviceProvider: String,
 
-    @SerializedName("numberOfStations")
-    val numberOfStations: Int,
+//    @SerializedName("numberOfStations")
+//    val numberOfStations: Int,
 
     @SerializedName("connectorType")
     val connectorType: @RawValue List<Connector>,

@@ -173,7 +173,8 @@
                     android:layout_marginLeft="10dp"
                     android:text="+5 more"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="visible" />
 
             </LinearLayout>
 

@@ -82,6 +82,7 @@ class StationListAdapter(
 //            portName2.text = item.connectorType[1].type
 
             if(item.connectorType.size >= 2 ) {
+                singlePortLayout2.makeVisible()
                 setPort(item.connectorType[0].type, portIcon1, portName1);
                 setPort(item.connectorType[1].type, portIcon2, portName2);
             }
@@ -123,14 +124,16 @@ class StationListAdapter(
 
     private fun setPort(portType: String, portIcon: ImageView, portName: TextView ) {
         portName.text = portType;
-        when (portType) {
-            CHAD_DC -> portIcon.setImageResource(R.drawable.ic_chad_icon)
-            CCS_DC -> portIcon.setImageResource(R.drawable.ic_ccs_icon)
-            TYPE_TWO_43 -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
+        when (portType.trimString()) {
+            CHAD -> portIcon.setImageResource(R.drawable.ic_chad_icon)
+            CCS -> portIcon.setImageResource(R.drawable.ic_ccs_icon)
+            TYPE_TWO -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
             TYPE_TWO_22 -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
             TYPE_ONE_7 -> portIcon.setImageResource(R.drawable.ic_type_one_icon)
             IEC_PLUG -> portIcon.setImageResource(R.drawable.ic_iec_plug)
             AMP_16 -> portIcon.setImageResource(R.drawable.ic_type_one_icon)
+            else -> portIcon.setImageResource(R.drawable.ic_type_two_icon)
         }
+
     }
 }

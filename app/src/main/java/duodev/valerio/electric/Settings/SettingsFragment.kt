@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import duodev.valerio.electric.Admin.AdminPanelFragment
 import duodev.valerio.electric.Profile.ProfileFragment
 import duodev.valerio.electric.R
+import duodev.valerio.electric.Routing.RoutingFragment
 import duodev.valerio.electric.Services.BookingServiceFragment
 import duodev.valerio.electric.Station.BookingStationFragment
 import duodev.valerio.electric.Utils.ADMIN
@@ -43,6 +44,10 @@ class SettingsFragment : BaseFragment() {
     }
 
     private fun setListeners() {
+        routingButton.setOnClickListener {
+            replaceFragment(this, R.id.homeContainer, RoutingFragment.newInstance())
+        }
+
         addStationButton.setOnClickListener {
             if(pm.email == ADMIN_EMAIL){
                 replaceFragment(this, R.id.homeContainer, AdminPanelFragment.newInstance(ADMIN))

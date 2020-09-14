@@ -40,7 +40,7 @@ object StationDef {
                     stationAddress = listOfNames[i],
                     location = GeoPoint(listOfLats[i], listOnLongs[i]),
                     stationLocation = "Delhi",
-                    numberOfStations = 1,
+//                    numberOfStations = 1,
                     serviceProvider = "Delta Electronics",
                     imageUrl = "https://firebasestorage.googleapis.com/v0/b/valerio-ac7ff.appspot.com/o/stationimage%2F73.8247188.jpg?alt=media&token=56525f51-5deb-44d0-af50-3adfb6c907eb",
                     stationId = "$i",
@@ -54,7 +54,10 @@ object StationDef {
                         Connector(
                             type = TYPE_TWO,
                             price = "Rs. 5.56 per hour",
-                            id = (i+1).toString()
+                            id = (i+1).toString(),
+                            power = "50",
+                            ports = "1",
+                            speed = "Fast"
                         )
                     ),
                     ownership = "Private"
